@@ -13,6 +13,7 @@ import {
   Box,
   Typography,
   useTheme,
+  Fade,
 } from "@mui/material";
 import {
   Dashboard,
@@ -25,7 +26,9 @@ import {
 interface SidebarProps {
   open: boolean;
   onClose: () => void;
+  onRouteChange: () => void;
   width: number;
+  isMobile: boolean;
 }
 
 interface MenuItem {
@@ -68,13 +71,21 @@ const menuItems: MenuItem[] = [
   },
 ];
 
-export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
+export const Sidebar: React.FC<SidebarProps> = ({
+  open,
+  onClose,
+  onRouteChange,
+  width,
+  isMobile,
+}) => {
   const pathname = usePathname();
   const router = useRouter();
   const theme = useTheme();
 
   const handleNavigation = (path: string) => {
+    console.log("Navigating to:", path); // Debug log
     router.push(path);
+    // Always close sidebar after navigation (both mobile and desktop)
     onClose();
   };
 
@@ -82,74 +93,79 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
     <Box
       sx={{ width, height: "100%", display: "flex", flexDirection: "column" }}
     >
-      {/* Logo Section */}
-      <Box
-        sx={{
-          p: 2,
-          display: "flex",
-          alignItems: "center",
-          minHeight: 64,
-          borderBottom: `1px solid ${theme.palette.divider}`,
-        }}
-      >
-        <AutoAwesome sx={{ mr: 1, color: "primary.main" }} />
-        <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
-          PlanIt
-        </Typography>
-      </Box>
-
-      {/* Navigation Menu */}
-      <Box sx={{ flexGrow: 1, overflow: "auto" }}>
-        <List sx={{ pt: 1 }}>
-          {menuItems.map((item) => (
-            <ListItem key={item.id} disablePadding>
-              <ListItemButton
-                onClick={() => handleNavigation(item.path)}
-                selected={pathname === item.path}
-                sx={{
-                  mx: 1,
-                  mb: 0.5,
-                  borderRadius: 2,
-                  "&.Mui-selected": {
-                    backgroundColor: "primary.main",
-                    color: "primary.contrastText",
-                    "&:hover": {
-                      backgroundColor: "primary.dark",
-                    },
-                    "& .MuiListItemIcon-root": {
-                      color: "primary.contrastText",
-                    },
-                  },
-                }}
-              >
-                <ListItemIcon
+      {/* Navigation Menu - No logo section */}
+      <Box sx={{ flexGrow: 1, overflow: "auto", pt: 3 }}>
+        <List sx={{ px: 2 }}>
+          {menuItems.map((item) => {
+            const isActive = pathname === item.path;
+            return (
+              <ListItem key={item.id} disablePadding sx={{ mb: 1 }}>
+                <ListItemButton
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleNavigation(item.path);
+                  }}
+                  selected={isActive}
                   sx={{
-                    minWidth: 40,
-                    color:
-                      pathname === item.path ? "inherit" : "text.secondary",
+                    borderRadius: 3,
+                    py: 1.5,
+                    px: 2,
+                    transition: "all 0.2s ease-in-out",
+                    "&.Mui-selected": {
+                      backgroundColor: "primary.main",
+                      color: "primary.contrastText",
+                      boxShadow: theme.shadows[2],
+                      "&:hover": {
+                        backgroundColor: "primary.dark",
+                        transform: "translateX(4px)",
+                      },
+                      "& .MuiListItemIcon-root": {
+                        color: "primary.contrastText",
+                      },
+                    },
+                    "&:hover:not(.Mui-selected)": {
+                      backgroundColor: "action.hover",
+                      transform: "translateX(2px)",
+                    },
                   }}
+                  aria-label={`Navigate to ${item.label}`}
                 >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.label}
-                  primaryTypographyProps={{
-                    fontSize: "0.875rem",
-                    fontWeight: pathname === item.path ? 600 : 400,
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 40,
+                      color: isActive ? "inherit" : "text.secondary",
+                      transition: "color 0.2s ease-in-out",
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.label}
+                    primaryTypographyProps={{
+                      fontSize: "0.95rem",
+                      fontWeight: isActive ? 600 : 500,
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
         </List>
       </Box>
 
       {/* Footer */}
-      <Box sx={{ p: 2, borderTop: `1px solid ${theme.palette.divider}` }}>
+      <Box
+        sx={{
+          p: 3,
+          borderTop: `1px solid ${theme.palette.divider}`,
+          bgcolor: "background.paper",
+        }}
+      >
         <Typography
-          variant="caption"
+          variant="body2"
           color="text.secondary"
-          sx={{ display: "block" }}
+          sx={{ display: "block", mb: 0.5 }}
         >
           PlanIt v1.0
         </Typography>
@@ -167,11 +183,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
         variant="temporary"
         open={open}
         onClose={onClose}
-        ModalProps={{ keepMounted: true }}
+        ModalProps={{
+          keepMounted: true,
+          // Remove onClick handler - let backdrop handle closing naturally
+        }}
         sx={{
           display: { xs: "block", md: "none" },
           "& .MuiDrawer-paper": {
             width,
+            transition: theme.transitions.create("transform", {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
           },
         }}
       >
@@ -181,12 +204,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
       {/* Desktop Drawer */}
       <Drawer
         variant="persistent"
+        anchor="left"
         open={open}
         sx={{
           display: { xs: "none", md: "block" },
           "& .MuiDrawer-paper": {
             width,
             border: "none",
+            transition: theme.transitions.create("transform", {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
           },
         }}
       >

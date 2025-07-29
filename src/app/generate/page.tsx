@@ -11,12 +11,12 @@ import {
   Stepper,
   Step,
   StepLabel,
-  Grid,
   TextField,
   MenuItem,
   Alert,
   CircularProgress,
   Fade,
+  LinearProgress,
 } from "@mui/material";
 import { AutoAwesome, NavigateNext, NavigateBefore } from "@mui/icons-material";
 import { MajorSelector } from "@/components/MajorSelector";
@@ -41,6 +41,7 @@ export default function GeneratePlanPage() {
   const [activeStep, setActiveStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   // Form state
   const [formData, setFormData] = useState<GeneratePlanRequest>({
@@ -90,10 +91,22 @@ export default function GeneratePlanPage() {
   const handleGeneratePlan = async () => {
     setIsGenerating(true);
     setError(null);
+    setLoadingProgress(0);
 
     try {
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Enhanced progress simulation with different phases
+      const phases = [
+        "Analyzing degree requirements...",
+        "Checking course prerequisites...",
+        "Optimizing semester distribution...",
+        "Generating personalized timeline...",
+        "Finalizing your academic plan...",
+      ];
+
+      for (let i = 0; i < phases.length; i++) {
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        setLoadingProgress((i + 1) * 20);
+      }
 
       // Mock successful generation
       console.log("Generating plan with data:", formData);
@@ -104,6 +117,7 @@ export default function GeneratePlanPage() {
       setError("Failed to generate plan. Please try again.");
     } finally {
       setIsGenerating(false);
+      setLoadingProgress(0);
     }
   };
 
@@ -115,114 +129,116 @@ export default function GeneratePlanPage() {
             <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
               When do you plan to start and finish?
             </Typography>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                gap: 3,
+              }}
+            >
+              <Box sx={{ flex: 1 }}>
                 <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 500 }}>
                   Start Semester
                 </Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TextField
-                      select
-                      fullWidth
-                      label="Season"
-                      value={formData.startSemester.season}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          startSemester: {
-                            ...prev.startSemester,
-                            season: e.target.value as any,
-                          },
-                        }))
-                      }
-                    >
-                      {seasons.map((season) => (
-                        <MenuItem key={season} value={season}>
-                          {season}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      select
-                      fullWidth
-                      label="Year"
-                      value={formData.startSemester.year}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          startSemester: {
-                            ...prev.startSemester,
-                            year: parseInt(e.target.value),
-                          },
-                        }))
-                      }
-                    >
-                      {years.map((year) => (
-                        <MenuItem key={year} value={year}>
-                          {year}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6}>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <TextField
+                    select
+                    fullWidth
+                    label="Season"
+                    value={formData.startSemester.season}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        startSemester: {
+                          ...prev.startSemester,
+                          season: e.target.value as any,
+                        },
+                      }))
+                    }
+                    aria-label="Select start semester season"
+                  >
+                    {seasons.map((season) => (
+                      <MenuItem key={season} value={season}>
+                        {season}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <TextField
+                    select
+                    fullWidth
+                    label="Year"
+                    value={formData.startSemester.year}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        startSemester: {
+                          ...prev.startSemester,
+                          year: parseInt(e.target.value),
+                        },
+                      }))
+                    }
+                    aria-label="Select start semester year"
+                  >
+                    {years.map((year) => (
+                      <MenuItem key={year} value={year}>
+                        {year}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Box>
+              </Box>
+              <Box sx={{ flex: 1 }}>
                 <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 500 }}>
                   End Semester (Expected Graduation)
                 </Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TextField
-                      select
-                      fullWidth
-                      label="Season"
-                      value={formData.endSemester.season}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          endSemester: {
-                            ...prev.endSemester,
-                            season: e.target.value as any,
-                          },
-                        }))
-                      }
-                    >
-                      {seasons.map((season) => (
-                        <MenuItem key={season} value={season}>
-                          {season}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      select
-                      fullWidth
-                      label="Year"
-                      value={formData.endSemester.year}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          endSemester: {
-                            ...prev.endSemester,
-                            year: parseInt(e.target.value),
-                          },
-                        }))
-                      }
-                    >
-                      {years.map((year) => (
-                        <MenuItem key={year} value={year}>
-                          {year}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                  <TextField
+                    select
+                    fullWidth
+                    label="Season"
+                    value={formData.endSemester.season}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        endSemester: {
+                          ...prev.endSemester,
+                          season: e.target.value as any,
+                        },
+                      }))
+                    }
+                    aria-label="Select end semester season"
+                  >
+                    {seasons.map((season) => (
+                      <MenuItem key={season} value={season}>
+                        {season}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <TextField
+                    select
+                    fullWidth
+                    label="Year"
+                    value={formData.endSemester.year}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        endSemester: {
+                          ...prev.endSemester,
+                          year: parseInt(e.target.value),
+                        },
+                      }))
+                    }
+                    aria-label="Select end semester year"
+                  >
+                    {years.map((year) => (
+                      <MenuItem key={year} value={year}>
+                        {year}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Box>
+              </Box>
+            </Box>
           </Box>
         );
 
@@ -338,6 +354,41 @@ export default function GeneratePlanPage() {
                   {formData.preferences.summerCourses ? "Yes" : "No"}
                 </Typography>
               </Paper>
+
+              {/* Loading Progress */}
+              {isGenerating && (
+                <Paper
+                  sx={{
+                    p: 3,
+                    bgcolor: "primary.light",
+                    color: "primary.contrastText",
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <CircularProgress
+                      size={24}
+                      sx={{ color: "primary.contrastText", mr: 2 }}
+                    />
+                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                      Generating Your Academic Plan...
+                    </Typography>
+                  </Box>
+                  <LinearProgress
+                    variant="determinate"
+                    value={loadingProgress}
+                    sx={{
+                      mb: 1,
+                      bgcolor: "rgba(255,255,255,0.3)",
+                      "& .MuiLinearProgress-bar": {
+                        bgcolor: "primary.contrastText",
+                      },
+                    }}
+                  />
+                  <Typography variant="body2">
+                    {loadingProgress}% Complete
+                  </Typography>
+                </Paper>
+              )}
             </Box>
           </Box>
         );
@@ -386,8 +437,9 @@ export default function GeneratePlanPage() {
           <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
             <Button
               onClick={handleBack}
-              disabled={activeStep === 0}
+              disabled={activeStep === 0 || isGenerating}
               startIcon={<NavigateBefore />}
+              aria-label="Go back to previous step"
             >
               Back
             </Button>
@@ -405,6 +457,7 @@ export default function GeneratePlanPage() {
                   )
                 }
                 sx={{ minWidth: 140 }}
+                aria-label="Generate academic plan"
               >
                 {isGenerating ? "Generating..." : "Generate Plan"}
               </Button>
@@ -412,7 +465,9 @@ export default function GeneratePlanPage() {
               <Button
                 variant="contained"
                 onClick={handleNext}
+                disabled={isGenerating}
                 endIcon={<NavigateNext />}
+                aria-label="Go to next step"
               >
                 Next
               </Button>

@@ -17,17 +17,19 @@ interface AppBarProps {
   open: boolean;
   onMenuToggle: () => void;
   drawerWidth: number;
+  isMobile: boolean;
 }
 
 export const AppBar: React.FC<AppBarProps> = ({
   open,
   onMenuToggle,
   drawerWidth,
+  isMobile,
 }) => {
   return (
     <MuiAppBar
       position="fixed"
-      elevation={1}
+      elevation={2}
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         transition: (theme) =>
@@ -35,33 +37,31 @@ export const AppBar: React.FC<AppBarProps> = ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
           }),
-        ...(open && {
-          marginLeft: { md: drawerWidth },
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          transition: (theme) =>
-            theme.transitions.create(["width", "margin"], {
-              easing: theme.transitions.easing.sharp,
-              duration: theme.transitions.duration.enteringScreen,
-            }),
-        }),
+        ...(!isMobile &&
+          open && {
+            marginLeft: drawerWidth,
+            width: `calc(100% - ${drawerWidth}px)`,
+            transition: (theme) =>
+              theme.transitions.create(["width", "margin"], {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+              }),
+          }),
       }}
     >
       <Toolbar>
         {/* Hamburger Menu Button */}
         <IconButton
           color="inherit"
-          aria-label="toggle drawer"
+          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
           onClick={onMenuToggle}
           edge="start"
-          sx={{
-            mr: 2,
-            ...(open && { display: { md: "none" } }),
-          }}
+          sx={{ mr: 2 }}
         >
           <Menu />
         </IconButton>
 
-        {/* Logo and Title */}
+        {/* Logo and Title - Always show since sidebar no longer has logo */}
         <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
           <AutoAwesome sx={{ mr: 1, display: { xs: "none", sm: "block" } }} />
           <Typography
@@ -92,8 +92,12 @@ export const AppBar: React.FC<AppBarProps> = ({
           <ThemeToggle />
 
           {/* Profile Avatar */}
-          <Tooltip title="Profile">
-            <IconButton color="inherit" sx={{ ml: 1 }}>
+          <Tooltip title="Profile (Coming Soon)">
+            <IconButton
+              color="inherit"
+              sx={{ ml: 1 }}
+              aria-label="User profile"
+            >
               <Avatar sx={{ width: 32, height: 32, bgcolor: "secondary.main" }}>
                 <AccountCircle />
               </Avatar>
