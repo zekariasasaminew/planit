@@ -92,11 +92,12 @@ export const AppBar: React.FC<AppBarProps> = ({
           <ThemeToggle />
 
           {/* Profile Avatar */}
-          <Tooltip title="Profile (Coming Soon)">
+          <Tooltip title="View Profile">
             <IconButton
               color="inherit"
               sx={{ ml: 1 }}
               aria-label="User profile"
+              onClick={() => (window.location.href = "/profile")}
             >
               <Avatar sx={{ width: 32, height: 32, bgcolor: "secondary.main" }}>
                 <AccountCircle />
