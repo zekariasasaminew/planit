@@ -5,4 +5,7 @@ export { SemesterCard } from './SemesterCard';
 export { MajorSelector } from './MajorSelector';
 export { MinorSelector } from './MinorSelector';
 export { PreferenceForm } from './PreferenceForm';
-export { LoadingIndicator } from './LoadingIndicator'; 
+export { LoadingIndicator } from './LoadingIndicator';
+export { SignInCard } from './SignInCard';
+export { ProfileCard } from './ProfileCard';
+export { ProtectedRoute } from './ProtectedRoute'; 

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Container,
@@ -10,7 +10,6 @@ import {
   Card,
   CardContent,
   Paper,
-  IconButton,
   Fade,
 } from "@mui/material";
 import {
@@ -21,9 +20,23 @@ import {
   ArrowForward,
   BookmarkBorder,
 } from "@mui/icons-material";
+import { useAuth } from "@/app/context/authContext";
 
 export default function HomePage() {
   const router = useRouter();
+  const { user } = useAuth();
+
+  // Handle redirect logic in useEffect to avoid SSR issues
+  useEffect(() => {
+    if (user === null) {
+      router.push("/signin");
+    }
+  }, [user, router]);
+
+  // Show loading or nothing while checking auth or redirecting
+  if (user === null || user === undefined) {
+    return null;
+  }
 
   const handleGetStarted = () => {
     router.push("/generate");
