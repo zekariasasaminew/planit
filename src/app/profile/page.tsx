@@ -15,7 +15,7 @@ export default function ProfilePage() {
           py: 4,
         }}
       >
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
           <Box sx={{ textAlign: "center", mb: 4 }}>
             <Typography
               variant="h3"
@@ -25,10 +25,10 @@ export default function ProfilePage() {
                 mb: 1,
               }}
             >
-              Your Profile
+              Profile & Settings
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Manage your account and preferences
+              Manage your account, preferences, and settings
             </Typography>
           </Box>
 

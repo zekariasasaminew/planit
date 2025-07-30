@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Container,
@@ -26,9 +26,15 @@ export default function HomePage() {
   const router = useRouter();
   const { user } = useAuth();
 
-  // If not logged in, redirect to signin
-  if (!user) {
-    router.push("/signin");
+  // Handle redirect logic in useEffect to avoid SSR issues
+  useEffect(() => {
+    if (user === null) {
+      router.push("/signin");
+    }
+  }, [user, router]);
+
+  // Show loading or nothing while checking auth or redirecting
+  if (user === null || user === undefined) {
     return null;
   }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import {
   AppBar as MuiAppBar,
   Toolbar,
@@ -26,6 +27,7 @@ export const AppBar: React.FC<AppBarProps> = ({
   drawerWidth,
   isMobile,
 }) => {
+  const router = useRouter();
   return (
     <MuiAppBar
       position="fixed"
@@ -97,7 +99,7 @@ export const AppBar: React.FC<AppBarProps> = ({
               color="inherit"
               sx={{ ml: 1 }}
               aria-label="User profile"
-              onClick={() => (window.location.href = "/profile")}
+              onClick={() => router.push("/profile")}
             >
               <Avatar sx={{ width: 32, height: 32, bgcolor: "secondary.main" }}>
                 <AccountCircle />
