@@ -10,7 +10,6 @@ import {
   Card,
   CardContent,
   Paper,
-  IconButton,
   Fade,
 } from "@mui/material";
 import {
@@ -21,9 +20,17 @@ import {
   ArrowForward,
   BookmarkBorder,
 } from "@mui/icons-material";
+import { useAuth } from "@/app/context/authContext";
 
 export default function HomePage() {
   const router = useRouter();
+  const { user } = useAuth();
+
+  // If not logged in, redirect to signin
+  if (!user) {
+    router.push("/signin");
+    return null;
+  }
 
   const handleGetStarted = () => {
     router.push("/generate");
