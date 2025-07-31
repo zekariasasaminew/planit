@@ -17,7 +17,7 @@ export interface Course {
   code: string;
   title: string;
   credits: number;
-  type: 'Core' | 'LP' | 'Elective' | 'Gen Ed' | 'Major' | 'Minor';
+  type: CourseType;
   prerequisites?: string[];
 }
 
@@ -25,7 +25,7 @@ export interface Semester {
   id: string;
   name: string;
   year: number;
-  season: 'Fall' | 'Spring' | 'Summer';
+  season: SemesterSeason;
   courses: Course[];
   totalCredits: number;
 }
@@ -36,11 +36,11 @@ export interface AcademicPlan {
   majors: Major[];
   minors: Minor[];
   startSemester: {
-    season: 'Fall' | 'Spring' | 'Summer';
+    season: SemesterSeason;
     year: number;
   };
   endSemester: {
-    season: 'Fall' | 'Spring' | 'Summer';
+    season: SemesterSeason;
     year: number;
   };
   semesters: Semester[];
@@ -51,7 +51,7 @@ export interface AcademicPlan {
 
 export interface PlanPreferences {
   maxCreditsPerSemester: number;
-  electivePriority: 'early' | 'late' | 'distributed';
+  electivePriority: ElectivePriority;
   summerCourses: boolean;
   winterimCourses: boolean;
   onlineCoursesAllowed: boolean;
@@ -61,12 +61,28 @@ export interface GeneratePlanRequest {
   majors: string[];
   minors: string[];
   startSemester: {
-    season: 'Fall' | 'Spring' | 'Summer';
+    season: SemesterSeason;
     year: number;
   };
   endSemester: {
-    season: 'Fall' | 'Spring' | 'Summer';
+    season: SemesterSeason;
     year: number;
   };
   preferences: PlanPreferences;
-} 
+}
+
+// UI Component Types
+export type ChipColor = 
+  | "primary"
+  | "secondary" 
+  | "success"
+  | "warning"
+  | "info"
+  | "error"
+  | "default";
+
+export type SemesterSeason = 'Fall' | 'Spring' | 'Summer';
+
+export type CourseType = 'Core' | 'LP' | 'Elective' | 'Gen Ed' | 'Major' | 'Minor';
+
+export type ElectivePriority = 'early' | 'late' | 'distributed'; 

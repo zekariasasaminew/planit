@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -15,7 +14,6 @@ import { signInWithGoogle } from "@/lib/auth";
 export const SignInCard: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   const handleGoogleSignIn = async () => {
     try {
@@ -26,8 +24,12 @@ export const SignInCard: React.FC = () => {
 
       // The auth state change will be handled by the AuthContext
       // and the user will be redirected in the SignInPage useEffect
-    } catch (err: any) {
-      setError(err.message || "Failed to sign in. Please try again.");
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to sign in. Please try again.";
+      setError(errorMessage);
       setLoading(false);
     }
   };

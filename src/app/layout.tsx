@@ -34,12 +34,6 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
     setSidebarOpen(false);
   }, []);
 
-  const handleRouteChange = useCallback(() => {
-    if (isMobile) {
-      setSidebarOpen(false);
-    }
-  }, [isMobile]);
-
   return (
     <Box sx={{ display: "flex" }}>
       {/* App Bar */}
@@ -51,13 +45,7 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
       />
 
       {/* Sidebar */}
-      <Sidebar
-        open={sidebarOpen}
-        onClose={handleSidebarClose}
-        onRouteChange={handleRouteChange}
-        width={280}
-        isMobile={isMobile}
-      />
+      <Sidebar open={sidebarOpen} onClose={handleSidebarClose} width={280} />
 
       {/* Backdrop for mobile */}
       {isMobile && sidebarOpen && (

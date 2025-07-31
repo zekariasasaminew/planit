@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import {
   AutoAwesome,
-  School,
   Timeline,
   CheckCircle,
   ArrowForward,

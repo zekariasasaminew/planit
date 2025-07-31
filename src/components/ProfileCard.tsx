@@ -23,12 +23,10 @@ import {
   FormControl,
   InputLabel,
   IconButton,
-  Tooltip,
   Paper,
 } from "@mui/material";
 import {
   ExitToApp,
-  Person,
   Email,
   Tag,
   AccountCircle,
@@ -96,8 +94,12 @@ export const ProfileCard: React.FC = () => {
 
       // Redirect to welcome page after sign out
       router.push("/");
-    } catch (err: any) {
-      setError(err.message || "Failed to sign out. Please try again.");
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to sign out. Please try again.";
+      setError(errorMessage);
       setLoading(false);
     }
   };

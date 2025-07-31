@@ -14,13 +14,13 @@ import {
   Badge,
 } from "@mui/material";
 import { School, Schedule } from "@mui/icons-material";
-import { Semester, Course } from "@/types";
+import { Semester, Course, ChipColor } from "@/types";
 
 interface SemesterCardProps {
   semester: Semester;
 }
 
-const getCourseTypeColor = (type: Course["type"]) => {
+const getCourseTypeColor = (type: Course["type"]): ChipColor => {
   switch (type) {
     case "Major":
       return "primary";
@@ -98,7 +98,7 @@ export const SemesterCard: React.FC<SemesterCardProps> = ({ semester }) => {
                     <Chip
                       label={course.type}
                       size="small"
-                      color={getCourseTypeColor(course.type) as any}
+                      color={getCourseTypeColor(course.type)}
                       variant="outlined"
                       sx={{ height: 20, fontSize: "0.75rem" }}
                     />

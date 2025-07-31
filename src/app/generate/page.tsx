@@ -23,7 +23,7 @@ import { MajorSelector } from "@/components/MajorSelector";
 import { MinorSelector } from "@/components/MinorSelector";
 import { PreferenceForm } from "@/components/PreferenceForm";
 import { mockMajors, mockMinors, defaultPreferences } from "@/data/mockData";
-import { Major, Minor, PlanPreferences, GeneratePlanRequest } from "@/types";
+import { GeneratePlanRequest, SemesterSeason } from "@/types";
 
 const steps = [
   "Basic Information",
@@ -113,7 +113,7 @@ export default function GeneratePlanPage() {
 
       // Navigate to planner view with the generated plan
       router.push("/planner?generated=true");
-    } catch (err) {
+    } catch {
       setError("Failed to generate plan. Please try again.");
     } finally {
       setIsGenerating(false);
@@ -151,7 +151,7 @@ export default function GeneratePlanPage() {
                         ...prev,
                         startSemester: {
                           ...prev.startSemester,
-                          season: e.target.value as any,
+                          season: e.target.value as SemesterSeason,
                         },
                       }))
                     }
@@ -202,7 +202,7 @@ export default function GeneratePlanPage() {
                         ...prev,
                         endSemester: {
                           ...prev.endSemester,
-                          season: e.target.value as any,
+                          season: e.target.value as SemesterSeason,
                         },
                       }))
                     }
@@ -412,7 +412,7 @@ export default function GeneratePlanPage() {
               Generate Academic Plan
             </Typography>
             <Typography variant="h6" color="text.secondary">
-              Let's create a personalized plan for your academic journey
+              {"Let's create a personalized plan for your academic journey"}
             </Typography>
           </Box>
         </Fade>

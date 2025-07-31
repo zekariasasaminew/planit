@@ -9,11 +9,9 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Divider,
   Box,
   Typography,
   useTheme,
-  Fade,
 } from "@mui/material";
 import {
   Dashboard,
@@ -26,9 +24,7 @@ import {
 interface SidebarProps {
   open: boolean;
   onClose: () => void;
-  onRouteChange: () => void;
   width: number;
-  isMobile: boolean;
 }
 
 interface MenuItem {
@@ -71,13 +67,7 @@ const menuItems: MenuItem[] = [
   },
 ];
 
-export const Sidebar: React.FC<SidebarProps> = ({
-  open,
-  onClose,
-  onRouteChange,
-  width,
-  isMobile,
-}) => {
+export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
   const pathname = usePathname();
   const router = useRouter();
   const theme = useTheme();

@@ -5,7 +5,6 @@ import {
   Box,
   Typography,
   FormControl,
-  FormLabel,
   RadioGroup,
   FormControlLabel,
   Radio,
@@ -15,7 +14,7 @@ import {
   Divider,
 } from "@mui/material";
 import { Settings, CreditCard, Schedule, WbSunny } from "@mui/icons-material";
-import { PlanPreferences } from "@/types";
+import { PlanPreferences, ElectivePriority } from "@/types";
 
 interface PreferenceFormProps {
   preferences: PlanPreferences;
@@ -26,7 +25,10 @@ export const PreferenceForm: React.FC<PreferenceFormProps> = ({
   preferences,
   onChange,
 }) => {
-  const handleChange = (field: keyof PlanPreferences, value: any) => {
+  const handleChange = (
+    field: keyof PlanPreferences,
+    value: number | string | boolean
+  ) => {
     onChange({
       ...preferences,
       [field]: value,
@@ -85,7 +87,12 @@ export const PreferenceForm: React.FC<PreferenceFormProps> = ({
           <FormControl>
             <RadioGroup
               value={preferences.electivePriority}
-              onChange={(e) => handleChange("electivePriority", e.target.value)}
+              onChange={(e) =>
+                handleChange(
+                  "electivePriority",
+                  e.target.value as ElectivePriority
+                )
+              }
               row
             >
               <FormControlLabel

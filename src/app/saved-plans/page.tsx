@@ -304,8 +304,9 @@ export default function SavedPlansPage() {
           <DialogTitle>Delete Plan</DialogTitle>
           <DialogContent>
             <Typography>
-              Are you sure you want to delete "{selectedPlan?.name}"? This
-              action cannot be undone.
+              {'Are you sure you want to delete "'}
+              {selectedPlan?.name}
+              {'"? This action cannot be undone.'}
             </Typography>
           </DialogContent>
           <DialogActions>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Container,
@@ -27,7 +27,7 @@ import { SemesterCard } from "@/components/SemesterCard";
 import { mockAcademicPlan } from "@/data/mockData";
 import { AcademicPlan } from "@/types";
 
-export default function PlannerPage() {
+function PlannerPageContent() {
   const searchParams = useSearchParams();
   const [plan, setPlan] = useState<AcademicPlan | null>(null);
   const [isGenerated, setIsGenerated] = useState(false);
@@ -277,8 +277,8 @@ export default function PlannerPage() {
             </Alert>
             <Alert severity="success" sx={{ flex: 1, minWidth: 300 }}>
               <AlertTitle>On Track for Graduation</AlertTitle>
-              You're on schedule to graduate in {plan.endSemester.season}{" "}
-              {plan.endSemester.year}.
+              {"You're on schedule to graduate in "}
+              {plan.endSemester.season} {plan.endSemester.year}.
             </Alert>
             <Alert severity="warning" sx={{ flex: 1, minWidth: 300 }}>
               <AlertTitle>Credit Load</AlertTitle>
@@ -302,5 +302,13 @@ export default function PlannerPage() {
         </Fab>
       </Box>
     </Container>
+  );
+}
+
+export default function PlannerPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PlannerPageContent />
+    </Suspense>
   );
 }
