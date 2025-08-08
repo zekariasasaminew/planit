@@ -32,10 +32,11 @@ import {
   Add,
   Visibility,
 } from "@mui/icons-material";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { mockSavedPlans } from "@/data/mockData";
 import { AcademicPlan } from "@/types";
 
-export default function SavedPlansPage() {
+function SavedPlansContent() {
   const router = useRouter();
   const [plans] = useState<AcademicPlan[]>(mockSavedPlans);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -356,5 +357,13 @@ export default function SavedPlansPage() {
         </Fab>
       </Box>
     </Container>
+  );
+}
+
+export default function SavedPlansPage() {
+  return (
+    <ProtectedRoute>
+      <SavedPlansContent />
+    </ProtectedRoute>
   );
 }

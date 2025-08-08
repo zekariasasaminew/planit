@@ -20,7 +20,10 @@ export const SignInCard: React.FC = () => {
       setLoading(true);
       setError(null);
 
-      await signInWithGoogle();
+      const returnTo = window.location.search.includes("returnTo=")
+        ? new URLSearchParams(window.location.search).get("returnTo") || "/"
+        : "/";
+      await signInWithGoogle(returnTo);
 
       // The auth state change will be handled by the AuthContext
       // and the user will be redirected in the SignInPage useEffect

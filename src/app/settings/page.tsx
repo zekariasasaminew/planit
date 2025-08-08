@@ -15,9 +15,10 @@ import {
   Alert,
 } from "@mui/material";
 import { Settings as SettingsIcon, Brightness6 } from "@mui/icons-material";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { useTheme } from "@/theme/context";
 
-export default function SettingsPage() {
+function SettingsContent() {
   const { mode, toggleMode } = useTheme();
 
   return (
@@ -109,5 +110,13 @@ export default function SettingsPage() {
         </Alert>
       </Box>
     </Container>
+  );
+}
+
+export default function SettingsPage() {
+  return (
+    <ProtectedRoute>
+      <SettingsContent />
+    </ProtectedRoute>
   );
 }

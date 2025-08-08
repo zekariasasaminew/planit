@@ -23,6 +23,7 @@ import {
   CheckCircle,
   Add,
 } from "@mui/icons-material";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { SemesterCard } from "@/components/SemesterCard";
 import { mockAcademicPlan } from "@/data/mockData";
 import { AcademicPlan } from "@/types";
@@ -307,8 +308,10 @@ function PlannerPageContent() {
 
 export default function PlannerPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PlannerPageContent />
-    </Suspense>
+    <ProtectedRoute>
+      <Suspense fallback={<div>Loading...</div>}>
+        <PlannerPageContent />
+      </Suspense>
+    </ProtectedRoute>
   );
 }
