@@ -19,6 +19,7 @@ import {
   LinearProgress,
 } from "@mui/material";
 import { AutoAwesome, NavigateNext, NavigateBefore } from "@mui/icons-material";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { MajorSelector } from "@/components/MajorSelector";
 import { MinorSelector } from "@/components/MinorSelector";
 import { PreferenceForm } from "@/components/PreferenceForm";
@@ -36,7 +37,7 @@ const currentYear = new Date().getFullYear();
 const seasons = ["Fall", "Spring", "Summer"];
 const years = Array.from({ length: 8 }, (_, i) => currentYear + i);
 
-export default function GeneratePlanPage() {
+function GeneratePlanContent() {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -476,5 +477,13 @@ export default function GeneratePlanPage() {
         </Paper>
       </Box>
     </Container>
+  );
+}
+
+export default function GeneratePlanPage() {
+  return (
+    <ProtectedRoute>
+      <GeneratePlanContent />
+    </ProtectedRoute>
   );
 }

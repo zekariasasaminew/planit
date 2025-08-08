@@ -3,7 +3,14 @@
 import React, { useState, useCallback } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import { usePathname } from "next/navigation";
-import { Box, Toolbar, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { ThemeProvider } from "@/theme/context";
 import { AuthProvider } from "@/app/context/authContext";
 import { useAuth } from "@/app/context/authContext";
@@ -100,11 +107,33 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
 }
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const pathname = usePathname();
 
   // Don't show navigation for signin page
   const isSignInPage = pathname === "/signin";
+
+  // Show loading state while checking authentication
+  if (loading && !isSignInPage) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+          bgcolor: "background.default",
+        }}
+      >
+        <Box sx={{ textAlign: "center" }}>
+          <CircularProgress sx={{ mb: 2 }} />
+          <Typography variant="body1" color="text.secondary">
+            Loading...
+          </Typography>
+        </Box>
+      </Box>
+    );
+  }
 
   // Show authenticated layout for logged in users (except signin page)
   const showAuthenticatedLayout = user && !isSignInPage;

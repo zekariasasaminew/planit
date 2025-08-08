@@ -1,21 +1,42 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Box, Container, Typography } from "@mui/material";
+import React, { useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Box, Container, Typography, CircularProgress } from "@mui/material";
 import { useAuth } from "@/app/context/authContext";
 import { SignInCard } from "@/components/SignInCard";
 
-export default function SignInPage() {
-  const { user } = useAuth();
+function SignInContent() {
+  const { user, loading } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    // If user is already logged in, redirect to home
+    if (loading) return;
+
+    // If user is already logged in, redirect appropriately
     if (user) {
-      router.push("/");
+      const returnTo = searchParams.get("returnTo") || "/";
+      router.replace(returnTo);
     }
-  }, [user, router]);
+  }, [user, loading, router, searchParams]);
+
+  // Show loading while checking auth status
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "background.default",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   // Don't render signin form if user is already logged in
   if (user) {
@@ -46,12 +67,33 @@ export default function SignInPage() {
             PlanIt
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-            Sign in to get started
+            {"Sign in to get started"}
           </Typography>
         </Box>
 
         <SignInCard />
       </Container>
     </Box>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense
+      fallback={
+        <Box
+          sx={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      }
+    >
+      <SignInContent />
+    </Suspense>
   );
 }

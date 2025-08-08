@@ -1,31 +1,41 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { useRouter, usePathname } from "next/navigation";
+import { Box, CircularProgress, Typography, Alert } from "@mui/material";
 import { useAuth } from "@/app/context/authContext";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
   fallback?: React.ReactNode;
+  redirectTo?: string;
+  requireAuth?: boolean;
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   fallback,
+  redirectTo = "/signin",
+  requireAuth = true,
 }) => {
-  const { user } = useAuth();
+  const { user, loading, error } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    // If no user is authenticated, redirect to signin
-    if (user === null) {
-      router.push("/signin");
+    if (loading) return; // Don't redirect while loading
+
+    if (requireAuth && !user) {
+      // Add current path as return URL for better UX
+      const returnUrl = `${redirectTo}?returnTo=${encodeURIComponent(
+        pathname
+      )}`;
+      router.replace(returnUrl);
     }
-  }, [user, router]);
+  }, [user, loading, router, redirectTo, pathname, requireAuth]);
 
   // Show loading state while checking authentication
-  if (user === undefined) {
+  if (loading) {
     return (
       fallback || (
         <Box
@@ -35,23 +45,47 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
             alignItems: "center",
             justifyContent: "center",
             minHeight: "100vh",
-            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            bgcolor: "background.default",
           }}
         >
-          <CircularProgress sx={{ color: "white", mb: 2 }} size={40} />
-          <Typography variant="h6" sx={{ color: "white" }}>
-            Loading...
+          <CircularProgress sx={{ mb: 2 }} size={40} />
+          <Typography variant="h6" color="text.secondary">
+            Verifying authentication...
           </Typography>
         </Box>
       )
     );
   }
 
-  // If user is null (not authenticated), return null as redirect is happening
-  if (user === null) {
-    return null;
+  // Show error state if there's an authentication error
+  if (error) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+          bgcolor: "background.default",
+          p: 3,
+        }}
+      >
+        <Alert severity="error" sx={{ mb: 2, maxWidth: 400 }}>
+          <Typography variant="body1">{error}</Typography>
+        </Alert>
+        <Typography variant="body2" color="text.secondary">
+          Please refresh the page or try signing in again.
+        </Typography>
+      </Box>
+    );
   }
 
-  // User is authenticated, render children
+  // If authentication is required but user is not authenticated, don't render
+  if (requireAuth && !user) {
+    return null; // Redirect is happening in useEffect
+  }
+
+  // If authentication is not required or user is authenticated, render children
   return <>{children}</>;
 };
