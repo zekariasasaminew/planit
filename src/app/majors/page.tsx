@@ -107,7 +107,7 @@ export default function MajorsPage() {
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
             <School sx={{ mr: 2, fontSize: 32, color: "primary.main" }} />
             <Typography variant="h3" component="h1" sx={{ fontWeight: 700 }}>
-              Majors & Requirements
+              {"Majors & Requirements"}
             </Typography>
           </Box>
           <Typography variant="h6" color="text.secondary">
@@ -121,9 +121,9 @@ export default function MajorsPage() {
             Full Requirements Coming Soon
           </Typography>
           <Typography variant="body1">
-            Detailed course requirements, prerequisites, and graduation
-            checklists will be available in a future update. For now, you can
-            browse available programs below.
+            {
+              "Detailed course requirements, prerequisites, and graduation checklists will be available in a future update. For now, you can browse available programs below."
+            }
           </Typography>
         </Alert>
 

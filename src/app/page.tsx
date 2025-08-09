@@ -10,30 +10,20 @@ import {
   Card,
   CardContent,
   Paper,
-  useTheme,
   Fade,
 } from "@mui/material";
 import {
   AutoAwesome,
-  Timeline,
-  CheckCircle,
   ArrowForward,
   BookmarkBorder,
   Refresh,
   School,
 } from "@mui/icons-material";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { useAuth } from "@/app/context/authContext";
 
 // Animated background component
 const AnimatedBackground = () => {
-  const theme = useTheme();
-
   return (
     <Box
       sx={{
@@ -142,10 +132,6 @@ const TypewriterText = ({
 export default function HomePage() {
   const router = useRouter();
   const { user } = useAuth();
-  const theme = useTheme();
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 300], [0, -50]);
-  const y2 = useTransform(scrollY, [0, 300], [0, -100]);
 
   // Handle redirect logic in useEffect to avoid SSR issues
   useEffect(() => {

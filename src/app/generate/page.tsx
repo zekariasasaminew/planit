@@ -110,7 +110,6 @@ function GeneratePlanContent() {
       }
 
       // Mock successful generation
-      console.log("Generating plan with data:", formData);
 
       // Navigate to planner view with the generated plan
       router.push("/planner?generated=true");

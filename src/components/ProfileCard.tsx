@@ -110,8 +110,7 @@ export const ProfileCard: React.FC = () => {
   };
 
   const handleSaveName = () => {
-    // TODO: Implement name update via Supabase API
-    console.log("Saving name:", tempName);
+    // Future enhancement: Implement name update via Supabase API
     setEditingName(false);
   };
 

@@ -1,52 +1,51 @@
+export type UUID = string;
+
+export type ProgramKind = 'major' | 'minor';
+export type CourseType = 'Major' | 'Core' | 'Gen Ed' | 'LP' | 'Elective' | 'Minor';
+export type CourseSource = 'user' | 'generator' | 'transfer' | 'ap';
+export type SemesterSeason = 'Fall' | 'Spring' | 'Summer';
+export type ElectivePriority = 'distributed' | 'concentrated';
+export type ChipColor = 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
+
+export interface Course {
+  id: UUID;
+  code: string;
+  title: string;
+  credits: number;
+  type: CourseType;
+  programId?: UUID | null;
+  prerequisites?: string[];
+}
+
 export interface Major {
-  id: string;
+  id: UUID;
   name: string;
   department: string;
   credits: number;
 }
 
 export interface Minor {
-  id: string;
+  id: UUID;
   name: string;
   department: string;
   credits: number;
 }
 
-export interface Course {
-  id: string;
-  code: string;
-  title: string;
-  credits: number;
-  type: CourseType;
-  prerequisites?: string[];
+export interface SemesterCourseEntry {
+  id: UUID;
+  course: Course;
+  source: CourseSource;
+  isLocked: boolean;
 }
 
 export interface Semester {
-  id: string;
+  id: UUID;
   name: string;
-  year: number;
   season: SemesterSeason;
-  courses: Course[];
+  year: number;
+  position?: number;
   totalCredits: number;
-}
-
-export interface AcademicPlan {
-  id: string;
-  name: string;
-  majors: Major[];
-  minors: Minor[];
-  startSemester: {
-    season: SemesterSeason;
-    year: number;
-  };
-  endSemester: {
-    season: SemesterSeason;
-    year: number;
-  };
-  semesters: Semester[];
-  preferences: PlanPreferences;
-  createdAt: Date;
-  updatedAt: Date;
+  courses: Course[];
 }
 
 export interface PlanPreferences {
@@ -57,32 +56,54 @@ export interface PlanPreferences {
   onlineCoursesAllowed: boolean;
 }
 
+export interface AcademicPlan {
+  id: UUID;
+  name: string;
+  majors: Major[];
+  minors: Minor[];
+  startSemester: SemesterInfo;
+  endSemester: SemesterInfo;
+  semesters: Semester[];
+  preferences: PlanPreferences;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface DiagnosticsMessage {
+  code: string;
+  message: string;
+  details?: Record<string, unknown>;
+}
+
+export interface SemesterInfo {
+  season: SemesterSeason;
+  year: number;
+}
+
 export interface GeneratePlanRequest {
-  majors: string[];
-  minors: string[];
-  startSemester: {
-    season: SemesterSeason;
-    year: number;
-  };
-  endSemester: {
-    season: SemesterSeason;
-    year: number;
-  };
+  majors: UUID[];
+  minors: UUID[];
+  startSemester: SemesterInfo;
+  endSemester: SemesterInfo;
   preferences: PlanPreferences;
 }
 
-// UI Component Types
-export type ChipColor = 
-  | "primary"
-  | "secondary" 
-  | "success"
-  | "warning"
-  | "info"
-  | "error"
-  | "default";
+export interface GeneratePlanApiRequest {
+  majorIds: UUID[];
+  minorIds?: UUID[];
+  takenCourseIds: UUID[];
+  transferCredits?: number;
+  semestersRemaining: number;
+  prefersSummer?: boolean;
+  maxCreditsPerSemester: number;
+  allowOverload?: boolean;
+  targetGraduateEarly?: boolean;
+  startSeason: string;
+  startYear: number;
+}
 
-export type SemesterSeason = 'Fall' | 'Spring' | 'Summer';
-
-export type CourseType = 'Core' | 'LP' | 'Elective' | 'Gen Ed' | 'Major' | 'Minor';
-
-export type ElectivePriority = 'early' | 'late' | 'distributed'; 
+export interface ApiError {
+  code: 'unauthorized' | 'validation_failed' | 'not_found' | 'conflict' | 'rate_limit_exceeded' | 'internal';
+  message: string;
+  details?: unknown;
+}
