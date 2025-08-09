@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: preview
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -16,4 +17,3 @@ jobs:
       - run: npm run lint
       - run: npm run test
       - run: npm run build
-
