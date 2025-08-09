@@ -1,0 +1,68 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { randomUUID } from 'node:crypto';
+import { withRequest } from '@/lib/logging/logger';
+import { getUserOrThrow } from '@/lib/auth/session';
+import { checkRateLimit, recordRequest } from '@/lib/supabase/rls';
+import { GeneratePlanRequestSchema } from '@/lib/validation/schemas';
+import { createSupabaseServiceClient } from '@/lib/supabase/server';
+import { generatePlan } from '@/lib/planner';
+import { rankPlans } from '@/lib/agent';
+
+export async function POST(req: NextRequest) {
+  const requestId = randomUUID().slice(0, 8);
+  const log = withRequest(requestId);
+  const start = Date.now();
+  try {
+    const user = await getUserOrThrow(req);
+    const body = await req.json();
+    const parsed = GeneratePlanRequestSchema.safeParse(body);
+    if (!parsed.success) {
+      const res = NextResponse.json({ code: 'validation_failed', message: 'Invalid input', details: parsed.error.flatten() }, { status: 400 });
+      res.headers.set('X-Request-Id', requestId);
+      return res;
+    }
+
+    // rate limit
+    const { allowed } = await checkRateLimit(user.id, 'plan_generate');
+    if (!allowed) {
+      const res = NextResponse.json({ code: 'rate_limit_exceeded', message: 'Too many requests' }, { status: 429 });
+      res.headers.set('X-Request-Id', requestId);
+      return res;
+    }
+    await recordRequest(user.id, 'plan_generate');
+
+    const supabase = createSupabaseServiceClient();
+
+    // Fetch courses for majors/minors and their prerequisite closure (simplified for scaffold)
+    const { data: programCourses } = await supabase
+      .from('courses')
+      .select('id, code, credits')
+      .in('program_id', [...(parsed.data.majorIds || []), ...(parsed.data.minorIds || [])]);
+
+    const { data: prereqs } = await supabase.from('course_prereqs').select('course_id, prereq_course_id');
+
+    const nodes = (programCourses || []).map((c) => ({
+      id: c.id as string,
+      code: c.code as string,
+      credits: c.credits as number,
+      prereqIds: (prereqs || [])
+        .filter((p) => p.course_id === c.id)
+        .map((p) => p.prereq_course_id as string),
+    }));
+
+    const { plan, diagnostics } = generatePlan(parsed.data, nodes);
+    const ranked = await rankPlans([plan], undefined);
+
+    const res = NextResponse.json({ plan: ranked.plan, diagnostics, rationale: ranked.rationale }, { status: 200 });
+    res.headers.set('X-Request-Id', requestId);
+    log.info({ status: 200, elapsedMs: Date.now() - start }, 'POST /api/plans/generate');
+    return res;
+  } catch (e: any) {
+    const status = e?.status === 401 ? 401 : 500;
+    const code = status === 401 ? 'unauthorized' : 'internal';
+    const res = NextResponse.json({ code, message: status === 401 ? 'Unauthorized' : 'Internal error' }, { status });
+    res.headers.set('X-Request-Id', requestId);
+    return res;
+  }
+}
+
