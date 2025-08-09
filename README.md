@@ -1,6 +1,6 @@
 # PlanIt - Academic Planning Assistant
 
-A modern, Material Design web application built with Next.js and TypeScript for college students to plan their academic journey.
+This repository now includes a backend scaffold with Next.js App Router APIs, Supabase Auth, Postgres (SQL migrations), Drizzle types, Zod validation, Pino logging, OpenAPI generation, Vitest unit tests, and Playwright API smoke tests.
 
 ## 🚀 Features
 
@@ -31,11 +31,17 @@ A modern, Material Design web application built with Next.js and TypeScript for 
 
 ## 🛠 Tech Stack
 
-- **Next.js 15** with App Router
+- **Next.js 14/15** with App Router (APIs under `src/app/api`)
 - **TypeScript** for type safety
 - **Material UI (MUI)** for components and styling
 - **Emotion** for CSS-in-JS styling
 - **Zustand** for state management (ready for integration)
+ - **Supabase** (Auth and Postgres)
+ - **Drizzle ORM** (types for schema)
+ - **Zod** for input validation
+ - **Pino** for logging
+ - **OpenAPI** generated from Zod
+ - **Vitest** and **Playwright** for tests
 
 ## 📁 Project Structure
 
@@ -70,8 +76,9 @@ src/
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20+
 - npm or yarn
+- A Postgres instance and Supabase project (or Supabase-hosted Postgres)
 
 ### Installation
 
@@ -82,13 +89,67 @@ src/
    npm install
    ```
 
-3. **Start the development server**:
+3. **Environment variables** (create `.env.local`):
+
+```
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+DATABASE_URL=
+OPENAI_API_KEY=
+RATE_LIMIT_WINDOW_SEC=60
+RATE_LIMIT_MAX_CALLS=10
+```
+
+4. **Run database migrations**:
+
+```bash
+npm run db:migrate
+```
+
+5. **Seed example data** (optional):
+
+```bash
+npm run db:seed
+```
+
+6. **Generate OpenAPI**:
+
+```bash
+npm run openapi:gen
+```
+
+7. **Start the development server**:
 
    ```bash
    npm run dev
    ```
 
-4. **Open your browser** and navigate to [http://localhost:3000](http://localhost:3000)
+8. **Open your browser** and navigate to [http://localhost:3000](http://localhost:3000)
+
+## 🧪 Tests
+
+```bash
+npm run test        # unit tests
+npm run test:e2e    # playwright API smoke tests
+```
+
+## 📜 Curl example (Plan Generation)
+
+```bash
+curl -X POST http://localhost:3000/api/plans/generate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "majorIds": ["<major-uuid>"],
+    "takenCourseIds": [],
+    "semestersRemaining": 6,
+    "maxCreditsPerSemester": 15,
+    "startSeason": "Fall",
+    "startYear": 2024
+  }'
+```
 
 ## 🎨 Design Features
 
