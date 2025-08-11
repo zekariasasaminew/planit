@@ -6,9 +6,17 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "node ./scripts/run-sql.js",
+    "db:seed": "tsx ./scripts/dev.seed.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "openapi:gen": "tsx ./scripts/openapi.gen.ts"
   },
   "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^7.1.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.2.0",
@@ -16,19 +24,31 @@
     "@mui/system": "^7.2.0",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.53.0",
+    "dotenv": "^17.2.1",
+    "drizzle-orm": "^0.38.3",
     "framer-motion": "^12.23.12",
     "next": "15.4.4",
+    "openai": "^4.56.0",
+    "pg": "^8.12.0",
+    "pino": "^9.3.2",
+    "pino-pretty": "^11.2.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "zod": "^3.23.8",
     "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.49.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "^0.30.5",
     "eslint": "^9",
     "eslint-config-next": "15.4.4",
-    "typescript": "^5"
+    "prettier": "^3.3.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5",
+    "vitest": "^2.0.5"
   }
 }

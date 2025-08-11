@@ -73,7 +73,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
   const theme = useTheme();
 
   const handleNavigation = (path: string) => {
-    console.log("Navigating to:", path); // Debug log
     router.push(path);
     // Always close sidebar after navigation (both mobile and desktop)
     onClose();
