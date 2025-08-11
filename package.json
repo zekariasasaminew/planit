@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "openapi:gen": "tsx ./scripts/openapi.gen.ts"
+    "openapi:gen": "tsx ./scripts/openapi.gen.ts",
+    "catalog:augustana": "tsx scripts/catalog/augustana/index.ts"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^7.1.0",
@@ -24,6 +25,8 @@
     "@mui/system": "^7.2.0",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.53.0",
+    "@types/uuid": "^10.0.0",
+    "cheerio": "^1.1.2",
     "dotenv": "^17.2.1",
     "drizzle-orm": "^0.38.3",
     "framer-motion": "^12.23.12",
@@ -34,6 +37,7 @@
     "pino-pretty": "^11.2.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "uuid": "^11.1.0",
     "zod": "^3.23.8",
     "zustand": "^5.0.6"
   },
