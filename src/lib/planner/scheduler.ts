@@ -4,9 +4,12 @@ import type { CourseNode } from './graph';
 
 export type Diagnostics = { code: string; message: string; details?: Record<string, unknown> }[];
 
-function canPlace(courseId: string, placedByCourse: Map<string, number>, prereqs: Map<string, string[]>): boolean {
+function canPlace(courseId: string, placedByCourse: Map<string, number>, prereqs: Map<string, string[]>, takenCourses: Set<string>): boolean {
   for (const p of prereqs.get(courseId) || []) {
-    if (!placedByCourse.has(p)) return false;
+    // Prerequisites can be satisfied by either placed courses or already taken courses
+    if (!placedByCourse.has(p) && !takenCourses.has(p)) {
+      return false;
+    }
   }
   return true;
 }
@@ -34,6 +37,7 @@ export function schedulePlan(req: GeneratePlanApiRequest, requiredCourses: Cours
 
   let position = 0;
   const diags: Diagnostics = [];
+  let consecutiveEmptyTerms = 0;
 
   while (placedByCourse.size < remaining.length && semesters.length < req.semestersRemaining) {
     // build a term
@@ -41,7 +45,7 @@ export function schedulePlan(req: GeneratePlanApiRequest, requiredCourses: Cours
     const selected: string[] = [];
     for (const c of remaining) {
       if (placedByCourse.has(c.id)) continue;
-      if (!canPlace(c.id, placedByCourse, prereqs)) continue;
+      if (!canPlace(c.id, placedByCourse, prereqs, taken)) continue;
       const tentative = credits + c.credits;
       if (tentative <= max + overflow) {
         selected.push(c.id);
@@ -50,11 +54,22 @@ export function schedulePlan(req: GeneratePlanApiRequest, requiredCourses: Cours
     }
     if (selected.length === 0) {
       // couldn't place anything
-      diags.push({ code: 'no_placement', message: 'Could not place any course this term due to constraints' });
+      consecutiveEmptyTerms += 1;
+      diags.push({ code: 'no_placement', message: `Could not place any course in ${season} ${year} due to constraints` });
+      
+      // Prevent infinite loop - if we can't place anything for 3 consecutive terms, break
+      if (consecutiveEmptyTerms >= 3) {
+        diags.push({ code: 'placement_impossible', message: 'Unable to place remaining courses within constraints - may need more semesters or different prerequisites' });
+        break;
+      }
+      
       nextTerm();
       position += 1;
       continue;
     }
+    
+    // Reset consecutive empty counter when we successfully place courses
+    consecutiveEmptyTerms = 0;
 
     for (const id of selected) placedByCourse.set(id, position);
     const termCourses = selected.map((id) => ({
@@ -77,6 +92,17 @@ export function schedulePlan(req: GeneratePlanApiRequest, requiredCourses: Cours
     });
     nextTerm();
     position += 1;
+  }
+
+  // Add diagnostic if not all courses could be placed
+  const coursesPlaced = placedByCourse.size;
+  const totalCourses = remaining.length;
+  if (coursesPlaced < totalCourses) {
+    diags.push({
+      code: 'incomplete_schedule',
+      message: `Only ${coursesPlaced} of ${totalCourses} courses could be scheduled within the given constraints`,
+      details: { coursesPlaced, totalCourses, semestersUsed: semesters.length }
+    });
   }
 
   const plan: AcademicPlan = {
