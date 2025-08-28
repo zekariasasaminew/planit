@@ -34,7 +34,7 @@
     "pino-pretty": "^13.1.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "zod": "^3.23.8",
+    "zod": "^4.1.4",
     "zustand": "^5.0.7"
   },
   "devDependencies": {
