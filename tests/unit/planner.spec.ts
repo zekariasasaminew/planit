@@ -169,24 +169,25 @@ describe('planner', () => {
         semestersRemaining: 3,
         maxCreditsPerSemester: 15,
         allowOverload: false,
+        prefersSummer: false,
         startSeason: 'Spring',
         startYear: 2024,
       };
 
       const { plan } = generatePlan(req, basicCourses);
       
-      // Check semester sequence: Spring 2024 -> Summer 2024 -> Fall 2024
+      // Check semester sequence: Spring 2024 -> Fall 2024 -> Spring 2025 (skipping Summer)
       expect(plan.semesters[0].season).toBe('Spring');
       expect(plan.semesters[0].year).toBe(2024);
       
       if (plan.semesters.length > 1) {
-        expect(plan.semesters[1].season).toBe('Summer');
+        expect(plan.semesters[1].season).toBe('Fall');
         expect(plan.semesters[1].year).toBe(2024);
       }
       
       if (plan.semesters.length > 2) {
-        expect(plan.semesters[2].season).toBe('Fall');
-        expect(plan.semesters[2].year).toBe(2024);
+        expect(plan.semesters[2].season).toBe('Spring');
+        expect(plan.semesters[2].year).toBe(2025);
       }
 
       console.log('\n=== Semester Progression Test ===');
