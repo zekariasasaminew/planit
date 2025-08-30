@@ -35,7 +35,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       } = await supabase.auth.refreshSession();
 
       if (sessionError) {
-        console.error("Session refresh error:", sessionError);
         setError("Session expired. Please sign in again.");
         setUser(null);
         setSession(null);
@@ -45,7 +44,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(session?.user ?? null);
       setSession(session);
     } catch (err) {
-      console.error("Unexpected error during session refresh:", err);
       setError("An unexpected error occurred. Please sign in again.");
       setUser(null);
       setSession(null);
@@ -66,7 +64,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         } = await supabase.auth.getSession();
 
         if (sessionError) {
-          console.error("Initial session error:", sessionError);
           setError("Unable to verify authentication status.");
           if (mounted) {
             setUser(null);
@@ -80,7 +77,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setSession(session);
         }
       } catch (err) {
-        console.error("Unexpected error getting session:", err);
         if (mounted) {
           setError("Unable to verify authentication status.");
           setUser(null);
@@ -113,19 +109,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setSession(null);
           setLoading(false);
 
-          // Clear any cached data on signout
           try {
             localStorage.removeItem("planit-auth");
             sessionStorage.clear();
           } catch (storageError) {
-            console.warn("Unable to clear storage on signout:", storageError);
+            // Storage cleanup failed
           }
         } else if (event === "USER_UPDATED") {
           setUser(session?.user ?? null);
           setSession(session);
         }
       } catch (err) {
-        console.error("Error handling auth state change:", err);
         if (mounted) {
           setError("Authentication error occurred.");
           setUser(null);
