@@ -23,10 +23,9 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const pathname = usePathname();
 
   useEffect(() => {
-    if (loading) return; // Don't redirect while loading
+    if (loading) return;
 
     if (requireAuth && !user) {
-      // Add current path as return URL for better UX
       const returnUrl = `${redirectTo}?returnTo=${encodeURIComponent(
         pathname
       )}`;
@@ -34,7 +33,6 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     }
   }, [user, loading, router, redirectTo, pathname, requireAuth]);
 
-  // Show loading state while checking authentication
   if (loading) {
     return (
       fallback || (
@@ -57,7 +55,6 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
-  // Show error state if there's an authentication error
   if (error) {
     return (
       <Box
@@ -81,11 +78,9 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
-  // If authentication is required but user is not authenticated, don't render
   if (requireAuth && !user) {
-    return null; // Redirect is happening in useEffect
+    return null;
   }
 
-  // If authentication is not required or user is authenticated, render children
   return <>{children}</>;
 };
