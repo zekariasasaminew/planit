@@ -1,21 +1,42 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography, Alert } from "@mui/material";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function AuthCallbackPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Supabase JS parses the auth hash automatically when detectSessionInUrl is true.
-    // We wait a tick to allow it to store the session, then redirect to returnTo/home.
-    const timer = setTimeout(() => {
-      const returnTo = searchParams.get("returnTo") || "/";
-      router.replace(returnTo);
-    }, 50);
+    const handleAuthCallback = async () => {
+      try {
+        const { data, error } = await supabase.auth.getSession();
 
+        if (error) {
+          setError(error.message);
+
+          setTimeout(() => router.replace("/signin"), 3000);
+          return;
+        }
+
+        if (data.session) {
+          const returnTo = searchParams.get("returnTo") || "/";
+          router.replace(returnTo);
+        } else {
+          setError("Authentication session not found");
+          setTimeout(() => router.replace("/signin"), 3000);
+        }
+      } catch {
+        setError("Authentication failed");
+        setTimeout(() => router.replace("/signin"), 3000);
+      }
+    };
+
+    // Give Supabase a moment to process the URL hash
+    const timer = setTimeout(handleAuthCallback, 100);
     return () => clearTimeout(timer);
   }, [router, searchParams]);
 
@@ -32,10 +53,24 @@ export default function AuthCallbackPage() {
       }}
     >
       <div>
-        <CircularProgress sx={{ mb: 2 }} />
-        <Typography variant="body1" color="text.secondary">
-          Completing sign-in...
-        </Typography>
+        {error ? (
+          <Alert severity="error" sx={{ mb: 2, maxWidth: 400 }}>
+            <Typography variant="h6" sx={{ mb: 1 }}>
+              Authentication Error
+            </Typography>
+            <Typography variant="body2">{error}</Typography>
+            <Typography variant="body2" sx={{ mt: 1 }}>
+              Redirecting to sign in...
+            </Typography>
+          </Alert>
+        ) : (
+          <>
+            <CircularProgress sx={{ mb: 2 }} />
+            <Typography variant="body1" color="text.secondary">
+              Completing sign-in...
+            </Typography>
+          </>
+        )}
       </div>
     </Box>
   );
