@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   let nodes: any[] = [];
   
   try {
-    const user = await getUserOrThrow(req);
+    const user = await getUserOrThrow();
     const body = await req.json();
     parsed = GeneratePlanRequestSchema.safeParse(body);
     if (!parsed.success) {
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
     }));
 
     const { plan, diagnostics } = generatePlan(parsed.data, nodes);
-    const ranked = await rankPlans([plan], undefined);
+    const ranked = await rankPlans([plan]);
 
     const res = NextResponse.json({ plan: ranked.plan, diagnostics, rationale: ranked.rationale }, { status: 200 });
     res.headers.set('X-Request-Id', requestId);

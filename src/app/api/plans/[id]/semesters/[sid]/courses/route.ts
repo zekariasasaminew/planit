@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const start = Date.now();
   try {
     await getUserOrThrow();
-    const { id, sid } = await params;
+    const { sid } = await params;
     const body = await req.json();
     const parsed = CourseAddSchema.safeParse(body);
     if (!parsed.success) {

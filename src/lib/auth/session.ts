@@ -1,7 +1,7 @@
-import { NextRequest } from 'next/server';
+
 import { createSupabaseServerClient } from '../supabase/server';
 
-export async function getUserOrThrow(_req?: NextRequest) {
+export async function getUserOrThrow() {
   const supabase = createSupabaseServerClient();
   const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {

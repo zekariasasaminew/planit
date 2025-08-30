@@ -32,7 +32,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
         year: data.end_year || (data.start_year + 4)
       },
       majors: [],
-      minors: []
+      minors: [],
       semesters: (data.plan_semesters || []).map((semester: any) => ({
         id: semester.id,
         name: `${semester.season} ${semester.year}`,

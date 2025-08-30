@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       setUser(session?.user ?? null);
       setSession(session);
-    } catch (err) {
+    } catch {
       setError("An unexpected error occurred. Please sign in again.");
       setUser(null);
       setSession(null);
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setUser(session?.user ?? null);
           setSession(session);
         }
-      } catch (err) {
+      } catch {
         if (mounted) {
           setError("Unable to verify authentication status.");
           setUser(null);
@@ -112,14 +112,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           try {
             localStorage.removeItem("planit-auth");
             sessionStorage.clear();
-          } catch (storageError) {
+          } catch {
             // Storage cleanup failed
           }
         } else if (event === "USER_UPDATED") {
           setUser(session?.user ?? null);
           setSession(session);
         }
-      } catch (err) {
+      } catch {
         if (mounted) {
           setError("Authentication error occurred.");
           setUser(null);

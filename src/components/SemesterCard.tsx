@@ -10,7 +10,6 @@ import {
   Box,
   List,
   ListItem,
-  ListItemText,
   Badge,
 } from "@mui/material";
 import { School, Schedule } from "@mui/icons-material";

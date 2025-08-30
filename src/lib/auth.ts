@@ -75,20 +75,20 @@ export const signOut = async () => {
     try {
       localStorage.clear()
       sessionStorage.clear()
-    } catch (storageError) {
-
+    } catch {
+      // Storage cleanup failed
     }
     
     // Force redirect to sign in page
     window.location.href = '/signin'
     
-  } catch (error) {
+  } catch {
     // Ensure local cleanup even if logout API fails
     try {
       localStorage.clear()
       sessionStorage.clear()
-    } catch (storageError) {
-
+    } catch {
+      // Storage cleanup failed
     }
     
 
