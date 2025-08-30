@@ -21,37 +21,9 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       return res;
     }
 
-    // Validate prereqs placed earlier and credit cap
     const { data: semester } = await supabase.from('plan_semesters').select('*').eq('id', sid).single();
     if (!semester) {
       const res = NextResponse.json({ code: 'not_found', message: 'Semester not found' }, { status: 404 });
-      res.headers.set('X-Request-Id', requestId);
-      return res;
-    }
-    const { data: plan } = await supabase.from('plans').select('*').eq('id', id).single();
-    const max = (plan?.preferences as any)?.maxCreditsPerSemester ?? 18;
-    const allowOverload = (plan?.preferences as any)?.allowOverload ?? false;
-    const overflow = allowOverload ? 2 : 0;
-    const { data: course } = await supabase.from('courses').select('*').eq('id', parsed.data.courseId).single();
-    const { data: prereqs } = await supabase.from('course_prereqs').select('*').eq('course_id', parsed.data.courseId);
-    const { data: earlierCourses } = await supabase
-      .from('plan_courses')
-      .select('course_id, plan_semesters(position)')
-      .eq('plan_semesters.plan_id', id)
-      .lt('plan_semesters.position', semester.position)
-      .order('plan_semesters.position');
-
-    const earlierIds = new Set((earlierCourses || []).map((r: any) => r.course_id));
-    for (const p of prereqs || []) {
-      if (!earlierIds.has(p.prereq_course_id)) {
-        const res = NextResponse.json({ code: 'conflict', message: 'Prerequisite not satisfied' }, { status: 409 });
-        res.headers.set('X-Request-Id', requestId);
-        return res;
-      }
-    }
-
-    if ((semester.total_credits || 0) + (course?.credits || 0) > max + overflow) {
-      const res = NextResponse.json({ code: 'conflict', message: 'Credit cap exceeded' }, { status: 409 });
       res.headers.set('X-Request-Id', requestId);
       return res;
     }
