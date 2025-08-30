@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Box,
@@ -13,9 +13,9 @@ import {
   Tab,
   Tabs,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { Search, School } from "@mui/icons-material";
-import { mockMajors, mockMinors } from "@/data/mockData";
 import { Major, Minor } from "@/types";
 
 interface TabPanelProps {
@@ -43,18 +43,50 @@ function TabPanel(props: TabPanelProps) {
 export default function MajorsPage() {
   const [tabValue, setTabValue] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [majors, setMajors] = useState<Major[]>([]);
+  const [minors, setMinors] = useState<Minor[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPrograms = async () => {
+      try {
+        setLoading(true);
+        const [majorsResponse, minorsResponse] = await Promise.all([
+          fetch("/api/catalog/majors"),
+          fetch("/api/catalog/minors"),
+        ]);
+
+        if (!majorsResponse.ok || !minorsResponse.ok) {
+          throw new Error("Failed to fetch programs");
+        }
+
+        const majorsData = await majorsResponse.json();
+        const minorsData = await minorsResponse.json();
+
+        setMajors(majorsData);
+        setMinors(minorsData);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPrograms();
+  }, []);
 
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
-  const filteredMajors = mockMajors.filter(
+  const filteredMajors = majors.filter(
     (major) =>
       major.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       major.department.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const filteredMinors = mockMinors.filter(
+  const filteredMinors = minors.filter(
     (minor) =>
       minor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       minor.department.toLowerCase().includes(searchTerm.toLowerCase())
@@ -99,10 +131,39 @@ export default function MajorsPage() {
     </Card>
   );
 
+  if (loading) {
+    return (
+      <Container maxWidth="lg">
+        <Box sx={{ py: 4, textAlign: "center" }}>
+          <CircularProgress />
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            Loading programs...
+          </Typography>
+        </Box>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container maxWidth="lg">
+        <Box sx={{ py: 4 }}>
+          <Alert severity="error" sx={{ mb: 4 }}>
+            <Typography variant="h6" sx={{ mb: 1 }}>
+              Error Loading Programs
+            </Typography>
+            <Typography variant="body1">
+              {error}. Please try refreshing the page.
+            </Typography>
+          </Alert>
+        </Box>
+      </Container>
+    );
+  }
+
   return (
     <Container maxWidth="lg">
       <Box sx={{ py: 4 }}>
-        {/* Header */}
         <Box sx={{ mb: 6 }}>
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
             <School sx={{ mr: 2, fontSize: 32, color: "primary.main" }} />
@@ -115,7 +176,6 @@ export default function MajorsPage() {
           </Typography>
         </Box>
 
-        {/* Coming Soon Alert */}
         <Alert severity="info" sx={{ mb: 4 }}>
           <Typography variant="h6" sx={{ mb: 1 }}>
             Full Requirements Coming Soon
@@ -127,7 +187,6 @@ export default function MajorsPage() {
           </Typography>
         </Alert>
 
-        {/* Search */}
         <TextField
           fullWidth
           placeholder="Search majors and minors..."
@@ -143,7 +202,6 @@ export default function MajorsPage() {
           sx={{ mb: 3 }}
         />
 
-        {/* Tabs */}
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs value={tabValue} onChange={handleTabChange}>
             <Tab label={`Majors (${filteredMajors.length})`} />
@@ -151,7 +209,6 @@ export default function MajorsPage() {
           </Tabs>
         </Box>
 
-        {/* Majors Tab */}
         <TabPanel value={tabValue} index={0}>
           <Box
             sx={{
@@ -173,7 +230,6 @@ export default function MajorsPage() {
           )}
         </TabPanel>
 
-        {/* Minors Tab */}
         <TabPanel value={tabValue} index={1}>
           <Box
             sx={{
