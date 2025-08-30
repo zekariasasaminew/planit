@@ -117,8 +117,10 @@ function SavedPlansContent() {
     setNewPlanName("");
   };
 
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
+  const formatDate = (date: Date | string | null | undefined) => {
+    if (!date) return "Unknown";
+    const dateObj = typeof date === "string" ? new Date(date) : date;
+    return dateObj.toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -277,9 +279,12 @@ function SavedPlansContent() {
 
                   <Typography variant="caption" color="text.secondary">
                     Created: {formatDate(plan.createdAt)}
-                    {plan.updatedAt.getTime() !== plan.createdAt.getTime() && (
-                      <> • Updated: {formatDate(plan.updatedAt)}</>
-                    )}
+                    {plan.updatedAt &&
+                      plan.createdAt &&
+                      new Date(plan.updatedAt).getTime() !==
+                        new Date(plan.createdAt).getTime() && (
+                        <> • Updated: {formatDate(plan.updatedAt)}</>
+                      )}
                   </Typography>
                 </CardContent>
 
