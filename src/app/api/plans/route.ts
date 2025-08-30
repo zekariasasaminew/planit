@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
       })
       .select('*')
       .single();
+    
     if (error) throw error;
     const res = NextResponse.json(data, { status: 201 });
     res.headers.set('X-Request-Id', requestId);
