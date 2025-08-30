@@ -89,44 +89,43 @@ export const SemesterCard: React.FC<SemesterCardProps> = ({ semester }) => {
                 },
               }}
             >
-              <ListItemText
-                primary={
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                      {course.code}
-                    </Typography>
-                    <Chip
-                      label={course.type}
-                      size="small"
-                      color={getCourseTypeColor(course.type)}
-                      variant="outlined"
-                      sx={{ height: 20, fontSize: "0.75rem" }}
-                    />
-                  </Box>
-                }
-                secondary={
-                  <Box>
-                    <Typography
-                      variant="body2"
-                      color="text.primary"
-                      sx={{ mt: 0.25 }}
-                    >
-                      {course.title}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {course.credits}{" "}
-                      {course.credits === 1 ? "credit" : "credits"}
-                      {course.prerequisites &&
-                        course.prerequisites.length > 0 && (
-                          <span>
-                            {" "}
-                            • Prerequisites: {course.prerequisites.join(", ")}
-                          </span>
-                        )}
-                    </Typography>
-                  </Box>
-                }
-              />
+              <Box sx={{ flex: 1 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    mb: 0.5,
+                  }}
+                >
+                  <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                    {course.code}
+                  </Typography>
+                  <Chip
+                    label={course.type}
+                    size="small"
+                    color={getCourseTypeColor(course.type)}
+                    variant="outlined"
+                    sx={{ height: 20, fontSize: "0.75rem" }}
+                  />
+                </Box>
+                <Typography
+                  variant="body2"
+                  color="text.primary"
+                  sx={{ mb: 0.25 }}
+                >
+                  {course.title}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {course.credits} {course.credits === 1 ? "credit" : "credits"}
+                  {course.prerequisites && course.prerequisites.length > 0 && (
+                    <span>
+                      {" "}
+                      • Prerequisites: {course.prerequisites.join(", ")}
+                    </span>
+                  )}
+                </Typography>
+              </Box>
             </ListItem>
           ))}
         </List>
