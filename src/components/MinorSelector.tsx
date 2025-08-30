@@ -62,16 +62,19 @@ export const MinorSelector: React.FC<MinorSelectorProps> = ({
           />
         ))
       }
-      renderOption={(props, option) => (
-        <Box component="li" {...props}>
-          <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
-            <Typography variant="body1">{option.name}</Typography>
-            <Typography variant="body2" color="text.secondary">
-              {option.department} • {option.credits} credits
-            </Typography>
+      renderOption={(props, option) => {
+        const { key, ...otherProps } = props;
+        return (
+          <Box component="li" key={key} {...otherProps}>
+            <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
+              <Typography variant="body1">{option.name}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                {option.department} • {option.credits} credits
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-      )}
+        );
+      }}
       filterSelectedOptions
       clearOnEscape
       sx={{
