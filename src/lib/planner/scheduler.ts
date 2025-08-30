@@ -40,7 +40,12 @@ export function schedulePlan(req: GeneratePlanApiRequest, requiredCourses: Cours
   let consecutiveEmptyTerms = 0;
 
   while (placedByCourse.size < remaining.length && semesters.length < req.semestersRemaining) {
-    // build a term
+    if (season === 'Summer' && !req.prefersSummer) {
+      nextTerm();
+      position += 1;
+      continue;
+    }
+
     let credits = 0;
     const selected: string[] = [];
     for (const c of remaining) {

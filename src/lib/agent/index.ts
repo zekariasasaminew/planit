@@ -1,8 +1,8 @@
 import OpenAI from 'openai';
-import type { AcademicPlan, GeneratePlanRequest } from '@/types';
+import type { AcademicPlan } from '@/types';
 import { SYSTEM_PROMPT } from './tools';
 
-export async function rankPlans(candidates: AcademicPlan[], _prefs?: GeneratePlanRequest['preferences']): Promise<{ plan: AcademicPlan; rationale: string }>
+export async function rankPlans(candidates: AcademicPlan[]): Promise<{ plan: AcademicPlan; rationale: string }>
 {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {

@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   const log = withRequest(requestId);
   const start = Date.now();
   try {
-    const user = await getUserOrThrow(req);
+    const user = await getUserOrThrow();
     const body = await req.json();
     const parsed = PlanCreateSchema.safeParse(body);
     if (!parsed.success) {
@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
       })
       .select('*')
       .single();
+    
     if (error) throw error;
     const res = NextResponse.json(data, { status: 201 });
     res.headers.set('X-Request-Id', requestId);

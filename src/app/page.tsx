@@ -252,7 +252,7 @@ export default function HomePage() {
                 >
                   <TypewriterText
                     text="Your intelligent academic planning assistant that helps you navigate your college journey with confidence and precision."
-                    delay={1200}
+                    delay={60}
                   />
                 </Typography>
               </motion.div>

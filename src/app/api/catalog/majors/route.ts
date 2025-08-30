@@ -9,7 +9,11 @@ export async function GET() {
   const supabase = createSupabaseServiceClient();
   const start = Date.now();
   try {
-    const { data, error } = await supabase.from('programs').select('*').eq('kind', 'major');
+    const { data, error } = await supabase
+      .from('programs')
+      .select('*')
+      .eq('kind', 'major')
+      .order('name');
     if (error) throw error;
     const res = NextResponse.json(data || [], { status: 200 });
     res.headers.set('X-Request-Id', requestId);

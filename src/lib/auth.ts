@@ -1,6 +1,6 @@
 import { supabase } from './supabaseClient'
 
-// Rate limiting for authentication attempts
+
 const authAttempts = new Map<string, { count: number; lastAttempt: number }>()
 const MAX_AUTH_ATTEMPTS = 5
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000 // 15 minutes
@@ -46,10 +46,7 @@ export const signInWithGoogle = async (returnTo: string = "/") => {
     })
     
     if (error) {
-      // Log for debugging but don't expose detailed error to user
-      console.error('Google login error:', error.message)
-      
-      // Return user-friendly error messages
+
       if (error.message.includes('unauthorized_client')) {
         throw new Error('Authentication service is temporarily unavailable. Please try again.')
       } else if (error.message.includes('access_denied')) {
@@ -71,31 +68,30 @@ export const signOut = async () => {
     const { error } = await supabase.auth.signOut()
     
     if (error) {
-      console.error('Logout error:', error.message)
-      // Even if logout fails on server, clear local data
+
     }
     
     // Clear all local storage and session storage
     try {
       localStorage.clear()
       sessionStorage.clear()
-    } catch (storageError) {
-      console.warn('Unable to clear local storage:', storageError)
+    } catch {
+      // Storage cleanup failed
     }
     
     // Force redirect to sign in page
     window.location.href = '/signin'
     
-  } catch (error) {
+  } catch {
     // Ensure local cleanup even if logout API fails
     try {
       localStorage.clear()
       sessionStorage.clear()
-    } catch (storageError) {
-      console.warn('Unable to clear local storage:', storageError)
+    } catch {
+      // Storage cleanup failed
     }
     
-    console.error('Logout error:', error)
+
     // Still redirect to signin even on error
     window.location.href = '/signin'
   }

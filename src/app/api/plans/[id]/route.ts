@@ -19,7 +19,47 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       .eq('id', id)
       .single();
     if (error) throw error;
-    const res = NextResponse.json(data, { status: 200 });
+    
+
+    const transformedPlan = {
+      ...data,
+      startSemester: {
+        season: data.start_season,
+        year: data.start_year
+      },
+      endSemester: {
+        season: data.end_season || 'Spring',
+        year: data.end_year || (data.start_year + 4)
+      },
+      majors: [],
+      minors: [],
+      semesters: (data.plan_semesters || []).map((semester: any) => ({
+        id: semester.id,
+        name: `${semester.season} ${semester.year}`,
+        season: semester.season,
+        year: semester.year,
+        position: semester.position,
+        totalCredits: semester.total_credits || 0,
+        courses: (semester.plan_courses || []).map((planCourse: any) => ({
+          id: planCourse.courses?.id,
+          code: planCourse.courses?.code,
+          title: planCourse.courses?.title,
+          credits: planCourse.courses?.credits,
+          type: planCourse.courses?.type,
+        })).filter((course: any) => course.id)
+      }))
+    };
+    
+
+    delete transformedPlan.plan_semesters;
+    delete transformedPlan.start_season;
+    delete transformedPlan.start_year;
+    delete transformedPlan.end_season;
+    delete transformedPlan.end_year;
+    
+
+    
+    const res = NextResponse.json(transformedPlan, { status: 200 });
     res.headers.set('X-Request-Id', requestId);
     log.info({ status: 200, elapsedMs: Date.now() - start }, 'GET /api/plans/[id]');
     return res;

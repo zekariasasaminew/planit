@@ -36,12 +36,12 @@ This repository now includes a backend scaffold with Next.js App Router APIs, Su
 - **Material UI (MUI)** for components and styling
 - **Emotion** for CSS-in-JS styling
 - **Zustand** for state management (ready for integration)
- - **Supabase** (Auth and Postgres)
- - **Drizzle ORM** (types for schema)
- - **Zod** for input validation
- - **Pino** for logging
- - **OpenAPI** generated from Zod
- - **Vitest** and **Playwright** for tests
+- **Supabase** (Auth and Postgres)
+- **Drizzle ORM** (types for schema)
+- **Zod** for input validation
+- **Pino** for logging
+- **OpenAPI** generated from Zod
+- **Vitest** and **Playwright** for tests
 
 ## 📁 Project Structure
 
@@ -66,10 +66,8 @@ src/
 ├── theme/                 # MUI theme configuration
 │   ├── theme.ts           # Light and dark theme definitions
 │   └── context.tsx        # Theme provider and context
-├── types/                 # TypeScript type definitions
-│   └── index.ts           # Core data types
-└── data/                  # Mock data and constants
-    └── mockData.ts        # Sample majors, minors, and plans
+└── types/                 # TypeScript type definitions
+    └── index.ts           # Core data types
 ```
 
 ## 🚀 Getting Started
@@ -231,16 +229,6 @@ This frontend is designed to integrate with:
 - **Collaboration features** for advisor review
 - **Export functionality** (PDF, calendar integration)
 
-## 🎯 Mock Data
-
-The application currently uses comprehensive mock data including:
-
-- **6 sample majors** across different departments
-- **5 sample minors** with credit requirements
-- **10 courses** with prerequisites and types
-- **Sample academic plans** with semester breakdowns
-- **Realistic preferences** and configurations
-
 ## 🧪 Development Notes
 
 - **Component-based architecture** for easy testing
@@ -251,4 +239,13 @@ The application currently uses comprehensive mock data including:
 
 ---
 
-**Ready for backend integration!** This frontend provides a complete UX foundation for the PlanIt academic planning system.
+## 🗄️ Data Integration
+
+The application now integrates with real data sources:
+
+- **Real course catalog** from Augustana College via ETL pipeline
+- **Dynamic program data** fetched from Supabase database
+- **User-generated plans** stored and retrieved from backend
+- **Live plan generation** using actual course prerequisites and requirements
+
+**Fully integrated system!** This application provides a complete academic planning experience with real data and intelligent plan generation.

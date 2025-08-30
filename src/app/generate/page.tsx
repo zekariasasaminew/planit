@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Container,
@@ -23,8 +23,14 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { MajorSelector } from "@/components/MajorSelector";
 import { MinorSelector } from "@/components/MinorSelector";
 import { PreferenceForm } from "@/components/PreferenceForm";
-import { mockMajors, mockMinors, defaultPreferences } from "@/data/mockData";
-import { GeneratePlanRequest, SemesterSeason } from "@/types";
+
+import {
+  GeneratePlanRequest,
+  GeneratePlanApiRequest,
+  SemesterSeason,
+  Major,
+  Minor,
+} from "@/types";
 
 const steps = [
   "Basic Information",
@@ -43,6 +49,9 @@ function GeneratePlanContent() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [majors, setMajors] = useState<Major[]>([]);
+  const [minors, setMinors] = useState<Minor[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
 
   // Form state
   const [formData, setFormData] = useState<GeneratePlanRequest>({
@@ -56,8 +65,44 @@ function GeneratePlanContent() {
       season: "Spring",
       year: currentYear + 4,
     },
-    preferences: defaultPreferences,
+    preferences: {
+      maxCreditsPerSemester: 16,
+      electivePriority: "distributed",
+      summerCourses: false,
+      winterimCourses: false,
+      onlineCoursesAllowed: true,
+    },
   });
+
+  useEffect(() => {
+    const fetchPrograms = async () => {
+      try {
+        setDataLoading(true);
+        const [majorsResponse, minorsResponse] = await Promise.all([
+          fetch("/api/catalog/majors"),
+          fetch("/api/catalog/minors"),
+        ]);
+
+        if (!majorsResponse.ok || !minorsResponse.ok) {
+          throw new Error("Failed to fetch programs");
+        }
+
+        const majorsData = await majorsResponse.json();
+        const minorsData = await minorsResponse.json();
+
+        setMajors(majorsData);
+        setMinors(minorsData);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to load programs"
+        );
+      } finally {
+        setDataLoading(false);
+      }
+    };
+
+    fetchPrograms();
+  }, []);
 
   const handleNext = () => {
     if (validateStep(activeStep)) {
@@ -95,7 +140,6 @@ function GeneratePlanContent() {
     setLoadingProgress(0);
 
     try {
-      // Enhanced progress simulation with different phases
       const phases = [
         "Analyzing degree requirements...",
         "Checking course prerequisites...",
@@ -104,17 +148,140 @@ function GeneratePlanContent() {
         "Finalizing your academic plan...",
       ];
 
-      for (let i = 0; i < phases.length; i++) {
-        await new Promise((resolve) => setTimeout(resolve, 800));
-        setLoadingProgress((i + 1) * 20);
+      for (let i = 0; i < phases.length - 1; i++) {
+        await new Promise((resolve) => setTimeout(resolve, 600));
+        setLoadingProgress((i + 1) * 18);
       }
 
-      // Mock successful generation
+      const startYear = formData.startSemester.year;
+      const endYear = formData.endSemester.year;
+      const startSeason = formData.startSemester.season;
+      const endSeason = formData.endSemester.season;
 
-      // Navigate to planner view with the generated plan
-      router.push("/planner?generated=true");
-    } catch {
-      setError("Failed to generate plan. Please try again.");
+      const yearDiff = endYear - startYear;
+      const semestersFromYears = yearDiff * 2;
+
+      let seasonAdjustment = 0;
+      if (startSeason === "Spring") seasonAdjustment -= 1;
+      if (startSeason === "Summer") seasonAdjustment -= 0.5;
+      if (endSeason === "Fall") seasonAdjustment += 1;
+      if (endSeason === "Summer") seasonAdjustment += 0.5;
+
+      const semestersRemaining = Math.max(
+        1,
+        Math.round(semestersFromYears + seasonAdjustment)
+      );
+
+      const generateRequest: GeneratePlanApiRequest = {
+        majorIds: formData.majors,
+        minorIds: formData.minors,
+        takenCourseIds: [], // No courses taken yet
+        transferCredits: 0, // No transfer credits for now
+        semestersRemaining,
+        prefersSummer: formData.preferences.summerCourses,
+        maxCreditsPerSemester: formData.preferences.maxCreditsPerSemester,
+        allowOverload: false, // Conservative default
+        targetGraduateEarly: false, // Conservative default
+        startSeason: formData.startSemester.season,
+        startYear: formData.startSemester.year,
+      };
+
+      const response = await fetch("/api/plans/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(generateRequest),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to generate plan");
+      }
+
+      const generationResult = await response.json();
+      setLoadingProgress(100);
+
+      const planName = `Academic Plan - ${new Date().toLocaleDateString()}`;
+      const createPlanRequest = {
+        name: planName,
+        startSeason: formData.startSemester.season,
+        startYear: formData.startSemester.year,
+        preferences: {
+          prefersSummer: formData.preferences.summerCourses,
+          maxCreditsPerSemester: formData.preferences.maxCreditsPerSemester,
+          allowOverload: false,
+          targetGraduateEarly: false,
+          transferCredits: 0,
+        },
+      };
+
+      const createResponse = await fetch("/api/plans", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(createPlanRequest),
+      });
+
+      if (!createResponse.ok) {
+        throw new Error("Failed to save generated plan");
+      }
+
+      const savedPlan = await createResponse.json();
+
+      if (generationResult.plan && generationResult.plan.semesters) {
+        for (let i = 0; i < generationResult.plan.semesters.length; i++) {
+          const semester = generationResult.plan.semesters[i];
+
+          const semesterResponse = await fetch(
+            `/api/plans/${savedPlan.id}/semesters`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                season: semester.season,
+                year: semester.year,
+                position: i,
+              }),
+            }
+          );
+
+          if (semesterResponse.ok) {
+            const savedSemester = await semesterResponse.json();
+
+            if (semester.courses && semester.courses.length > 0) {
+              for (const course of semester.courses) {
+                const courseResponse = await fetch(
+                  `/api/plans/${savedPlan.id}/semesters/${savedSemester.id}/courses`,
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      courseId: course.id,
+                    }),
+                  }
+                );
+
+                if (courseResponse.ok) {
+                }
+              }
+            }
+          }
+        }
+      }
+
+      router.push(`/planner?id=${savedPlan.id}&generated=true`);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to generate plan. Please try again."
+      );
     } finally {
       setIsGenerating(false);
       setLoadingProgress(0);
@@ -249,8 +416,8 @@ function GeneratePlanContent() {
               Select your academic programs
             </Typography>
             <MajorSelector
-              majors={mockMajors}
-              selectedMajors={mockMajors.filter((m) =>
+              majors={majors}
+              selectedMajors={majors.filter((m) =>
                 formData.majors.includes(m.id)
               )}
               onChange={(majors) =>
@@ -267,8 +434,8 @@ function GeneratePlanContent() {
               }
             />
             <MinorSelector
-              minors={mockMinors}
-              selectedMinors={mockMinors.filter((m) =>
+              minors={minors}
+              selectedMinors={minors.filter((m) =>
                 formData.minors.includes(m.id)
               )}
               onChange={(minors) =>
@@ -326,13 +493,13 @@ function GeneratePlanContent() {
                 <Typography variant="body1">
                   <strong>Majors:</strong>{" "}
                   {formData.majors
-                    .map((id) => mockMajors.find((m) => m.id === id)?.name)
+                    .map((id) => majors.find((m) => m.id === id)?.name)
                     .join(", ") || "None selected"}
                 </Typography>
                 <Typography variant="body1">
                   <strong>Minors:</strong>{" "}
                   {formData.minors
-                    .map((id) => mockMinors.find((m) => m.id === id)?.name)
+                    .map((id) => minors.find((m) => m.id === id)?.name)
                     .join(", ") || "None selected"}
                 </Typography>
               </Paper>
@@ -432,7 +599,23 @@ function GeneratePlanContent() {
             </Alert>
           )}
 
-          <Box sx={{ minHeight: 400 }}>{renderStepContent(activeStep)}</Box>
+          {dataLoading ? (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                py: 8,
+              }}
+            >
+              <CircularProgress />
+              <Typography variant="h6" sx={{ mt: 2 }}>
+                Loading programs...
+              </Typography>
+            </Box>
+          ) : (
+            <Box sx={{ minHeight: 400 }}>{renderStepContent(activeStep)}</Box>
+          )}
 
           <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
             <Button
