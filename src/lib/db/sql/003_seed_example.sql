@@ -5,20 +5,26 @@ values
   (gen_random_uuid(), 'minor', 'Mathematics Minor', 'MATH', 18)
 on conflict do nothing;
 
--- Get program ids
-with pm as (
-  select id from programs where name = 'Computer Science B.S.'
-), mn as (
-  select id from programs where name = 'Mathematics Minor'
-)
+-- Insert courses with program reference
 insert into courses (code, title, credits, type, program_id)
-values
-  ('CS101', 'Intro to Computer Science', 3, 'Core', (select id from pm)),
-  ('CS102', 'Data Structures', 3, 'Core', (select id from pm)),
-  ('CS201', 'Algorithms', 3, 'Core', (select id from pm)),
-  ('MATH101', 'Calculus I', 4, 'Core', (select id from pm)),
-  ('MATH102', 'Calculus II', 4, 'Core', (select id from pm))
-on conflict do nothing;
+select 'CS101', 'Intro to Computer Science', 3, 'Core', p.id from programs p where p.name = 'Computer Science B.S.' limit 1
+on conflict (code) do nothing;
+
+insert into courses (code, title, credits, type, program_id)
+select 'CS102', 'Data Structures', 3, 'Core', p.id from programs p where p.name = 'Computer Science B.S.' limit 1
+on conflict (code) do nothing;
+
+insert into courses (code, title, credits, type, program_id)
+select 'CS201', 'Algorithms', 3, 'Core', p.id from programs p where p.name = 'Computer Science B.S.' limit 1
+on conflict (code) do nothing;
+
+insert into courses (code, title, credits, type, program_id)
+select 'MATH101', 'Calculus I', 4, 'Core', p.id from programs p where p.name = 'Computer Science B.S.' limit 1
+on conflict (code) do nothing;
+
+insert into courses (code, title, credits, type, program_id)
+select 'MATH102', 'Calculus II', 4, 'Core', p.id from programs p where p.name = 'Computer Science B.S.' limit 1
+on conflict (code) do nothing;
 
 -- Prereqs: CS101 -> CS102 -> CS201, MATH101 -> MATH102
 insert into course_prereqs (course_id, prereq_course_id)

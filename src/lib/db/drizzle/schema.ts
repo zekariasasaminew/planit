@@ -25,6 +25,7 @@ export const courses = pgTable('courses', {
   id: uuid('id').primaryKey().defaultRandom(),
   code: text('code').notNull().unique(),
   title: text('title').notNull(),
+  description: text('description'),
   credits: integer('credits').notNull(),
   type: courseType('type').notNull(),
   programId: uuid('program_id').references(() => programs.id),
