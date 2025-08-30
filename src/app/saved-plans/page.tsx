@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Container,
@@ -16,6 +16,7 @@ import {
   MenuItem,
   Alert,
   Fab,
+  CircularProgress,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -33,17 +34,38 @@ import {
   Visibility,
 } from "@mui/icons-material";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { mockSavedPlans } from "@/data/mockData";
 import { AcademicPlan } from "@/types";
 
 function SavedPlansContent() {
   const router = useRouter();
-  const [plans] = useState<AcademicPlan[]>(mockSavedPlans);
+  const [plans, setPlans] = useState<AcademicPlan[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedPlan, setSelectedPlan] = useState<AcademicPlan | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [renameDialogOpen, setRenameDialogOpen] = useState(false);
   const [newPlanName, setNewPlanName] = useState("");
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/plans");
+        if (!response.ok) {
+          throw new Error("Failed to fetch plans");
+        }
+        const data = await response.json();
+        setPlans(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load plans");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPlans();
+  }, []);
 
   const handleMenuOpen = (
     event: React.MouseEvent<HTMLElement>,
@@ -121,8 +143,31 @@ function SavedPlansContent() {
           </Typography>
         </Box>
 
-        {/* Plans Grid */}
-        {plans.length === 0 ? (
+        {/* Loading State */}
+        {loading ? (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              py: 8,
+            }}
+          >
+            <CircularProgress />
+            <Typography variant="h6" sx={{ mt: 2 }}>
+              Loading your plans...
+            </Typography>
+          </Box>
+        ) : error ? (
+          <Alert severity="error" sx={{ mb: 4 }}>
+            <Typography variant="h6" sx={{ mb: 1 }}>
+              Error Loading Plans
+            </Typography>
+            <Typography variant="body1">
+              {error}. Please try refreshing the page.
+            </Typography>
+          </Alert>
+        ) : plans.length === 0 ? (
           <Alert severity="info" sx={{ mb: 4 }}>
             <Typography variant="h6" sx={{ mb: 1 }}>
               No saved plans yet
@@ -191,7 +236,7 @@ function SavedPlansContent() {
                   <Box
                     sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 2 }}
                   >
-                    {plan.majors.map((major) => (
+                    {(plan.majors || []).map((major) => (
                       <Chip
                         key={major.id}
                         label={major.name}
@@ -200,7 +245,7 @@ function SavedPlansContent() {
                         variant="outlined"
                       />
                     ))}
-                    {plan.minors.map((minor) => (
+                    {(plan.minors || []).map((minor) => (
                       <Chip
                         key={minor.id}
                         label={`Minor: ${minor.name}`}
@@ -213,19 +258,20 @@ function SavedPlansContent() {
 
                   <Box sx={{ mb: 2 }}>
                     <Typography variant="body2" color="text.secondary">
-                      Duration: {plan.startSemester.season}{" "}
-                      {plan.startSemester.year} - {plan.endSemester.season}{" "}
-                      {plan.endSemester.year}
+                      Duration: {plan.startSemester?.season || "Fall"}{" "}
+                      {plan.startSemester?.year || new Date().getFullYear()} -{" "}
+                      {plan.endSemester?.season || "Spring"}{" "}
+                      {plan.endSemester?.year || new Date().getFullYear() + 4}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       Total Credits:{" "}
-                      {plan.semesters.reduce(
-                        (sum, sem) => sum + sem.totalCredits,
+                      {(plan.semesters || []).reduce(
+                        (sum, sem) => sum + (sem.totalCredits || 0),
                         0
                       )}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Semesters: {plan.semesters.length}
+                      Semesters: {(plan.semesters || []).length}
                     </Typography>
                   </Box>
 
