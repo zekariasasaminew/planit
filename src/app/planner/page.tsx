@@ -25,24 +25,49 @@ import {
 } from "@mui/icons-material";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { SemesterCard } from "@/components/SemesterCard";
-import { mockAcademicPlan } from "@/data/mockData";
 import { AcademicPlan } from "@/types";
 
 function PlannerPageContent() {
   const searchParams = useSearchParams();
   const [plan, setPlan] = useState<AcademicPlan | null>(null);
   const [isGenerated, setIsGenerated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if this is a newly generated plan
-    const generated = searchParams.get("generated") === "true";
-    setIsGenerated(generated);
+    const fetchPlan = async () => {
+      try {
+        setLoading(true);
+        // Check if this is a newly generated plan
+        const generated = searchParams.get("generated") === "true";
+        setIsGenerated(generated);
 
-    // Load the plan (in real app, this would come from the generation API or saved plans)
-    setPlan(mockAcademicPlan);
+        const planId = searchParams.get("id");
+        if (!planId) {
+          setError(
+            "No plan ID provided. Please generate a plan or select one from your saved plans."
+          );
+          return;
+        }
+
+        const response = await fetch(`/api/plans/${planId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch plan");
+        }
+
+        const planData = await response.json();
+        setPlan(planData);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load plan");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPlan();
   }, [searchParams]);
 
-  if (!plan) {
+  if (loading) {
     return (
       <Container maxWidth="lg">
         <Box sx={{ py: 4, textAlign: "center" }}>
@@ -54,14 +79,45 @@ function PlannerPageContent() {
     );
   }
 
-  const totalCredits = plan.semesters.reduce(
-    (sum, semester) => sum + semester.totalCredits,
+  if (error) {
+    return (
+      <Container maxWidth="lg">
+        <Box sx={{ py: 4 }}>
+          <Alert severity="error">
+            <Typography variant="h6" sx={{ mb: 1 }}>
+              Error Loading Plan
+            </Typography>
+            <Typography variant="body1">
+              {error}. Please try refreshing the page.
+            </Typography>
+          </Alert>
+        </Box>
+      </Container>
+    );
+  }
+
+  if (!plan) {
+    return (
+      <Container maxWidth="lg">
+        <Box sx={{ py: 4, textAlign: "center" }}>
+          <Typography variant="h5" color="text.secondary">
+            Plan not found
+          </Typography>
+        </Box>
+      </Container>
+    );
+  }
+
+  const semesters = plan.semesters || [];
+  const totalCredits = semesters.reduce(
+    (sum, semester) => sum + (semester.totalCredits || 0),
     0
   );
   const completedSemesters = 0; // This would be calculated based on current date
-  const progressPercentage = Math.round(
-    (completedSemesters / plan.semesters.length) * 100
-  );
+  const progressPercentage =
+    semesters.length > 0
+      ? Math.round((completedSemesters / semesters.length) * 100)
+      : 0;
 
   return (
     <Container maxWidth="xl">
@@ -105,7 +161,7 @@ function PlannerPageContent() {
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
-                {plan.majors.map((major) => (
+                {(plan.majors || []).map((major) => (
                   <Chip
                     key={major.id}
                     label={major.name}
@@ -113,7 +169,7 @@ function PlannerPageContent() {
                     variant="outlined"
                   />
                 ))}
-                {plan.minors.map((minor) => (
+                {(plan.minors || []).map((minor) => (
                   <Chip
                     key={minor.id}
                     label={`Minor: ${minor.name}`}
@@ -216,7 +272,7 @@ function PlannerPageContent() {
               },
             }}
           >
-            {plan.semesters.map((semester, index) => (
+            {semesters.map((semester, index) => (
               <Box key={semester.id} sx={{ position: "relative" }}>
                 {index < completedSemesters && (
                   <Box
