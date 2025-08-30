@@ -12,10 +12,14 @@ export async function POST(req: NextRequest) {
   const requestId = randomUUID().slice(0, 8);
   const log = withRequest(requestId);
   const start = Date.now();
+  
+  let parsed: any = null;
+  let nodes: any[] = [];
+  
   try {
     const user = await getUserOrThrow(req);
     const body = await req.json();
-    const parsed = GeneratePlanRequestSchema.safeParse(body);
+    parsed = GeneratePlanRequestSchema.safeParse(body);
     if (!parsed.success) {
       const res = NextResponse.json({ code: 'validation_failed', message: 'Invalid input', details: parsed.error.flatten() }, { status: 400 });
       res.headers.set('X-Request-Id', requestId);
@@ -33,18 +37,22 @@ export async function POST(req: NextRequest) {
 
     const supabase = createSupabaseServiceClient();
 
-    // Fetch courses for majors/minors and their prerequisite closure (simplified for scaffold)
-    const { data: programCourses } = await supabase
+    // Fetch ALL courses and their prerequisites to allow proper prerequisite resolution
+    // The planner algorithm will determine which courses are actually needed
+    const { data: allCourses } = await supabase
       .from('courses')
-      .select('id, code, credits')
-      .in('program_id', [...(parsed.data.majorIds || []), ...(parsed.data.minorIds || [])]);
+      .select('id, code, credits, title, type, program_id');
 
     const { data: prereqs } = await supabase.from('course_prereqs').select('course_id, prereq_course_id');
 
-    const nodes = (programCourses || []).map((c) => ({
+    // Create course nodes with prerequisite information
+    nodes = (allCourses || []).map((c) => ({
       id: c.id as string,
       code: c.code as string,
       credits: c.credits as number,
+      title: c.title as string,
+      type: c.type as string,
+      programId: c.program_id as string,
       prereqIds: (prereqs || [])
         .filter((p) => p.course_id === c.id)
         .map((p) => p.prereq_course_id as string),
@@ -58,9 +66,15 @@ export async function POST(req: NextRequest) {
     log.info({ status: 200, elapsedMs: Date.now() - start }, 'POST /api/plans/generate');
     return res;
   } catch (e: any) {
+
+    
     const status = e?.status === 401 ? 401 : 500;
     const code = status === 401 ? 'unauthorized' : 'internal';
-    const res = NextResponse.json({ code, message: status === 401 ? 'Unauthorized' : 'Internal error' }, { status });
+    const res = NextResponse.json({ 
+      code, 
+      message: status === 401 ? 'Unauthorized' : 'Internal error',
+      details: process.env.NODE_ENV === 'development' ? e.message : undefined
+    }, { status });
     res.headers.set('X-Request-Id', requestId);
     return res;
   }
