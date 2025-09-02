@@ -59,9 +59,10 @@ export async function POST(req: NextRequest) {
     }));
 
     const { plan, diagnostics } = generatePlan(parsed.data, nodes);
-    const ranked = await rankPlans([plan]);
+    // Temporarily skip AI ranking due to OpenAI quota limits
+    // const ranked = await rankPlans([plan]);
 
-    const res = NextResponse.json({ plan: ranked.plan, diagnostics, rationale: ranked.rationale }, { status: 200 });
+    const res = NextResponse.json({ plan, diagnostics, rationale: "Plan generated successfully" }, { status: 200 });
     res.headers.set('X-Request-Id', requestId);
     log.info({ status: 200, elapsedMs: Date.now() - start }, 'POST /api/plans/generate');
     return res;
