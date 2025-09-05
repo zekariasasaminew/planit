@@ -28,6 +28,12 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ tok
       .eq('id', link.plan_id)
       .single();
     if (error) throw error;
+    
+    // Sort semesters by position to ensure proper chronological order
+    if (data.plan_semesters) {
+      data.plan_semesters.sort((a: any, b: any) => a.position - b.position);
+    }
+    
     const res = NextResponse.json(data, { status: 200 });
     res.headers.set('X-Request-Id', requestId);
     log.info({ status: 200, elapsedMs: Date.now() - start }, 'GET /api/share/[token]');

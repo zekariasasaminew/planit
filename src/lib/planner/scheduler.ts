@@ -27,7 +27,7 @@ export function schedulePlan(req: GeneratePlanApiRequest, requiredCourses: Cours
 
   let season = req.startSeason;
   let year = req.startYear;
-  const seasonOrder = ['Spring', 'Summer', 'Fall'];
+  const seasonOrder = ['Fall', 'Spring', 'Summer'];
   function nextTerm() {
     const idx = seasonOrder.indexOf(season);
     const ni = (idx + 1) % seasonOrder.length;
