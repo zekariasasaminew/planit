@@ -37,13 +37,43 @@ export async function POST(req: NextRequest) {
 
     const supabase = createSupabaseServiceClient();
 
-    // Fetch ALL courses and their prerequisites to allow proper prerequisite resolution
-    // The planner algorithm will determine which courses are actually needed
-    const { data: allCourses } = await supabase
-      .from('courses')
-      .select('id, code, credits, title, type, program_id');
+    // Fetch courses for selected majors and minors, plus any prerequisite courses
+    const programIds = [...parsed.data.majorIds];
+    if (parsed.data.minorIds) {
+      programIds.push(...parsed.data.minorIds);
+    }
 
+    // First, get courses for the selected programs
+    const { data: programCourses } = await supabase
+      .from('courses')
+      .select('id, code, credits, title, type, program_id')
+      .in('program_id', programIds);
+
+    // Get all prerequisite relationships to find any prerequisite courses not in selected programs
     const { data: prereqs } = await supabase.from('course_prereqs').select('course_id, prereq_course_id');
+    
+    // Find prerequisite course IDs that are not already in our program courses
+    const programCourseIds = new Set((programCourses || []).map(c => c.id));
+    const prereqIds = new Set<string>();
+    
+    for (const prereq of prereqs || []) {
+      if (programCourseIds.has(prereq.course_id) && !programCourseIds.has(prereq.prereq_course_id)) {
+        prereqIds.add(prereq.prereq_course_id);
+      }
+    }
+
+    // Fetch any prerequisite courses that aren't already included
+    let prereqCourses: any[] = [];
+    if (prereqIds.size > 0) {
+      const { data } = await supabase
+        .from('courses')
+        .select('id, code, credits, title, type, program_id')
+        .in('id', Array.from(prereqIds));
+      prereqCourses = data || [];
+    }
+
+    // Combine program courses and prerequisite courses
+    const allCourses = [...(programCourses || []), ...prereqCourses];
 
     // Create course nodes with prerequisite information
     nodes = (allCourses || []).map((c) => ({
