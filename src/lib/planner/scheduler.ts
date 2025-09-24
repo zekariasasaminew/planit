@@ -4,6 +4,33 @@ import type { CourseNode } from './graph';
 
 export type Diagnostics = { code: string; message: string; details?: Record<string, unknown> }[];
 
+function createErrorPlan(req: GeneratePlanApiRequest): AcademicPlan {
+  return {
+    id: randomUUID(),
+    name: 'Error Plan',
+    majors: [],
+    minors: [],
+    startSemester: {
+      season: req?.startSeason as any || 'Fall',
+      year: req?.startYear || new Date().getFullYear(),
+    },
+    endSemester: {
+      season: req?.startSeason as any || 'Fall',
+      year: req?.startYear || new Date().getFullYear(),
+    },
+    preferences: {
+      maxCreditsPerSemester: req?.maxCreditsPerSemester || 15,
+      electivePriority: 'distributed',
+      summerCourses: req?.prefersSummer ?? false,
+      winterimCourses: false,
+      onlineCoursesAllowed: true,
+    },
+    semesters: [],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+}
+
 function canPlace(courseId: string, placedByCourse: Map<string, number>, prereqs: Map<string, string[]>, takenCourses: Set<string>): boolean {
   for (const p of prereqs.get(courseId) || []) {
     // Prerequisites can be satisfied by either placed courses or already taken courses
@@ -15,6 +42,19 @@ function canPlace(courseId: string, placedByCourse: Map<string, number>, prereqs
 }
 
 export function schedulePlan(req: GeneratePlanApiRequest, requiredCourses: CourseNode[]): { plan: AcademicPlan; diagnostics: Diagnostics } {
+  const diags: Diagnostics = [];
+  
+  // Input validation
+  if (!req) {
+    diags.push({ code: 'invalid_request', message: 'Invalid request object' });
+    return { plan: createErrorPlan(req), diagnostics: diags };
+  }
+  
+  if (!requiredCourses || requiredCourses.length === 0) {
+    diags.push({ code: 'no_courses', message: 'No courses provided for scheduling' });
+    return { plan: createErrorPlan(req), diagnostics: diags };
+  }
+  
   const max = req.maxCreditsPerSemester;
   const overflow = req.allowOverload ? 2 : 0;
   const semesters: Semester[] = [];
@@ -36,7 +76,6 @@ export function schedulePlan(req: GeneratePlanApiRequest, requiredCourses: Cours
   }
 
   let position = 0;
-  const diags: Diagnostics = [];
   let consecutiveEmptyTerms = 0;
 
   while (placedByCourse.size < remaining.length && semesters.length < req.semestersRemaining) {
