@@ -195,7 +195,10 @@ export default function HomePage() {
                 gap: 6, // Increased gap between buttons
               }}
             >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   variant="text"
                   startIcon={<AutoAwesome />}
@@ -218,7 +221,10 @@ export default function HomePage() {
                 </Button>
               </motion.div>
 
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   variant="text"
                   startIcon={<BookmarkBorder />}
@@ -241,7 +247,10 @@ export default function HomePage() {
                 </Button>
               </motion.div>
 
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   variant="text"
                   startIcon={<School />}
@@ -264,7 +273,10 @@ export default function HomePage() {
                 </Button>
               </motion.div>
 
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   variant="text"
                   startIcon={<Person />}
@@ -287,7 +299,10 @@ export default function HomePage() {
                 </Button>
               </motion.div>
 
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   variant="text"
                   startIcon={<Settings />}
@@ -557,17 +572,15 @@ export default function HomePage() {
           >
             {[
               {
-                icon: (
-                  <AutoAwesome sx={{ fontSize: 64, color: "#FFF5F0" }} /> // Light color for visibility
-                ),
+                // Light color for visibility
+                icon: <AutoAwesome sx={{ fontSize: 64, color: "#FFF5F0" }} />,
                 title: "AI-Powered Course Planning",
                 description:
                   "Generate personalized academic plans using advanced AI that understands course prerequisites, requirements, and your unique preferences to create the optimal path to graduation.",
               },
               {
-                icon: (
-                  <Refresh sx={{ fontSize: 64, color: "#FFF5F0" }} /> // Light color for visibility
-                ),
+                // Light color for visibility
+                icon: <Refresh sx={{ fontSize: 64, color: "#FFF5F0" }} />,
                 title: "Dynamic Plan Updates",
                 description:
                   "Instantly modify and regenerate your academic plan when your goals or circumstances change. Our system adapts to schedule conflicts, preference updates, and requirement changes.",
@@ -579,25 +592,24 @@ export default function HomePage() {
                   "Automatically track graduation requirements, major courses, minor requirements, and general education credits with precision. Never miss a requirement again.",
               },
               {
+                // Light color for visibility
                 icon: (
-                  <BookmarkBorder sx={{ fontSize: 64, color: "#FFF5F0" }} /> // Light color for visibility
+                  <BookmarkBorder sx={{ fontSize: 64, color: "#FFF5F0" }} />
                 ),
                 title: "Multiple Plan Management",
                 description:
                   "Save and compare multiple academic plans. Explore different majors, minors, or graduation timelines side-by-side to make informed decisions about your future.",
               },
               {
-                icon: (
-                  <ArrowForward sx={{ fontSize: 64, color: "#FFF5F0" }} /> // Light color for visibility
-                ),
+                // Light color for visibility
+                icon: <ArrowForward sx={{ fontSize: 64, color: "#FFF5F0" }} />,
                 title: "Semester-by-Semester Planning",
                 description:
                   "Get detailed semester breakdowns with course loads, credit hours, and timeline visualization. Plan years ahead with confidence and clarity.",
               },
               {
-                icon: (
-                  <AutoAwesome sx={{ fontSize: 64, color: "#FFF5F0" }} /> // Light color for visibility
-                ),
+                // Light color for visibility
+                icon: <AutoAwesome sx={{ fontSize: 64, color: "#FFF5F0" }} />,
                 title: "Smart Recommendations",
                 description:
                   "Receive intelligent suggestions for course selections, scheduling optimizations, and alternative pathways based on your academic performance and preferences.",
@@ -628,7 +640,7 @@ export default function HomePage() {
                         ? "linear-gradient(135deg, rgba(255, 245, 240, 0.95) 0%, rgba(254, 237, 230, 0.95) 100%)" // Light background for special cards
                         : "rgba(74, 43, 42, 0.8)", // Dark background for others
                       backdropFilter: "blur(20px)",
-                      border: isSpecial 
+                      border: isSpecial
                         ? "2px solid rgba(230, 128, 87, 0.3)" // Orange border for special
                         : "1px solid rgba(191, 117, 135, 0.3)", // Rose border for others
                       borderRadius: 4,
@@ -637,7 +649,7 @@ export default function HomePage() {
                         background: isSpecial
                           ? "linear-gradient(135deg, rgba(255, 245, 240, 1) 0%, rgba(254, 237, 230, 1) 100%)"
                           : "rgba(74, 43, 42, 0.9)",
-                        border: isSpecial 
+                        border: isSpecial
                           ? "2px solid rgba(230, 128, 87, 0.5)"
                           : "1px solid rgba(191, 117, 135, 0.5)",
                         boxShadow: isSpecial
@@ -657,10 +669,10 @@ export default function HomePage() {
                         <Box sx={{ mb: 3 }}>
                           {/* Update icon colors conditionally */}
                           {React.cloneElement(feature.icon, {
-                            sx: { 
-                              ...feature.icon.props.sx, 
-                              color: isSpecial ? "#E68057" : "#FFF5F0" 
-                            }
+                            sx: {
+                              ...feature.icon.props.sx,
+                              color: isSpecial ? "#E68057" : "#FFF5F0",
+                            },
                           })}
                         </Box>
                       </motion.div>
@@ -677,8 +689,8 @@ export default function HomePage() {
                       </Typography>
                       <Typography
                         variant="body1"
-                        sx={{ 
-                          lineHeight: 1.7, 
+                        sx={{
+                          lineHeight: 1.7,
                           fontSize: "1.1rem",
                           color: isSpecial ? "#74433F" : "#E6D5D3", // Dark for light bg, light for dark bg
                         }}
@@ -732,9 +744,8 @@ export default function HomePage() {
           >
             {[
               {
-                icon: (
-                  <AutoAwesome sx={{ fontSize: 48, color: "#E68057" }} /> // Warm orange for primary card
-                ),
+                // Warm orange for primary card
+                icon: <AutoAwesome sx={{ fontSize: 48, color: "#E68057" }} />,
                 title: "Generate Your First Plan",
                 description:
                   "Start your academic planning journey by creating a personalized plan based on your major, preferences, and timeline.",
@@ -799,7 +810,7 @@ export default function HomePage() {
                       background: item.primary
                         ? "linear-gradient(135deg, rgba(255, 245, 240, 1) 0%, rgba(254, 237, 230, 1) 100%)"
                         : "rgba(74, 43, 42, 0.9)",
-                      border: item.primary 
+                      border: item.primary
                         ? "2px solid rgba(230, 128, 87, 0.5)"
                         : "2px solid rgba(191, 117, 135, 0.5)",
                       boxShadow: item.primary
@@ -825,8 +836,8 @@ export default function HomePage() {
                     </Box>
                     <Typography
                       variant="body1"
-                      sx={{ 
-                        mb: 3, 
+                      sx={{
+                        mb: 3,
                         lineHeight: 1.6,
                         color: item.primary ? "#74433F" : "#E6D5D3", // Darker brown for primary, lighter for others
                       }}
