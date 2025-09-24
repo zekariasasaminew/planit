@@ -44,16 +44,31 @@ export async function POST(req: NextRequest) {
     }
 
     // First, get courses for the selected programs
-    const { data: programCourses } = await supabase
+    const { data: programCourses, error: coursesError } = await supabase
       .from('courses')
       .select('id, code, credits, title, type, program_id')
       .in('program_id', programIds);
 
+    if (coursesError) {
+      log.error({ error: coursesError, programIds }, 'Failed to fetch program courses');
+      throw new Error(`Failed to fetch courses: ${coursesError.message}`);
+    }
+
+    log.info({ 
+      programIds, 
+      courseCount: programCourses?.length || 0 
+    }, 'Fetched program courses');
+
     // Get all prerequisite relationships to find any prerequisite courses not in selected programs
-    const { data: prereqs } = await supabase.from('course_prereqs').select('course_id, prereq_course_id');
+    const { data: prereqs, error: prereqsError } = await supabase.from('course_prereqs').select('course_id, prereq_course_id');
     
+    if (prereqsError) {
+      log.error({ error: prereqsError }, 'Failed to fetch prerequisites');
+      throw new Error(`Failed to fetch prerequisites: ${prereqsError.message}`);
+    }
+
     // Get alternative group prerequisites
-    const { data: prereqAlts } = await supabase
+    const { data: prereqAlts, error: prereqAltsError } = await supabase
       .from('course_prereq_alternatives')
       .select(`
         course_id,
@@ -65,8 +80,13 @@ export async function POST(req: NextRequest) {
         )
       `);
 
+    if (prereqAltsError) {
+      log.error({ error: prereqAltsError }, 'Failed to fetch prerequisite alternatives');
+      throw new Error(`Failed to fetch prerequisite alternatives: ${prereqAltsError.message}`);
+    }
+
     // Get all courses in alternative groups
-    const { data: altCourses } = await supabase
+    const { data: altCourses, error: altCoursesError } = await supabase
       .from('course_alternatives')
       .select(`
         group_id,
@@ -80,6 +100,11 @@ export async function POST(req: NextRequest) {
           program_id
         )
       `);
+
+    if (altCoursesError) {
+      log.error({ error: altCoursesError }, 'Failed to fetch alternative courses');
+      throw new Error(`Failed to fetch alternative courses: ${altCoursesError.message}`);
+    }
     
     // Find prerequisite course IDs that are not already in our program courses
     const programCourseIds = new Set((programCourses || []).map(c => c.id));
@@ -128,15 +153,31 @@ export async function POST(req: NextRequest) {
     // Fetch any prerequisite courses that aren't already included
     let prereqCourses: any[] = [];
     if (prereqIds.size > 0) {
-      const { data } = await supabase
+      const { data, error: prereqCoursesError } = await supabase
         .from('courses')
         .select('id, code, credits, title, type, program_id')
         .in('id', Array.from(prereqIds));
+      
+      if (prereqCoursesError) {
+        log.error({ error: prereqCoursesError, prereqIds: Array.from(prereqIds) }, 'Failed to fetch prerequisite courses');
+        throw new Error(`Failed to fetch prerequisite courses: ${prereqCoursesError.message}`);
+      }
+      
       prereqCourses = data || [];
     }
 
     // Combine program courses and prerequisite courses
     const allCourses = [...(programCourses || []), ...prereqCourses];
+
+    if (allCourses.length === 0) {
+      log.warn({ programIds }, 'No courses found for selected programs');
+      const res = NextResponse.json({ 
+        code: 'no_courses_found', 
+        message: 'No courses found for the selected programs. Please ensure the programs exist and have courses.' 
+      }, { status: 400 });
+      res.headers.set('X-Request-Id', requestId);
+      return res;
+    }
 
     // Create course nodes with prerequisite information
     nodes = (allCourses || []).map((c) => {
@@ -171,23 +212,65 @@ export async function POST(req: NextRequest) {
       };
     });
 
+    log.info({ 
+      totalCourses: allCourses.length,
+      nodeCount: nodes.length,
+      requestData: {
+        majorIds: parsed.data.majorIds,
+        minorIds: parsed.data.minorIds,
+        semestersRemaining: parsed.data.semestersRemaining
+      }
+    }, 'Generated course nodes, starting plan generation');
+
     const { plan, diagnostics } = generatePlan(parsed.data, nodes);
     // Temporarily skip AI ranking due to OpenAI quota limits
     // const ranked = await rankPlans([plan]);
+
+    if (!plan || plan.id === 'error-plan') {
+      log.error({ diagnostics }, 'Plan generation failed');
+      const res = NextResponse.json({ 
+        code: 'plan_generation_failed', 
+        message: 'Failed to generate a valid plan',
+        diagnostics 
+      }, { status: 500 });
+      res.headers.set('X-Request-Id', requestId);
+      return res;
+    }
+
+    log.info({ 
+      planId: plan.id, 
+      semesterCount: plan.semesters?.length || 0,
+      diagnosticsCount: diagnostics?.length || 0 
+    }, 'Plan generated successfully');
 
     const res = NextResponse.json({ plan, diagnostics, rationale: "Plan generated successfully" }, { status: 200 });
     res.headers.set('X-Request-Id', requestId);
     log.info({ status: 200, elapsedMs: Date.now() - start }, 'POST /api/plans/generate');
     return res;
   } catch (e: any) {
-
+    // Enhanced error logging
+    log.error(
+      { 
+        error: e.message, 
+        stack: e.stack, 
+        parsed: parsed?.success ? 'valid' : parsed?.error?.flatten(), 
+        nodeCount: nodes.length,
+        requestId 
+      }, 
+      'POST /api/plans/generate - Error'
+    );
     
     const status = e?.status === 401 ? 401 : 500;
     const code = status === 401 ? 'unauthorized' : 'internal';
     const res = NextResponse.json({ 
       code, 
       message: status === 401 ? 'Unauthorized' : 'Internal error',
-      details: process.env.NODE_ENV === 'development' ? e.message : undefined
+      details: process.env.NODE_ENV === 'development' ? {
+        message: e.message,
+        stack: e.stack,
+        nodeCount: nodes.length,
+        validationResult: parsed?.success ? 'valid' : parsed?.error?.flatten()
+      } : undefined
     }, { status });
     res.headers.set('X-Request-Id', requestId);
     return res;
