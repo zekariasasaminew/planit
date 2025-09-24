@@ -22,7 +22,10 @@ export const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
       sx={{
         position: "fixed",
         top: 20,
-        left: 0,
+        left: {
+          xs: 0, // Always left on mobile
+          md: open ? 300 : 0, // Shift right on desktop when sidebar is open (280px sidebar + 20px margin)
+        },
         right: 0,
         zIndex: 1300, // Higher than sidebar z-index (1200)
         display: "flex",
@@ -30,6 +33,10 @@ export const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
         alignItems: "center",
         px: 3,
         pointerEvents: "none", // Allow clicks to pass through the container
+        transition: theme.transitions.create(["left"], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
       }}
     >
       {/* Left side - Hamburger Menu */}
