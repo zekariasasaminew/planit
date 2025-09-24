@@ -14,13 +14,10 @@ import {
   Divider,
   Alert,
 } from "@mui/material";
-import { Settings as SettingsIcon, Brightness6 } from "@mui/icons-material";
+import { Settings as SettingsIcon } from "@mui/icons-material";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { useTheme } from "@/theme/context";
 
 function SettingsContent() {
-  const { mode, toggleMode } = useTheme();
-
   return (
     <Container maxWidth="md">
       <Box sx={{ py: 4 }}>
@@ -40,26 +37,6 @@ function SettingsContent() {
         {/* Settings Panel */}
         <Paper sx={{ mb: 4 }}>
           <List>
-            {/* Theme Setting */}
-            <ListItem>
-              <Box sx={{ display: "flex", alignItems: "center", mr: 2 }}>
-                <Brightness6 sx={{ mr: 1, color: "text.secondary" }} />
-              </Box>
-              <ListItemText
-                primary="Dark Mode"
-                secondary={`Currently using ${mode} theme`}
-              />
-              <ListItemSecondaryAction>
-                <Switch
-                  checked={mode === "dark"}
-                  onChange={toggleMode}
-                  color="primary"
-                />
-              </ListItemSecondaryAction>
-            </ListItem>
-
-            <Divider />
-
             {/* Placeholder Settings */}
             <ListItem>
               <ListItemText

@@ -12,7 +12,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Menu, AutoAwesome, AccountCircle } from "@mui/icons-material";
-import { ThemeToggle } from "./ThemeToggle";
 
 interface AppBarProps {
   open: boolean;
@@ -90,9 +89,6 @@ export const AppBar: React.FC<AppBarProps> = ({
 
         {/* Right Side Actions */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          {/* Theme Toggle */}
-          <ThemeToggle />
-
           {/* Profile Avatar */}
           <Tooltip title="View Profile">
             <IconButton
