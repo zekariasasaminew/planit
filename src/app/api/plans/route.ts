@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { randomUUID } from 'node:crypto';
 import { withRequest } from '@/lib/logging/logger';
-import { getUserOrThrow } from '@/lib/auth/session';
+import { getUserOrThrow, ensureUserRecord } from '@/lib/auth/session';
 import { PlanCreateSchema } from '@/lib/validation/schemas';
 import { createSupabaseServiceClient } from '@/lib/supabase/server';
 
@@ -18,7 +18,22 @@ export async function POST(req: NextRequest) {
       res.headers.set('X-Request-Id', requestId);
       return res;
     }
+    
+    // Log the parsed data for debugging
+    log.info({ 
+      requestId, 
+      userId: user.id,
+      parsedData: parsed.data
+    }, 'Creating plan with data');
+    
     const supabase = createSupabaseServiceClient();
+    
+    // Ensure the user record exists in the users table
+    const userRecordCreated = await ensureUserRecord(user);
+    if (!userRecordCreated) {
+      log.warn({ userId: user.id }, 'Could not ensure user record exists, but continuing...');
+    }
+    
     const { data, error } = await supabase
       .from('plans')
       .insert({
@@ -37,9 +52,29 @@ export async function POST(req: NextRequest) {
     log.info({ status: 201, elapsedMs: Date.now() - start }, 'POST /api/plans');
     return res;
   } catch (e: any) {
+    // Enhanced error logging
+    log.error(
+      { 
+        error: e.message, 
+        stack: e.stack, 
+        code: e.code,
+        details: e.details,
+        requestId 
+      }, 
+      'POST /api/plans - Error'
+    );
+    
     const status = e?.status === 401 ? 401 : 500;
     const code = status === 401 ? 'unauthorized' : 'internal';
-    const res = NextResponse.json({ code, message: status === 401 ? 'Unauthorized' : 'Internal error' }, { status });
+    const res = NextResponse.json({ 
+      code, 
+      message: status === 401 ? 'Unauthorized' : 'Internal error',
+      details: process.env.NODE_ENV === 'development' ? {
+        message: e.message,
+        code: e.code,
+        details: e.details
+      } : undefined
+    }, { status });
     res.headers.set('X-Request-Id', requestId);
     return res;
   }
