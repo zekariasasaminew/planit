@@ -98,7 +98,7 @@ export default function HomePage() {
   const { user, loading: authLoading } = useAuth();
   const [checkingPlans, setCheckingPlans] = useState(false);
 
-  // Check for saved plans when user is authenticated
+  // Check for saved plans when user is authenticated (removed auto-redirect)
   useEffect(() => {
     const checkSavedPlans = async () => {
       if (!user) return;
@@ -108,11 +108,7 @@ export default function HomePage() {
         const response = await fetch("/api/plans");
         if (response.ok) {
           const plans = await response.json();
-          if (plans.length > 0) {
-            // Redirect to saved plans if user has plans
-            router.push("/saved-plans");
-            return;
-          }
+          console.log(`Found ${plans.length} saved plans`);
         }
       } catch (error) {
         console.error("Error checking saved plans:", error);
@@ -133,7 +129,7 @@ export default function HomePage() {
     }
   }, [user, router]);
 
-  // Show loading while checking auth or redirecting
+  // Show loading while checking auth
   if (authLoading || user === null || user === undefined || checkingPlans) {
     return (
       <Box
@@ -152,7 +148,7 @@ export default function HomePage() {
             <AutoAwesome sx={{ fontSize: 48, color: "primary.main", mb: 2 }} />
           </motion.div>
           <Typography variant="h6" color="text.secondary">
-            {checkingPlans ? "Checking your plans..." : "Loading..."}
+            {checkingPlans ? "Setting up your dashboard..." : "Loading..."}
           </Typography>
         </Box>
       </Box>
