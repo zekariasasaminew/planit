@@ -1,45 +1,51 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { randomUUID } from 'node:crypto';
-import { withRequest } from '@/lib/logging/logger';
-import { getUserOrThrow } from '@/lib/auth/session';
-import { createSupabaseServiceClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
+import { withRequest } from "@/lib/logging/logger";
+import { getUserOrThrow } from "@/lib/auth/session";
+import { createSupabaseServiceClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
   const requestId = randomUUID().slice(0, 8);
   const supabase = createSupabaseServiceClient();
   const log = withRequest(requestId);
   const start = Date.now();
-  
+
   try {
     const user = await getUserOrThrow();
     const { planId } = await req.json();
-    
+
     if (!planId) {
-      const res = NextResponse.json({ code: 'validation_failed', message: 'Plan ID is required' }, { status: 400 });
-      res.headers.set('X-Request-Id', requestId);
+      const res = NextResponse.json(
+        { code: "validation_failed", message: "Plan ID is required" },
+        { status: 400 }
+      );
+      res.headers.set("X-Request-Id", requestId);
       return res;
     }
 
     // First, get the original plan with all its data
     const { data: originalPlan, error: fetchError } = await supabase
-      .from('plans')
-      .select('*, plan_semesters(*, plan_courses(*, courses(*)))')
-      .eq('id', planId)
-      .eq('user_id', user.id) // Make sure user owns the plan
+      .from("plans")
+      .select("*, plan_semesters(*, plan_courses(*, courses(*)))")
+      .eq("id", planId)
+      .eq("user_id", user.id) // Make sure user owns the plan
       .single();
 
     if (fetchError || !originalPlan) {
-      const res = NextResponse.json({ code: 'not_found', message: 'Plan not found' }, { status: 404 });
-      res.headers.set('X-Request-Id', requestId);
+      const res = NextResponse.json(
+        { code: "not_found", message: "Plan not found" },
+        { status: 404 }
+      );
+      res.headers.set("X-Request-Id", requestId);
       return res;
     }
 
     // Create the new plan with "(Copy)" appended to the name
     const newPlanId = randomUUID();
     const duplicatedName = `${originalPlan.name} (Copy)`;
-    
+
     const { data: newPlan, error: createError } = await supabase
-      .from('plans')
+      .from("plans")
       .insert({
         id: newPlanId,
         user_id: user.id,
@@ -50,15 +56,18 @@ export async function POST(req: NextRequest) {
         end_year: originalPlan.end_year,
         preferences: originalPlan.preferences,
         created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .select()
       .single();
 
     if (createError || !newPlan) {
-      log.error({ createError }, 'Failed to create duplicated plan');
-      const res = NextResponse.json({ code: 'internal_error', message: 'Failed to create plan copy' }, { status: 500 });
-      res.headers.set('X-Request-Id', requestId);
+      log.error({ createError }, "Failed to create duplicated plan");
+      const res = NextResponse.json(
+        { code: "internal_error", message: "Failed to create plan copy" },
+        { status: 500 }
+      );
+      res.headers.set("X-Request-Id", requestId);
       return res;
     }
 
@@ -66,38 +75,40 @@ export async function POST(req: NextRequest) {
     if (originalPlan.plan_semesters && originalPlan.plan_semesters.length > 0) {
       for (const semester of originalPlan.plan_semesters) {
         const newSemesterId = randomUUID();
-        
+
         // Create the semester
         const { error: semesterError } = await supabase
-          .from('plan_semesters')
+          .from("plan_semesters")
           .insert({
             id: newSemesterId,
             plan_id: newPlanId,
             season: semester.season,
             year: semester.year,
             position: semester.position,
-            total_credits: semester.total_credits
+            total_credits: semester.total_credits,
           });
 
         if (semesterError) {
-          log.error({ semesterError }, 'Failed to create semester copy');
+          log.error({ semesterError }, "Failed to create semester copy");
           continue;
         }
 
         // Duplicate all courses in this semester
         if (semester.plan_courses && semester.plan_courses.length > 0) {
-          const coursesToInsert = semester.plan_courses.map((planCourse: any) => ({
-            id: randomUUID(),
-            plan_semester_id: newSemesterId,
-            course_id: planCourse.course_id
-          }));
+          const coursesToInsert = semester.plan_courses.map(
+            (planCourse: any) => ({
+              id: randomUUID(),
+              plan_semester_id: newSemesterId,
+              course_id: planCourse.course_id,
+            })
+          );
 
           const { error: coursesError } = await supabase
-            .from('plan_courses')
+            .from("plan_courses")
             .insert(coursesToInsert);
 
           if (coursesError) {
-            log.error({ coursesError }, 'Failed to create course copies');
+            log.error({ coursesError }, "Failed to create course copies");
           }
         }
       }
@@ -105,15 +116,24 @@ export async function POST(req: NextRequest) {
 
     // Fetch the complete duplicated plan to return
     const { data: completePlan, error: fetchCompleteError } = await supabase
-      .from('plans')
-      .select('*, plan_semesters(*, plan_courses(*, courses(*)))')
-      .eq('id', newPlanId)
+      .from("plans")
+      .select("*, plan_semesters(*, plan_courses(*, courses(*)))")
+      .eq("id", newPlanId)
       .single();
 
     if (fetchCompleteError || !completePlan) {
-      log.error({ fetchCompleteError }, 'Failed to fetch complete duplicated plan');
-      const res = NextResponse.json({ code: 'internal_error', message: 'Plan duplicated but failed to fetch result' }, { status: 500 });
-      res.headers.set('X-Request-Id', requestId);
+      log.error(
+        { fetchCompleteError },
+        "Failed to fetch complete duplicated plan"
+      );
+      const res = NextResponse.json(
+        {
+          code: "internal_error",
+          message: "Plan duplicated but failed to fetch result",
+        },
+        { status: 500 }
+      );
+      res.headers.set("X-Request-Id", requestId);
       return res;
     }
 
@@ -122,11 +142,11 @@ export async function POST(req: NextRequest) {
       ...completePlan,
       startSemester: {
         season: completePlan.start_season,
-        year: completePlan.start_year
+        year: completePlan.start_year,
       },
       endSemester: {
-        season: completePlan.end_season || 'Spring',
-        year: completePlan.end_year || (completePlan.start_year + 4)
+        season: completePlan.end_season || "Spring",
+        year: completePlan.end_year || completePlan.start_year + 4,
       },
       majors: [],
       minors: [],
@@ -146,8 +166,8 @@ export async function POST(req: NextRequest) {
             credits: planCourse.courses?.credits,
             type: planCourse.courses?.type,
             description: planCourse.courses?.description,
-          }))
-        }))
+          })),
+        })),
     };
 
     // Clean up the database fields that shouldn't be in the response
@@ -158,16 +178,21 @@ export async function POST(req: NextRequest) {
     delete (transformedPlan as any).plan_semesters;
 
     const res = NextResponse.json(transformedPlan, { status: 201 });
-    res.headers.set('X-Request-Id', requestId);
-    log.info({ status: 201, elapsedMs: Date.now() - start }, 'POST /api/plans/duplicate');
+    res.headers.set("X-Request-Id", requestId);
+    log.info(
+      { status: 201, elapsedMs: Date.now() - start },
+      "POST /api/plans/duplicate"
+    );
     return res;
-
   } catch (e: any) {
-    log.error({ error: e }, 'Error in duplicate plan endpoint');
+    log.error({ error: e }, "Error in duplicate plan endpoint");
     const status = e?.status === 401 ? 401 : 500;
-    const code = status === 401 ? 'unauthorized' : 'internal';
-    const res = NextResponse.json({ code, message: status === 401 ? 'Unauthorized' : 'Internal error' }, { status });
-    res.headers.set('X-Request-Id', requestId);
+    const code = status === 401 ? "unauthorized" : "internal";
+    const res = NextResponse.json(
+      { code, message: status === 401 ? "Unauthorized" : "Internal error" },
+      { status }
+    );
+    res.headers.set("X-Request-Id", requestId);
     return res;
   }
 }

@@ -130,7 +130,7 @@ export function usePlanActions(options: UsePlanActionsOptions = {}) {
     try {
       setLoading(true);
       const duplicatedPlan = await PlanService.duplicatePlan(plan.id);
-      
+
       // Add the duplicated plan to the list instead of navigating
       options.onPlanCreated?.(duplicatedPlan);
       options.onSuccess?.("Plan duplicated successfully");

@@ -75,13 +75,15 @@ function SavedPlansContent() {
 
   const planActions = usePlanActions({
     onPlanUpdated: (updatedPlan) => {
-      setPlans(prevPlans => prevPlans.map((p) => (p.id === updatedPlan.id ? updatedPlan : p)));
+      setPlans((prevPlans) =>
+        prevPlans.map((p) => (p.id === updatedPlan.id ? updatedPlan : p))
+      );
     },
     onPlanCreated: (newPlan) => {
-      setPlans(prevPlans => [newPlan, ...prevPlans]); // Add to the beginning of the list
+      setPlans((prevPlans) => [newPlan, ...prevPlans]); // Add to the beginning of the list
     },
     onPlanDeleted: (planId) => {
-      setPlans(prevPlans => prevPlans.filter((p) => p.id !== planId));
+      setPlans((prevPlans) => prevPlans.filter((p) => p.id !== planId));
     },
     onError: (message) => {
       setSnackbar({ open: true, message, severity: "error" });
@@ -665,10 +667,14 @@ function SavedPlansContent() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => {
-              setRenameDialogOpen(false);
-              setSelectedPlan(null);
-            }}>Cancel</Button>
+            <Button
+              onClick={() => {
+                setRenameDialogOpen(false);
+                setSelectedPlan(null);
+              }}
+            >
+              Cancel
+            </Button>
             <Button
               onClick={confirmRename}
               variant="contained"
