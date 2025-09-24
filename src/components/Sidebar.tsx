@@ -11,8 +11,8 @@ import {
   ListItemText,
   Box,
   Typography,
-  useTheme,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import {
   Dashboard,
   AutoAwesome,

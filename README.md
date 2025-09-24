@@ -61,11 +61,10 @@ src/
 │   ├── SemesterCard.tsx   # Course display cards
 │   ├── MajorSelector.tsx  # Major selection component
 │   ├── MinorSelector.tsx  # Minor selection component
-│   ├── PreferenceForm.tsx # Plan preferences form
-│   └── ThemeToggle.tsx    # Light/dark mode toggle
+│   └── PreferenceForm.tsx # Plan preferences form
 ├── theme/                 # MUI theme configuration
-│   ├── theme.ts           # Light and dark theme definitions
-│   └── context.tsx        # Theme provider and context
+│   ├── theme.ts           # Dark theme definition
+│   └── context.tsx        # Theme provider
 └── types/                 # TypeScript type definitions
     └── index.ts           # Core data types
 ```

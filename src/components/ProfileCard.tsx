@@ -31,7 +31,6 @@ import {
   Tag,
   AccountCircle,
   Settings,
-  Palette,
   Security,
   Edit,
   Save,
@@ -45,7 +44,6 @@ import {
 } from "@mui/icons-material";
 import { useAuth } from "@/app/context/authContext";
 import { signOut } from "@/lib/auth";
-import { useTheme } from "@/theme/context";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -72,7 +70,7 @@ function TabPanel(props: TabPanelProps) {
 export const ProfileCard: React.FC = () => {
   const { user } = useAuth();
   const router = useRouter();
-  const { mode, toggleMode } = useTheme();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [tabValue, setTabValue] = useState(0);
@@ -371,33 +369,6 @@ export const ProfileCard: React.FC = () => {
             </Typography>
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-              {/* Theme Settings */}
-              <Paper sx={{ p: 3, bgcolor: "background.default" }}>
-                <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                  <Palette sx={{ mr: 1, color: "primary.main" }} />
-                  <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                    Theme
-                  </Typography>
-                </Box>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={mode === "dark"}
-                      onChange={toggleMode}
-                      color="primary"
-                    />
-                  }
-                  label={`${mode === "dark" ? "Dark" : "Light"} Mode`}
-                />
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mt: 1 }}
-                >
-                  Choose between light and dark theme for the interface
-                </Typography>
-              </Paper>
-
               {/* Notification Settings */}
               <Paper sx={{ p: 3, bgcolor: "background.default" }}>
                 <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>

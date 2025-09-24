@@ -33,22 +33,24 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       },
       majors: [],
       minors: [],
-      semesters: (data.plan_semesters || []).map((semester: any) => ({
-        id: semester.id,
-        name: `${semester.season} ${semester.year}`,
-        season: semester.season,
-        year: semester.year,
-        position: semester.position,
-        totalCredits: semester.total_credits || 0,
-        courses: (semester.plan_courses || []).map((planCourse: any) => ({
-          id: planCourse.courses?.id,
-          code: planCourse.courses?.code,
-          title: planCourse.courses?.title,
-          credits: planCourse.courses?.credits,
-          type: planCourse.courses?.type,
-        })).filter((course: any) => course.id)
-      }))
-    };
+      semesters: (data.plan_semesters || [])
+        .sort((a: any, b: any) => a.position - b.position)
+        .map((semester: any) => ({
+          id: semester.id,
+          name: `${semester.season} ${semester.year}`,
+          season: semester.season,
+          year: semester.year,
+          position: semester.position,
+          totalCredits: semester.total_credits || 0,
+          courses: (semester.plan_courses || []).map((planCourse: any) => ({
+            id: planCourse.courses?.id,
+            code: planCourse.courses?.code,
+            title: planCourse.courses?.title,
+            credits: planCourse.courses?.credits,
+            type: planCourse.courses?.type,
+          })).filter((course: any) => course.id)
+        }))
+      }
     
 
     delete transformedPlan.plan_semesters;

@@ -6,7 +6,7 @@ import { checkRateLimit, recordRequest } from '@/lib/supabase/rls';
 import { GeneratePlanRequestSchema } from '@/lib/validation/schemas';
 import { createSupabaseServiceClient } from '@/lib/supabase/server';
 import { generatePlan } from '@/lib/planner';
-import { rankPlans } from '@/lib/agent';
+// import { rankPlans } from '@/lib/agent'; // Temporarily disabled due to OpenAI quota limits
 
 export async function POST(req: NextRequest) {
   const requestId = randomUUID().slice(0, 8);
@@ -37,26 +37,139 @@ export async function POST(req: NextRequest) {
 
     const supabase = createSupabaseServiceClient();
 
-    // Fetch ALL courses and their prerequisites to allow proper prerequisite resolution
-    // The planner algorithm will determine which courses are actually needed
-    const { data: allCourses } = await supabase
-      .from('courses')
-      .select('id, code, credits, title, type, program_id');
+    // Fetch courses for selected majors and minors, plus any prerequisite courses
+    const programIds = [...parsed.data.majorIds];
+    if (parsed.data.minorIds) {
+      programIds.push(...parsed.data.minorIds);
+    }
 
+    // First, get courses for the selected programs
+    const { data: programCourses } = await supabase
+      .from('courses')
+      .select('id, code, credits, title, type, program_id')
+      .in('program_id', programIds);
+
+    // Get all prerequisite relationships to find any prerequisite courses not in selected programs
     const { data: prereqs } = await supabase.from('course_prereqs').select('course_id, prereq_course_id');
+    
+    // Get alternative group prerequisites
+    const { data: prereqAlts } = await supabase
+      .from('course_prereq_alternatives')
+      .select(`
+        course_id,
+        prereq_group_id,
+        course_alternative_groups!inner(
+          id,
+          name,
+          description
+        )
+      `);
+
+    // Get all courses in alternative groups
+    const { data: altCourses } = await supabase
+      .from('course_alternatives')
+      .select(`
+        group_id,
+        course_id,
+        courses!inner(
+          id,
+          code,
+          credits,
+          title,
+          type,
+          program_id
+        )
+      `);
+    
+    // Find prerequisite course IDs that are not already in our program courses
+    const programCourseIds = new Set((programCourses || []).map(c => c.id));
+    const prereqIds = new Set<string>();
+    
+    for (const prereq of prereqs || []) {
+      if (programCourseIds.has(prereq.course_id) && !programCourseIds.has(prereq.prereq_course_id)) {
+        prereqIds.add(prereq.prereq_course_id);
+      }
+    }
+
+    // Handle alternative groups - select one course from each group that has prerequisites
+    const selectedFromAlternatives: any[] = [];
+    const altGroupsWithPrereqs = new Set<string>();
+    
+    // Find which alternative groups are needed as prerequisites
+    for (const prereqAlt of prereqAlts || []) {
+      if (programCourseIds.has(prereqAlt.course_id)) {
+        altGroupsWithPrereqs.add(prereqAlt.prereq_group_id);
+      }
+    }
+
+    // For each needed alternative group, select the first available sequence
+    for (const groupId of altGroupsWithPrereqs) {
+      const groupCourses = (altCourses || [])
+        .filter(ac => ac.group_id === groupId)
+        .map(ac => ac.courses);
+
+      if (groupCourses.length > 0) {
+        // For physics sequences, prefer the 151/152 sequence (first sequence)
+        // This could be made configurable based on user preferences later
+        const firstSequence = groupCourses.filter((c: any) => c.code.includes('151') || c.code.includes('152'));
+        const selectedSequence = firstSequence.length > 0 ? firstSequence : groupCourses.slice(0, 2);
+        
+        selectedFromAlternatives.push(...selectedSequence);
+        
+        // Add to prereq IDs so they get included in the final course list
+        for (const course of selectedSequence) {
+          if (!programCourseIds.has((course as any).id)) {
+            prereqIds.add((course as any).id);
+          }
+        }
+      }
+    }
+
+    // Fetch any prerequisite courses that aren't already included
+    let prereqCourses: any[] = [];
+    if (prereqIds.size > 0) {
+      const { data } = await supabase
+        .from('courses')
+        .select('id, code, credits, title, type, program_id')
+        .in('id', Array.from(prereqIds));
+      prereqCourses = data || [];
+    }
+
+    // Combine program courses and prerequisite courses
+    const allCourses = [...(programCourses || []), ...prereqCourses];
 
     // Create course nodes with prerequisite information
-    nodes = (allCourses || []).map((c) => ({
-      id: c.id as string,
-      code: c.code as string,
-      credits: c.credits as number,
-      title: c.title as string,
-      type: c.type as string,
-      programId: c.program_id as string,
-      prereqIds: (prereqs || [])
+    nodes = (allCourses || []).map((c) => {
+      // Get regular prerequisites
+      const regularPrereqs = (prereqs || [])
         .filter((p) => p.course_id === c.id)
-        .map((p) => p.prereq_course_id as string),
-    }));
+        .map((p) => p.prereq_course_id as string);
+
+      // Get prerequisites from alternative groups
+      const altGroupPrereqs: string[] = [];
+      for (const prereqAlt of prereqAlts || []) {
+        if (prereqAlt.course_id === c.id) {
+          // Find the selected courses from this alternative group
+          const selectedFromGroup = selectedFromAlternatives.filter((selected: any) => {
+            return (altCourses || []).some(ac => 
+              ac.group_id === prereqAlt.prereq_group_id && 
+              ac.course_id === selected.id
+            );
+          });
+          altGroupPrereqs.push(...selectedFromGroup.map((s: any) => s.id));
+        }
+      }
+
+      return {
+        id: c.id as string,
+        code: c.code as string,
+        credits: c.credits as number,
+        title: c.title as string,
+        type: c.type as string,
+        programId: c.program_id as string,
+        prereqIds: [...regularPrereqs, ...altGroupPrereqs],
+      };
+    });
 
     const { plan, diagnostics } = generatePlan(parsed.data, nodes);
     // Temporarily skip AI ranking due to OpenAI quota limits
