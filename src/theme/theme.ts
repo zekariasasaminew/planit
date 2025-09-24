@@ -91,14 +91,6 @@ export const theme = createTheme({
           fontSize: "0.875rem",
           padding: "8px 16px",
         },
-        large: {
-          fontSize: "1rem",
-          padding: "10px 20px", // Reduced from default large
-        },
-        small: {
-          fontSize: "0.75rem",
-          padding: "4px 8px",
-        },
       },
     },
     MuiIconButton: {
