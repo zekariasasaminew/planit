@@ -36,6 +36,25 @@ export const coursePrereqs = pgTable('course_prereqs', {
   prereqCourseId: uuid('prereq_course_id').references(() => courses.id).notNull(),
 }, (t: any) => ({ pk: primaryKey({ columns: [t.courseId, t.prereqCourseId] }) }));
 
+export const courseAlternativeGroups = pgTable('course_alternative_groups', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: text('name').notNull(),
+  description: text('description'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+});
+
+export const courseAlternatives = pgTable('course_alternatives', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  groupId: uuid('group_id').notNull().references(() => courseAlternativeGroups.id, { onDelete: 'cascade' }),
+  courseId: uuid('course_id').notNull().references(() => courses.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (t: any) => ({ unique: unique().on(t.groupId, t.courseId) }));
+
+export const coursePrereqAlternatives = pgTable('course_prereq_alternatives', {
+  courseId: uuid('course_id').notNull().references(() => courses.id, { onDelete: 'cascade' }),
+  prereqGroupId: uuid('prereq_group_id').notNull().references(() => courseAlternativeGroups.id, { onDelete: 'cascade' }),
+}, (t: any) => ({ pk: primaryKey({ columns: [t.courseId, t.prereqGroupId] }) }));
+
 export const plans = pgTable('plans', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id').notNull().references(() => users.id),
