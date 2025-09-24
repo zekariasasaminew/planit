@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import {
   Box,
   CircularProgress,
-  Toolbar,
   Typography,
   useMediaQuery,
   useTheme,
@@ -14,7 +13,7 @@ import {
 import { ThemeProvider } from "@/theme/context";
 import { AuthProvider } from "@/app/context/authContext";
 import { useAuth } from "@/app/context/authContext";
-import { AppBar } from "@/components/AppBar";
+import { FloatingNavigation, AnimatedBackground } from "@/components";
 import { Sidebar } from "@/components/Sidebar";
 import "./globals.css";
 
@@ -43,12 +42,13 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      {/* App Bar */}
-      <AppBar
+      {/* Animated Background */}
+      <AnimatedBackground />
+
+      {/* Floating Navigation */}
+      <FloatingNavigation
         open={sidebarOpen}
         onMenuToggle={handleSidebarToggle}
-        drawerWidth={280}
-        isMobile={isMobile}
       />
 
       {/* Sidebar */}
@@ -77,12 +77,13 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
         sx={{
           flexGrow: 1,
           p: { xs: 2, sm: 3 },
+          pt: { xs: 10, sm: 10 }, // Add top padding to account for floating navigation
           width: {
             xs: "100%",
             md: sidebarOpen ? `calc(100% - 280px)` : "100%",
           },
           minHeight: "100vh",
-          bgcolor: "background.default",
+          backgroundColor: "transparent", // Make background transparent to show the animated background
           transition: theme.transitions.create(["margin", "width"], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -98,8 +99,6 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
             }),
         }}
       >
-        {/* Toolbar spacer */}
-        <Toolbar />
         {children}
       </Box>
     </Box>
@@ -123,10 +122,11 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
           alignItems: "center",
           justifyContent: "center",
           minHeight: "100vh",
-          bgcolor: "background.default",
+          position: "relative",
         }}
       >
-        <Box sx={{ textAlign: "center" }}>
+        <AnimatedBackground />
+        <Box sx={{ textAlign: "center", zIndex: 1 }}>
           <CircularProgress sx={{ mb: 2 }} />
           <Typography variant="body1" color="text.secondary">
             Loading...
