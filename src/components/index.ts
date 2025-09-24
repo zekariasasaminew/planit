@@ -8,3 +8,6 @@ export { LoadingIndicator } from "./LoadingIndicator";
 export { SignInCard } from "./SignInCard";
 export { ProfileCard } from "./ProfileCard";
 export { ProtectedRoute } from "./ProtectedRoute";
+export { DownloadDialog } from "./DownloadDialog";
+export { ShareDialog } from "./ShareDialog";
+export { ConfirmationDialog } from "./ConfirmationDialog";
