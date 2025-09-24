@@ -110,11 +110,12 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   const pathname = usePathname();
 
-  // Don't show navigation for signin page
+  // Don't show navigation for signin page or landing page
   const isSignInPage = pathname === "/signin";
+  const isLandingPage = pathname === "/";
 
   // Show loading state while checking authentication
-  if (loading && !isSignInPage) {
+  if (loading && !isSignInPage && !isLandingPage) {
     return (
       <Box
         sx={{
@@ -135,8 +136,8 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // Show authenticated layout for logged in users (except signin page)
-  const showAuthenticatedLayout = user && !isSignInPage;
+  // Show authenticated layout for logged in users (except signin page and landing page)
+  const showAuthenticatedLayout = user && !isSignInPage && !isLandingPage;
 
   if (showAuthenticatedLayout) {
     return <AuthenticatedLayout>{children}</AuthenticatedLayout>;

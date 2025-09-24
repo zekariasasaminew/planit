@@ -16,6 +16,8 @@ import {
   BookmarkBorder,
   Refresh,
   School,
+  Person,
+  Settings,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useAuth } from "@/app/context/authContext";
@@ -43,8 +45,8 @@ const AnimatedBackground = () => {
           right: 0,
           bottom: 0,
           backgroundImage: `
-            linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
+            linear-gradient(rgba(230, 128, 87, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(230, 128, 87, 0.1) 1px, transparent 1px)
           `,
           backgroundSize: "50px 50px",
         }}
@@ -67,7 +69,7 @@ const AnimatedBackground = () => {
             width: "200px",
             height: "200px",
             borderRadius: "50%",
-            background: `radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)`,
+            background: `radial-gradient(circle, rgba(191, 117, 135, 0.15) 0%, transparent 70%)`,
             filter: "blur(40px)",
           }}
           animate={{
@@ -166,11 +168,158 @@ export default function HomePage() {
     <Box sx={{ minHeight: "100vh", position: "relative" }}>
       <AnimatedBackground />
 
+      {/* Transparent Header Navigation */}
+      <Box
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+        }}
+      >
+        <Container maxWidth="xl">
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              py: 4, // Increased vertical padding
+            }}
+          >
+            {/* Centered Navigation Links - No background, completely transparent */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6, // Increased gap between buttons
+              }}
+            >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  variant="text"
+                  startIcon={<AutoAwesome />}
+                  onClick={() => router.push("/generate")}
+                  sx={{
+                    color: "text.primary",
+                    fontWeight: 600,
+                    fontSize: "1.1rem", // Increased font size
+                    textTransform: "none",
+                    background: "transparent",
+                    py: 1.5, // Increased vertical padding
+                    px: 3, // Increased horizontal padding
+                    "&:hover": {
+                      background: "transparent",
+                      opacity: 0.8,
+                    },
+                  }}
+                >
+                  Generate Plan
+                </Button>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  variant="text"
+                  startIcon={<BookmarkBorder />}
+                  onClick={() => router.push("/saved-plans")}
+                  sx={{
+                    color: "text.primary",
+                    fontWeight: 600,
+                    fontSize: "1.1rem", // Increased font size
+                    textTransform: "none",
+                    background: "transparent",
+                    py: 1.5, // Increased vertical padding
+                    px: 3, // Increased horizontal padding
+                    "&:hover": {
+                      background: "transparent",
+                      opacity: 0.8,
+                    },
+                  }}
+                >
+                  Saved Plans
+                </Button>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  variant="text"
+                  startIcon={<School />}
+                  onClick={() => router.push("/majors")}
+                  sx={{
+                    color: "text.primary",
+                    fontWeight: 600,
+                    fontSize: "1.1rem", // Increased font size
+                    textTransform: "none",
+                    background: "transparent",
+                    py: 1.5, // Increased vertical padding
+                    px: 3, // Increased horizontal padding
+                    "&:hover": {
+                      background: "transparent",
+                      opacity: 0.8,
+                    },
+                  }}
+                >
+                  Majors
+                </Button>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  variant="text"
+                  startIcon={<Person />}
+                  onClick={() => router.push("/profile")}
+                  sx={{
+                    color: "text.primary",
+                    fontWeight: 600,
+                    fontSize: "1.1rem", // Increased font size
+                    textTransform: "none",
+                    background: "transparent",
+                    py: 1.5, // Increased vertical padding
+                    px: 3, // Increased horizontal padding
+                    "&:hover": {
+                      background: "transparent",
+                      opacity: 0.8,
+                    },
+                  }}
+                >
+                  Profile
+                </Button>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  variant="text"
+                  startIcon={<Settings />}
+                  onClick={() => router.push("/settings")}
+                  sx={{
+                    color: "text.primary",
+                    fontWeight: 600,
+                    fontSize: "1.1rem", // Increased font size
+                    textTransform: "none",
+                    background: "transparent",
+                    py: 1.5, // Increased vertical padding
+                    px: 3, // Increased horizontal padding
+                    "&:hover": {
+                      background: "transparent",
+                      opacity: 0.8,
+                    },
+                  }}
+                >
+                  Settings
+                </Button>
+              </motion.div>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+
       {/* Hero Section */}
       <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
         <Box
           sx={{
             py: 8,
+            pt: 16, // Add extra padding top to account for fixed header
             minHeight: "100vh",
             display: "flex",
             alignItems: "center",
@@ -212,13 +361,13 @@ export default function HomePage() {
                       fontWeight: 700,
                       mb: 3,
                       background:
-                        "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%)",
+                        "linear-gradient(135deg, #E68057 0%, #BF7587 50%, #993A8B 100%)",
                       backgroundClip: "text",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       fontSize: { xs: "3.5rem", md: "5rem", lg: "6rem" },
                       letterSpacing: "-0.02em",
-                      textShadow: "0 0 40px rgba(59, 130, 246, 0.3)",
+                      textShadow: "0 0 40px rgba(230, 128, 87, 0.3)",
                     }}
                   >
                     PlanIt
@@ -286,7 +435,7 @@ export default function HomePage() {
                       fontSize: "1.5rem",
                       fontWeight: 600,
                       textTransform: "none",
-                      boxShadow: "0 8px 32px rgba(59, 130, 246, 0.3)",
+                      boxShadow: "0 8px 32px rgba(230, 128, 87, 0.3)",
                       position: "relative",
                       overflow: "hidden",
                       "&::before": {
@@ -297,11 +446,11 @@ export default function HomePage() {
                         width: "100%",
                         height: "100%",
                         background:
-                          "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                          "linear-gradient(90deg, transparent, rgba(255,245,240,0.2), transparent)",
                         transition: "left 0.6s",
                       },
                       "&:hover": {
-                        boxShadow: "0 12px 40px rgba(59, 130, 246, 0.4)",
+                        boxShadow: "0 12px 40px rgba(230, 128, 87, 0.4)",
                       },
                       "&:hover::before": {
                         left: "100%",
@@ -333,7 +482,7 @@ export default function HomePage() {
                 textAlign: "center",
                 mb: 6,
                 fontWeight: 700,
-                background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
+                background: "linear-gradient(135deg, #E68057 0%, #BF7587 100%)",
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -383,7 +532,7 @@ export default function HomePage() {
                 textAlign: "center",
                 mb: 10,
                 fontWeight: 700,
-                background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
+                background: "linear-gradient(135deg, #E68057 0%, #BF7587 100%)",
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -409,7 +558,7 @@ export default function HomePage() {
             {[
               {
                 icon: (
-                  <AutoAwesome sx={{ fontSize: 64, color: "primary.main" }} />
+                  <AutoAwesome sx={{ fontSize: 64, color: "#FFF5F0" }} /> // Light color for visibility
                 ),
                 title: "AI-Powered Course Planning",
                 description:
@@ -417,21 +566,21 @@ export default function HomePage() {
               },
               {
                 icon: (
-                  <Refresh sx={{ fontSize: 64, color: "secondary.main" }} />
+                  <Refresh sx={{ fontSize: 64, color: "#FFF5F0" }} /> // Light color for visibility
                 ),
                 title: "Dynamic Plan Updates",
                 description:
                   "Instantly modify and regenerate your academic plan when your goals or circumstances change. Our system adapts to schedule conflicts, preference updates, and requirement changes.",
               },
               {
-                icon: <School sx={{ fontSize: 64, color: "success.main" }} />,
+                icon: <School sx={{ fontSize: 64, color: "#FFF5F0" }} />, // Light color for visibility
                 title: "Graduation Requirements Tracking",
                 description:
                   "Automatically track graduation requirements, major courses, minor requirements, and general education credits with precision. Never miss a requirement again.",
               },
               {
                 icon: (
-                  <BookmarkBorder sx={{ fontSize: 64, color: "info.main" }} />
+                  <BookmarkBorder sx={{ fontSize: 64, color: "#FFF5F0" }} /> // Light color for visibility
                 ),
                 title: "Multiple Plan Management",
                 description:
@@ -439,7 +588,7 @@ export default function HomePage() {
               },
               {
                 icon: (
-                  <ArrowForward sx={{ fontSize: 64, color: "warning.main" }} />
+                  <ArrowForward sx={{ fontSize: 64, color: "#FFF5F0" }} /> // Light color for visibility
                 ),
                 title: "Semester-by-Semester Planning",
                 description:
@@ -447,76 +596,100 @@ export default function HomePage() {
               },
               {
                 icon: (
-                  <AutoAwesome sx={{ fontSize: 64, color: "error.main" }} />
+                  <AutoAwesome sx={{ fontSize: 64, color: "#FFF5F0" }} /> // Light color for visibility
                 ),
                 title: "Smart Recommendations",
                 description:
                   "Receive intelligent suggestions for course selections, scheduling optimizations, and alternative pathways based on your academic performance and preferences.",
               },
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50, rotateX: 10 }}
-                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.1,
-                  ease: "easeOut",
-                }}
-                whileHover={{
-                  y: -10,
-                  transition: { duration: 0.3 },
-                }}
-              >
-                <Card
-                  sx={{
-                    height: "100%",
-                    textAlign: "center",
-                    background: "rgba(30, 41, 59, 0.4)",
-                    backdropFilter: "blur(20px)",
-                    border: "1px solid rgba(59, 130, 246, 0.2)",
-                    borderRadius: 4,
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      background: "rgba(30, 41, 59, 0.6)",
-                      border: "1px solid rgba(59, 130, 246, 0.4)",
-                      boxShadow: "0 8px 32px rgba(59, 130, 246, 0.2)",
-                    },
+            ].map((feature, index) => {
+              const isSpecial = true; // Make all cards special with light background
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50, rotateX: 10 }}
+                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.1,
+                    ease: "easeOut",
+                  }}
+                  whileHover={{
+                    y: -10,
+                    transition: { duration: 0.3 },
                   }}
                 >
-                  <CardContent sx={{ p: 4 }}>
-                    <motion.div
-                      whileHover={{
-                        scale: 1.1,
-                        rotate: [0, -5, 5, 0],
-                        transition: { duration: 0.5 },
-                      }}
-                    >
-                      <Box sx={{ mb: 3 }}>{feature.icon}</Box>
-                    </motion.div>
-                    <Typography
-                      variant="h5"
-                      component="h4"
-                      sx={{
-                        mb: 3,
-                        fontWeight: 700,
-                        color: "primary.main",
-                      }}
-                    >
-                      {feature.title}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      color="text.secondary"
-                      sx={{ lineHeight: 1.7, fontSize: "1.1rem" }}
-                    >
-                      {feature.description}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                  <Card
+                    sx={{
+                      height: "100%",
+                      textAlign: "center",
+                      background: isSpecial
+                        ? "linear-gradient(135deg, rgba(255, 245, 240, 0.95) 0%, rgba(254, 237, 230, 0.95) 100%)" // Light background for special cards
+                        : "rgba(74, 43, 42, 0.8)", // Dark background for others
+                      backdropFilter: "blur(20px)",
+                      border: isSpecial 
+                        ? "2px solid rgba(230, 128, 87, 0.3)" // Orange border for special
+                        : "1px solid rgba(191, 117, 135, 0.3)", // Rose border for others
+                      borderRadius: 4,
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        background: isSpecial
+                          ? "linear-gradient(135deg, rgba(255, 245, 240, 1) 0%, rgba(254, 237, 230, 1) 100%)"
+                          : "rgba(74, 43, 42, 0.9)",
+                        border: isSpecial 
+                          ? "2px solid rgba(230, 128, 87, 0.5)"
+                          : "1px solid rgba(191, 117, 135, 0.5)",
+                        boxShadow: isSpecial
+                          ? "0 12px 40px rgba(230, 128, 87, 0.4)"
+                          : "0 8px 32px rgba(191, 117, 135, 0.3)",
+                      },
+                    }}
+                  >
+                    <CardContent sx={{ p: 4 }}>
+                      <motion.div
+                        whileHover={{
+                          scale: 1.1,
+                          rotate: [0, -5, 5, 0],
+                          transition: { duration: 0.5 },
+                        }}
+                      >
+                        <Box sx={{ mb: 3 }}>
+                          {/* Update icon colors conditionally */}
+                          {React.cloneElement(feature.icon, {
+                            sx: { 
+                              ...feature.icon.props.sx, 
+                              color: isSpecial ? "#E68057" : "#FFF5F0" 
+                            }
+                          })}
+                        </Box>
+                      </motion.div>
+                      <Typography
+                        variant="h5"
+                        component="h4"
+                        sx={{
+                          mb: 3,
+                          fontWeight: 700,
+                          color: isSpecial ? "#A2574F" : "#FFF5F0", // Dark for light bg, light for dark bg
+                        }}
+                      >
+                        {feature.title}
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{ 
+                          lineHeight: 1.7, 
+                          fontSize: "1.1rem",
+                          color: isSpecial ? "#74433F" : "#E6D5D3", // Dark for light bg, light for dark bg
+                        }}
+                      >
+                        {feature.description}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </Box>
         </Box>
       </Container>
@@ -560,7 +733,7 @@ export default function HomePage() {
             {[
               {
                 icon: (
-                  <AutoAwesome sx={{ fontSize: 48, color: "primary.main" }} />
+                  <AutoAwesome sx={{ fontSize: 48, color: "#E68057" }} /> // Warm orange for primary card
                 ),
                 title: "Generate Your First Plan",
                 description:
@@ -572,7 +745,7 @@ export default function HomePage() {
               {
                 icon: (
                   <BookmarkBorder
-                    sx={{ fontSize: 48, color: "secondary.main" }}
+                    sx={{ fontSize: 48, color: "#FFF5F0" }} // Light color for contrast on dark background
                   />
                 ),
                 title: "View Saved Plans",
@@ -583,7 +756,7 @@ export default function HomePage() {
                 primary: false,
               },
               {
-                icon: <School sx={{ fontSize: 48, color: "success.main" }} />,
+                icon: <School sx={{ fontSize: 48, color: "#FFF5F0" }} />, // Light color for contrast
                 title: "Browse Majors & Minors",
                 description:
                   "Explore available majors and minors to help you make informed decisions about your academic path.",
@@ -592,7 +765,7 @@ export default function HomePage() {
                 primary: false,
               },
               {
-                icon: <Refresh sx={{ fontSize: 48, color: "info.main" }} />,
+                icon: <Refresh sx={{ fontSize: 48, color: "#FFF5F0" }} />, // Light color for contrast
                 title: "Planner Interface",
                 description:
                   "Use our interactive planner to visualize your academic timeline and make adjustments to your course schedule.",
@@ -614,20 +787,24 @@ export default function HomePage() {
                     height: "100%",
                     cursor: "pointer",
                     background: item.primary
-                      ? "linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)"
-                      : "rgba(30, 41, 59, 0.4)",
+                      ? "linear-gradient(135deg, rgba(255, 245, 240, 0.95) 0%, rgba(254, 237, 230, 0.95) 100%)" // Light peachy background for primary
+                      : "rgba(74, 43, 42, 0.8)", // Darker background for others
                     backdropFilter: "blur(20px)",
                     border: item.primary
-                      ? "2px solid rgba(59, 130, 246, 0.4)"
-                      : "1px solid rgba(59, 130, 246, 0.2)",
+                      ? "2px solid rgba(230, 128, 87, 0.3)"
+                      : "1px solid rgba(191, 117, 135, 0.3)",
                     borderRadius: 4,
                     transition: "all 0.3s ease",
                     "&:hover": {
                       background: item.primary
-                        ? "linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%)"
-                        : "rgba(30, 41, 59, 0.6)",
-                      border: "2px solid rgba(59, 130, 246, 0.4)",
-                      boxShadow: "0 8px 32px rgba(59, 130, 246, 0.3)",
+                        ? "linear-gradient(135deg, rgba(255, 245, 240, 1) 0%, rgba(254, 237, 230, 1) 100%)"
+                        : "rgba(74, 43, 42, 0.9)",
+                      border: item.primary 
+                        ? "2px solid rgba(230, 128, 87, 0.5)"
+                        : "2px solid rgba(191, 117, 135, 0.5)",
+                      boxShadow: item.primary
+                        ? "0 12px 40px rgba(230, 128, 87, 0.4)"
+                        : "0 8px 32px rgba(191, 117, 135, 0.3)",
                     },
                   }}
                   onClick={item.onClick}
@@ -640,7 +817,7 @@ export default function HomePage() {
                         sx={{
                           ml: 2,
                           fontWeight: 700,
-                          color: item.primary ? "primary.main" : "text.primary",
+                          color: item.primary ? "#A2574F" : "#FFF5F0", // Dark reddish-brown for primary, light for others
                         }}
                       >
                         {item.title}
@@ -648,8 +825,11 @@ export default function HomePage() {
                     </Box>
                     <Typography
                       variant="body1"
-                      color="text.secondary"
-                      sx={{ mb: 3, lineHeight: 1.6 }}
+                      sx={{ 
+                        mb: 3, 
+                        lineHeight: 1.6,
+                        color: item.primary ? "#74433F" : "#E6D5D3", // Darker brown for primary, lighter for others
+                      }}
                     >
                       {item.description}
                     </Typography>
@@ -677,7 +857,7 @@ export default function HomePage() {
         <Box
           sx={{
             py: 8,
-            borderTop: "1px solid rgba(59, 130, 246, 0.2)",
+            borderTop: "1px solid rgba(230, 128, 87, 0.2)",
             mt: 8,
           }}
         >
@@ -723,67 +903,12 @@ export default function HomePage() {
                     fontSize: "1.2rem",
                     fontWeight: 600,
                     textTransform: "none",
-                    boxShadow: "0 8px 32px rgba(59, 130, 246, 0.3)",
+                    boxShadow: "0 8px 32px rgba(230, 128, 87, 0.3)",
                   }}
                 >
                   Get Started Now
                 </Button>
               </motion.div>
-            </Box>
-
-            {/* Quick Links */}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: { xs: "column", md: "row" },
-                justifyContent: "center",
-                alignItems: "center",
-                gap: { xs: 2, md: 6 },
-                pt: 4,
-                borderTop: "1px solid rgba(59, 130, 246, 0.1)",
-              }}
-            >
-              {[
-                { label: "Generate Plan", onClick: handleGetStarted },
-                {
-                  label: "Saved Plans",
-                  onClick: () => router.push("/saved-plans"),
-                },
-                {
-                  label: "Browse Majors",
-                  onClick: () => router.push("/majors"),
-                },
-                {
-                  label: "Academic Planner",
-                  onClick: () => router.push("/planner"),
-                },
-                {
-                  label: "Profile Settings",
-                  onClick: () => router.push("/profile"),
-                },
-              ].map((link, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button
-                    variant="text"
-                    onClick={link.onClick}
-                    sx={{
-                      color: "primary.main",
-                      fontWeight: 600,
-                      textTransform: "none",
-                      fontSize: "1.1rem",
-                      "&:hover": {
-                        background: "rgba(59, 130, 246, 0.1)",
-                      },
-                    }}
-                  >
-                    {link.label}
-                  </Button>
-                </motion.div>
-              ))}
             </Box>
           </motion.div>
         </Box>

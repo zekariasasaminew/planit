@@ -1,12 +1,12 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FDF8F6; /* Very light warm beige background */
+  --foreground: #4A2B2A; /* Very dark warm brown for text */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #FDF8F6; /* Keep light warm background even in dark mode preference */
+    --foreground: #4A2B2A; /* Very dark warm brown for text */
   }
 }
 
