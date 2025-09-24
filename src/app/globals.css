@@ -14,6 +14,8 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  font-size: 16px; /* Ensure base font size is normal */
+  line-height: 1.5; /* Normal line height */
 }
 
 body {
@@ -23,6 +25,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  zoom: 1; /* Prevent any zoom issues */
+  -webkit-text-size-adjust: 100%; /* Prevent iOS text size adjustment */
+  -ms-text-size-adjust: 100%; /* Prevent IE text size adjustment */
 }
 
 * {
@@ -34,6 +39,12 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Normalize button and input sizes */
+button, input, select, textarea {
+  font-size: inherit;
+  font-family: inherit;
 }
 
 @media (prefers-color-scheme: dark) {

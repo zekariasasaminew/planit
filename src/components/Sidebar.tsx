@@ -105,7 +105,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
                   selected={isActive}
                   sx={{
                     borderRadius: 3,
-                    py: 1.5,
+                    py: 1,
                     px: 2,
                     transition: "all 0.2s ease-in-out",
                     "&.Mui-selected": {

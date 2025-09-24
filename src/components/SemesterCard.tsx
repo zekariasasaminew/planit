@@ -139,7 +139,7 @@ export const SemesterCard: React.FC<SemesterCardProps> = ({ semester }) => {
               color: "text.secondary",
             }}
           >
-            <School sx={{ fontSize: 48, opacity: 0.3, mb: 1 }} />
+            <School sx={{ fontSize: 32, opacity: 0.3, mb: 1 }} />
             <Typography variant="body2">No courses planned</Typography>
           </Box>
         )}

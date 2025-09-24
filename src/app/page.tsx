@@ -110,7 +110,7 @@ export default function HomePage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              py: 4, // Increased vertical padding
+              py: 2,
             }}
           >
             {/* Centered Navigation Links - No background, completely transparent */}
@@ -132,11 +132,10 @@ export default function HomePage() {
                   sx={{
                     color: "text.primary",
                     fontWeight: 600,
-                    fontSize: "1.1rem", // Increased font size
                     textTransform: "none",
                     background: "transparent",
-                    py: 1.5, // Increased vertical padding
-                    px: 3, // Increased horizontal padding
+                    py: 1,
+                    px: 2,
                     "&:hover": {
                       background: "transparent",
                       opacity: 0.8,
@@ -158,11 +157,10 @@ export default function HomePage() {
                   sx={{
                     color: "text.primary",
                     fontWeight: 600,
-                    fontSize: "1.1rem", // Increased font size
                     textTransform: "none",
                     background: "transparent",
-                    py: 1.5, // Increased vertical padding
-                    px: 3, // Increased horizontal padding
+                    py: 1,
+                    px: 2,
                     "&:hover": {
                       background: "transparent",
                       opacity: 0.8,
@@ -184,11 +182,10 @@ export default function HomePage() {
                   sx={{
                     color: "text.primary",
                     fontWeight: 600,
-                    fontSize: "1.1rem", // Increased font size
                     textTransform: "none",
                     background: "transparent",
-                    py: 1.5, // Increased vertical padding
-                    px: 3, // Increased horizontal padding
+                    py: 1,
+                    px: 2,
                     "&:hover": {
                       background: "transparent",
                       opacity: 0.8,
@@ -210,11 +207,10 @@ export default function HomePage() {
                   sx={{
                     color: "text.primary",
                     fontWeight: 600,
-                    fontSize: "1.1rem", // Increased font size
                     textTransform: "none",
                     background: "transparent",
-                    py: 1.5, // Increased vertical padding
-                    px: 3, // Increased horizontal padding
+                    py: 1,
+                    px: 2,
                     "&:hover": {
                       background: "transparent",
                       opacity: 0.8,
@@ -236,11 +232,10 @@ export default function HomePage() {
                   sx={{
                     color: "text.primary",
                     fontWeight: 600,
-                    fontSize: "1.1rem", // Increased font size
                     textTransform: "none",
                     background: "transparent",
-                    py: 1.5, // Increased vertical padding
-                    px: 3, // Increased horizontal padding
+                    py: 1,
+                    px: 2,
                     "&:hover": {
                       background: "transparent",
                       opacity: 0.8,
@@ -259,8 +254,8 @@ export default function HomePage() {
       <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
         <Box
           sx={{
-            py: 8,
-            pt: 16, // Add extra padding top to account for fixed header
+            py: 4,
+            pt: 8,
             minHeight: "100vh",
             display: "flex",
             alignItems: "center",
@@ -292,7 +287,7 @@ export default function HomePage() {
                     }}
                   >
                     <School
-                      sx={{ fontSize: 120, color: "primary.main", mb: 3 }}
+                      sx={{ fontSize: 48, color: "primary.main", mb: 2 }}
                     />
                   </motion.div>
                   <Typography
@@ -306,9 +301,8 @@ export default function HomePage() {
                       backgroundClip: "text",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
-                      fontSize: { xs: "3.5rem", md: "5rem", lg: "6rem" },
                       letterSpacing: "-0.02em",
-                      textShadow: "0 0 40px rgba(230, 128, 87, 0.3)",
+                      textShadow: "0 0 20px rgba(230, 128, 87, 0.3)",
                     }}
                   >
                     PlanIt
@@ -323,13 +317,12 @@ export default function HomePage() {
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
                 <Typography
-                  variant="h3"
+                  variant="h2"
                   component="h2"
                   sx={{
                     fontWeight: 600,
-                    mb: 4,
+                    mb: 3,
                     color: "primary.main",
-                    fontSize: { xs: "2rem", md: "2.5rem", lg: "3rem" },
                   }}
                 >
                   Your Academic Journey, Simplified
@@ -339,10 +332,9 @@ export default function HomePage() {
                   variant="h5"
                   color="text.secondary"
                   sx={{
-                    mb: 8,
-                    maxWidth: 900,
+                    mb: 6,
+                    maxWidth: 700,
                     mx: "auto",
-                    fontSize: { xs: "1.2rem", md: "1.5rem" },
                     lineHeight: 1.6,
                     fontWeight: 400,
                   }}
@@ -366,17 +358,16 @@ export default function HomePage() {
                 >
                   <Button
                     variant="contained"
-                    size="large"
                     onClick={handleGetStarted}
                     endIcon={<ArrowForward />}
                     sx={{
-                      py: 3,
-                      px: 8,
-                      borderRadius: 6,
-                      fontSize: "1.5rem",
+                      py: 1.5,
+                      px: 4,
+                      borderRadius: 3,
+                      fontSize: "1.1rem",
                       fontWeight: 600,
                       textTransform: "none",
-                      boxShadow: "0 8px 32px rgba(230, 128, 87, 0.3)",
+                      boxShadow: "0 4px 16px rgba(230, 128, 87, 0.3)",
                       position: "relative",
                       overflow: "hidden",
                       "&::before": {
@@ -409,7 +400,7 @@ export default function HomePage() {
 
       {/* What is PlanIt Section */}
       <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
-        <Box sx={{ py: 12 }}>
+        <Box sx={{ py: 6 }}>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -459,7 +450,7 @@ export default function HomePage() {
 
       {/* Features Section */}
       <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
-        <Box sx={{ py: 12 }}>
+        <Box sx={{ py: 6 }}>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -499,20 +490,20 @@ export default function HomePage() {
             {[
               {
                 // Light color for visibility
-                icon: <AutoAwesome sx={{ fontSize: 64, color: "#FFF5F0" }} />,
+                icon: <AutoAwesome sx={{ fontSize: 32, color: "#FFF5F0" }} />,
                 title: "AI-Powered Course Planning",
                 description:
                   "Generate personalized academic plans using advanced AI that understands course prerequisites, requirements, and your unique preferences to create the optimal path to graduation.",
               },
               {
                 // Light color for visibility
-                icon: <Refresh sx={{ fontSize: 64, color: "#FFF5F0" }} />,
+                icon: <Refresh sx={{ fontSize: 32, color: "#FFF5F0" }} />,
                 title: "Dynamic Plan Updates",
                 description:
                   "Instantly modify and regenerate your academic plan when your goals or circumstances change. Our system adapts to schedule conflicts, preference updates, and requirement changes.",
               },
               {
-                icon: <School sx={{ fontSize: 64, color: "#FFF5F0" }} />, // Light color for visibility
+                icon: <School sx={{ fontSize: 32, color: "#FFF5F0" }} />, // Light color for visibility
                 title: "Graduation Requirements Tracking",
                 description:
                   "Automatically track graduation requirements, major courses, minor requirements, and general education credits with precision. Never miss a requirement again.",
@@ -520,7 +511,7 @@ export default function HomePage() {
               {
                 // Light color for visibility
                 icon: (
-                  <BookmarkBorder sx={{ fontSize: 64, color: "#FFF5F0" }} />
+                  <BookmarkBorder sx={{ fontSize: 32, color: "#FFF5F0" }} />
                 ),
                 title: "Multiple Plan Management",
                 description:
@@ -528,14 +519,14 @@ export default function HomePage() {
               },
               {
                 // Light color for visibility
-                icon: <ArrowForward sx={{ fontSize: 64, color: "#FFF5F0" }} />,
+                icon: <ArrowForward sx={{ fontSize: 32, color: "#FFF5F0" }} />,
                 title: "Semester-by-Semester Planning",
                 description:
                   "Get detailed semester breakdowns with course loads, credit hours, and timeline visualization. Plan years ahead with confidence and clarity.",
               },
               {
                 // Light color for visibility
-                icon: <AutoAwesome sx={{ fontSize: 64, color: "#FFF5F0" }} />,
+                icon: <AutoAwesome sx={{ fontSize: 32, color: "#FFF5F0" }} />,
                 title: "Smart Recommendations",
                 description:
                   "Receive intelligent suggestions for course selections, scheduling optimizations, and alternative pathways based on your academic performance and preferences.",
