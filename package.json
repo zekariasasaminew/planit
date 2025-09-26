@@ -27,7 +27,7 @@
     "@types/uuid": "^10.0.0",
     "dotenv": "^17.2.2",
     "drizzle-orm": "^0.44.4",
-    "framer-motion": "^12.23.12",
+    "framer-motion": "^12.23.22",
     "next": "15.5.2",
     "openai": "^5.16.0",
     "pg": "^8.12.0",
