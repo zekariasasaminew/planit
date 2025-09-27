@@ -51,19 +51,17 @@ export const SignInCard: React.FC = () => {
         <Button
           variant="contained"
           fullWidth
-          size="large"
           onClick={handleGoogleSignIn}
           disabled={loading}
           startIcon={
             loading ? (
-              <CircularProgress size={20} color="inherit" />
+              <CircularProgress size={16} color="inherit" />
             ) : (
               <Google />
             )
           }
           sx={{
-            py: 1.5,
-            fontSize: "1.1rem",
+            py: 1,
             fontWeight: 600,
             textTransform: "none",
             backgroundColor: "#4285f4",

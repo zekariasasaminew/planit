@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Box, CircularProgress, Typography, Alert } from "@mui/material";
 import { supabase } from "@/lib/supabaseClient";
+import { AnimatedBackground } from "@/components";
 
 export default function AuthCallbackPage() {
   const router = useRouter();
@@ -47,12 +48,13 @@ export default function AuthCallbackPage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        bgcolor: "background.default",
+        position: "relative",
         textAlign: "center",
         p: 3,
       }}
     >
-      <div>
+      <AnimatedBackground />
+      <div style={{ zIndex: 1 }}>
         {error ? (
           <Alert severity="error" sx={{ mb: 2, maxWidth: 400 }}>
             <Typography variant="h6" sx={{ mb: 1 }}>

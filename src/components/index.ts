@@ -11,3 +11,5 @@ export { ProtectedRoute } from "./ProtectedRoute";
 export { DownloadDialog } from "./DownloadDialog";
 export { ShareDialog } from "./ShareDialog";
 export { ConfirmationDialog } from "./ConfirmationDialog";
+export { FloatingNavigation } from "./FloatingNavigation";
+export { default as AnimatedBackground } from "./AnimatedBackground";
