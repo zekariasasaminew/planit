@@ -20,7 +20,6 @@ import {
   School,
   Settings,
 } from "@mui/icons-material";
-import { iconSizes } from "@/theme/theme";
 
 interface SidebarProps {
   open: boolean;
