@@ -12,6 +12,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Menu, AutoAwesome, AccountCircle } from "@mui/icons-material";
+import { iconSizes } from "@/theme/theme";
 
 interface AppBarProps {
   open: boolean;
@@ -98,7 +99,7 @@ export const AppBar: React.FC<AppBarProps> = ({
               onClick={() => router.push("/profile")}
             >
               <Avatar sx={{ width: 28, height: 28, bgcolor: "secondary.main" }}>
-                <AccountCircle sx={{ fontSize: 18 }} />
+                <AccountCircle sx={{ fontSize: iconSizes.small }} />
               </Avatar>
             </IconButton>
           </Tooltip>

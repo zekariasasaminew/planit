@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { School, Schedule } from "@mui/icons-material";
 import { Semester, Course, ChipColor } from "@/types";
+import { iconSizes } from "@/theme/theme";
 
 interface SemesterCardProps {
   semester: Semester;
@@ -64,7 +65,13 @@ export const SemesterCard: React.FC<SemesterCardProps> = ({ semester }) => {
         }
         subheader={
           <Box sx={{ display: "flex", alignItems: "center", mt: 0.5 }}>
-            <Schedule sx={{ fontSize: 16, mr: 0.5, color: "text.secondary" }} />
+            <Schedule
+              sx={{
+                fontSize: iconSizes.small,
+                mr: 0.5,
+                color: "text.secondary",
+              }}
+            />
             <Typography variant="body2" color="text.secondary">
               {semester.totalCredits} credits • {semester.courses.length}{" "}
               courses
@@ -139,7 +146,7 @@ export const SemesterCard: React.FC<SemesterCardProps> = ({ semester }) => {
               color: "text.secondary",
             }}
           >
-            <School sx={{ fontSize: 32, opacity: 0.3, mb: 1 }} />
+            <School sx={{ fontSize: iconSizes.large, opacity: 0.3, mb: 1 }} />
             <Typography variant="body2">No courses planned</Typography>
           </Box>
         )}

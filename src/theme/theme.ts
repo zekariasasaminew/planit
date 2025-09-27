@@ -1,38 +1,70 @@
 import { createTheme } from "@mui/material/styles";
 
+// Standardized spacing scale
+export const spacing = {
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  xxl: 48,
+  xxxl: 64,
+} as const;
+
+// Standardized icon sizes
+export const iconSizes = {
+  small: 16,
+  medium: 24,
+  large: 32,
+  xlarge: 48,
+} as const;
+
 export const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#E68057", // Warm orange
-      light: "#FFF5F0", // Very light peach/cream
-      dark: "#A2574F", // Reddish brown
+      main: "#E68057",
+      light: "#FFF5F0",
+      dark: "#A2574F",
     },
     secondary: {
-      main: "#BF7587", // Muted rose/mauve
-      light: "#E68057", // Warm orange
-      dark: "#993A8B", // Deep purple
+      main: "#BF7587",
+      light: "#E68057",
+      dark: "#993A8B",
     },
     background: {
-      default: "#FDF8F6", // Very light warm beige background
-      paper: "#FAF5F2", // Slightly warmer light beige for cards
+      default: "#FDF8F6",
+      paper: "#FAF5F2",
     },
     text: {
-      primary: "#4A2B2A", // Very dark warm brown for text
-      secondary: "#A2574F", // Reddish brown for secondary text
+      primary: "#4A2B2A",
+      secondary: "#A2574F",
     },
     success: {
       main: "#BF7587",
       light: "#FFF5F0",
       dark: "#993A8B",
     },
+    error: {
+      main: "#d32f2f",
+      light: "#ffcdd2",
+      dark: "#c62828",
+    },
+    warning: {
+      main: "#ed6c02",
+      light: "#fff3e0",
+      dark: "#e65100",
+    },
+    info: {
+      main: "#0288d1",
+      light: "#e3f2fd",
+      dark: "#01579b",
+    },
   },
   typography: {
-    // Set reasonable base font size
     fontSize: 14,
-    // Normalize heading sizes
     h1: {
-      fontSize: "2.5rem", // Much smaller than 6rem
+      fontSize: "2.5rem",
       fontWeight: 700,
       lineHeight: 1.2,
       "@media (max-width:600px)": {
@@ -89,22 +121,23 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           fontSize: "0.875rem",
-          padding: "8px 16px",
+          padding: `${spacing.sm}px ${spacing.md}px`,
+          borderRadius: spacing.sm,
         },
       },
     },
     MuiIconButton: {
       styleOverrides: {
         root: {
-          padding: "8px",
+          padding: spacing.sm,
         },
       },
     },
     MuiAvatar: {
       styleOverrides: {
         root: {
-          width: "32px",
-          height: "32px",
+          width: spacing.xl,
+          height: spacing.xl,
           fontSize: "1rem",
         },
       },
@@ -112,8 +145,23 @@ export const theme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          height: "28px", // Smaller chips
+          height: 28,
           fontSize: "0.8125rem",
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: spacing.md,
+          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: spacing.md,
         },
       },
     },
@@ -129,24 +177,17 @@ export const theme = createTheme({
     MuiListItemButton: {
       styleOverrides: {
         root: {
-          paddingTop: "8px",
-          paddingBottom: "8px",
-        },
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          padding: "16px", // Normalize card padding
+          paddingTop: spacing.sm,
+          paddingBottom: spacing.sm,
         },
       },
     },
     MuiCardContent: {
       styleOverrides: {
         root: {
-          padding: "16px",
+          padding: spacing.md,
           "&:last-child": {
-            paddingBottom: "16px",
+            paddingBottom: spacing.md,
           },
         },
       },

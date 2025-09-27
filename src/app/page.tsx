@@ -22,6 +22,7 @@ import {
 import { motion } from "framer-motion";
 import { useAuth } from "@/app/context/authContext";
 import { AnimatedBackground } from "@/components";
+import { iconSizes } from "@/theme/theme";
 
 export default function HomePage() {
   const router = useRouter();
@@ -37,8 +38,7 @@ export default function HomePage() {
         setCheckingPlans(true);
         const response = await fetch("/api/plans");
         if (response.ok) {
-          const plans = await response.json();
-          console.log(`Found ${plans.length} saved plans`);
+          await response.json();
         }
       } catch (error) {
         console.error("Error checking saved plans:", error);
@@ -75,7 +75,9 @@ export default function HomePage() {
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
           >
-            <AutoAwesome sx={{ fontSize: 48, color: "primary.main", mb: 2 }} />
+            <AutoAwesome
+              sx={{ fontSize: iconSizes.xlarge, color: "primary.main", mb: 2 }}
+            />
           </motion.div>
           <Typography variant="h6" color="text.secondary">
             {checkingPlans ? "Setting up your dashboard..." : "Loading..."}
@@ -287,7 +289,11 @@ export default function HomePage() {
                     }}
                   >
                     <School
-                      sx={{ fontSize: 48, color: "primary.main", mb: 2 }}
+                      sx={{
+                        fontSize: iconSizes.xlarge,
+                        color: "primary.main",
+                        mb: 2,
+                      }}
                     />
                   </motion.div>
                   <Typography
@@ -489,44 +495,62 @@ export default function HomePage() {
           >
             {[
               {
-                // Light color for visibility
-                icon: <AutoAwesome sx={{ fontSize: 32, color: "#FFF5F0" }} />,
+                icon: (
+                  <AutoAwesome
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "AI-Powered Course Planning",
                 description:
                   "Generate personalized academic plans using advanced AI that understands course prerequisites, requirements, and your unique preferences to create the optimal path to graduation.",
               },
               {
-                // Light color for visibility
-                icon: <Refresh sx={{ fontSize: 32, color: "#FFF5F0" }} />,
+                icon: (
+                  <Refresh
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Dynamic Plan Updates",
                 description:
                   "Instantly modify and regenerate your academic plan when your goals or circumstances change. Our system adapts to schedule conflicts, preference updates, and requirement changes.",
               },
               {
-                icon: <School sx={{ fontSize: 32, color: "#FFF5F0" }} />, // Light color for visibility
+                icon: (
+                  <School
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Graduation Requirements Tracking",
                 description:
                   "Automatically track graduation requirements, major courses, minor requirements, and general education credits with precision. Never miss a requirement again.",
               },
               {
-                // Light color for visibility
                 icon: (
-                  <BookmarkBorder sx={{ fontSize: 32, color: "#FFF5F0" }} />
+                  <BookmarkBorder
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
                 ),
                 title: "Multiple Plan Management",
                 description:
                   "Save and compare multiple academic plans. Explore different majors, minors, or graduation timelines side-by-side to make informed decisions about your future.",
               },
               {
-                // Light color for visibility
-                icon: <ArrowForward sx={{ fontSize: 32, color: "#FFF5F0" }} />,
+                icon: (
+                  <ArrowForward
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Semester-by-Semester Planning",
                 description:
                   "Get detailed semester breakdowns with course loads, credit hours, and timeline visualization. Plan years ahead with confidence and clarity.",
               },
               {
                 // Light color for visibility
-                icon: <AutoAwesome sx={{ fontSize: 32, color: "#FFF5F0" }} />,
+                icon: (
+                  <AutoAwesome
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Smart Recommendations",
                 description:
                   "Receive intelligent suggestions for course selections, scheduling optimizations, and alternative pathways based on your academic performance and preferences.",
@@ -662,7 +686,11 @@ export default function HomePage() {
             {[
               {
                 // Warm orange for primary card
-                icon: <AutoAwesome sx={{ fontSize: 48, color: "#E68057" }} />,
+                icon: (
+                  <AutoAwesome
+                    sx={{ fontSize: iconSizes.xlarge, color: "#E68057" }}
+                  />
+                ),
                 title: "Generate Your First Plan",
                 description:
                   "Start your academic planning journey by creating a personalized plan based on your major, preferences, and timeline.",
@@ -673,7 +701,7 @@ export default function HomePage() {
               {
                 icon: (
                   <BookmarkBorder
-                    sx={{ fontSize: 48, color: "#FFF5F0" }} // Light color for contrast on dark background
+                    sx={{ fontSize: iconSizes.xlarge, color: "#FFF5F0" }}
                   />
                 ),
                 title: "View Saved Plans",
@@ -684,7 +712,11 @@ export default function HomePage() {
                 primary: false,
               },
               {
-                icon: <School sx={{ fontSize: 48, color: "#FFF5F0" }} />, // Light color for contrast
+                icon: (
+                  <School
+                    sx={{ fontSize: iconSizes.xlarge, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Browse Majors & Minors",
                 description:
                   "Explore available majors and minors to help you make informed decisions about your academic path.",
@@ -693,7 +725,11 @@ export default function HomePage() {
                 primary: false,
               },
               {
-                icon: <Refresh sx={{ fontSize: 48, color: "#FFF5F0" }} />, // Light color for contrast
+                icon: (
+                  <Refresh
+                    sx={{ fontSize: iconSizes.xlarge, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Planner Interface",
                 description:
                   "Use our interactive planner to visualize your academic timeline and make adjustments to your course schedule.",

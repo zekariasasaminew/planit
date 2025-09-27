@@ -4,6 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { Box, IconButton, Avatar, Tooltip, useTheme } from "@mui/material";
 import { Menu, Close, AccountCircle } from "@mui/icons-material";
+import { spacing } from "@/theme/theme";
 
 interface FloatingNavigationProps {
   open: boolean;
@@ -21,10 +22,10 @@ export const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
     <Box
       sx={{
         position: "fixed",
-        top: 20,
+        top: spacing.lg,
         left: {
-          xs: 0, // Always left on mobile
-          md: open ? 300 : 0, // Shift right on desktop when sidebar is open (280px sidebar + 20px margin)
+          xs: 0,
+          md: open ? 300 : 0,
         },
         right: 0,
         zIndex: 1300, // Higher than sidebar z-index (1200)
