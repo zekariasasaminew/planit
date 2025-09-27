@@ -21,84 +21,15 @@ import {
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useAuth } from "@/app/context/authContext";
-
-// Animated background component
-const AnimatedBackground = () => {
-  return (
-    <Box
-      sx={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        overflow: "hidden",
-        zIndex: -1,
-      }}
-    >
-      {/* Animated grid */}
-      <motion.div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundImage: `
-            linear-gradient(rgba(230, 128, 87, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(230, 128, 87, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
-        }}
-        animate={{
-          backgroundPosition: ["0px 0px", "50px 50px"],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-      />
-
-      {/* Floating orbs */}
-      {[...Array(3)].map((_, i) => (
-        <motion.div
-          key={i}
-          style={{
-            position: "absolute",
-            width: "200px",
-            height: "200px",
-            borderRadius: "50%",
-            background: `radial-gradient(circle, rgba(191, 117, 135, 0.15) 0%, transparent 70%)`,
-            filter: "blur(40px)",
-          }}
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 8 + i * 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 2,
-          }}
-          initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-          }}
-        />
-      ))}
-    </Box>
-  );
-};
+import { AnimatedBackground } from "@/components";
+import { iconSizes } from "@/theme/theme";
 
 export default function HomePage() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
   const [checkingPlans, setCheckingPlans] = useState(false);
 
-  // Check for saved plans when user is authenticated
+  // Check for saved plans when user is authenticated (removed auto-redirect)
   useEffect(() => {
     const checkSavedPlans = async () => {
       if (!user) return;
@@ -107,12 +38,7 @@ export default function HomePage() {
         setCheckingPlans(true);
         const response = await fetch("/api/plans");
         if (response.ok) {
-          const plans = await response.json();
-          if (plans.length > 0) {
-            // Redirect to saved plans if user has plans
-            router.push("/saved-plans");
-            return;
-          }
+          await response.json();
         }
       } catch (error) {
         console.error("Error checking saved plans:", error);
@@ -133,7 +59,7 @@ export default function HomePage() {
     }
   }, [user, router]);
 
-  // Show loading while checking auth or redirecting
+  // Show loading while checking auth
   if (authLoading || user === null || user === undefined || checkingPlans) {
     return (
       <Box
@@ -149,10 +75,12 @@ export default function HomePage() {
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
           >
-            <AutoAwesome sx={{ fontSize: 48, color: "primary.main", mb: 2 }} />
+            <AutoAwesome
+              sx={{ fontSize: iconSizes.xlarge, color: "primary.main", mb: 2 }}
+            />
           </motion.div>
           <Typography variant="h6" color="text.secondary">
-            {checkingPlans ? "Checking your plans..." : "Loading..."}
+            {checkingPlans ? "Setting up your dashboard..." : "Loading..."}
           </Typography>
         </Box>
       </Box>
@@ -184,7 +112,7 @@ export default function HomePage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              py: 4, // Increased vertical padding
+              py: 2,
             }}
           >
             {/* Centered Navigation Links - No background, completely transparent */}
@@ -206,11 +134,10 @@ export default function HomePage() {
                   sx={{
                     color: "text.primary",
                     fontWeight: 600,
-                    fontSize: "1.1rem", // Increased font size
                     textTransform: "none",
                     background: "transparent",
-                    py: 1.5, // Increased vertical padding
-                    px: 3, // Increased horizontal padding
+                    py: 1,
+                    px: 2,
                     "&:hover": {
                       background: "transparent",
                       opacity: 0.8,
@@ -232,11 +159,10 @@ export default function HomePage() {
                   sx={{
                     color: "text.primary",
                     fontWeight: 600,
-                    fontSize: "1.1rem", // Increased font size
                     textTransform: "none",
                     background: "transparent",
-                    py: 1.5, // Increased vertical padding
-                    px: 3, // Increased horizontal padding
+                    py: 1,
+                    px: 2,
                     "&:hover": {
                       background: "transparent",
                       opacity: 0.8,
@@ -258,11 +184,10 @@ export default function HomePage() {
                   sx={{
                     color: "text.primary",
                     fontWeight: 600,
-                    fontSize: "1.1rem", // Increased font size
                     textTransform: "none",
                     background: "transparent",
-                    py: 1.5, // Increased vertical padding
-                    px: 3, // Increased horizontal padding
+                    py: 1,
+                    px: 2,
                     "&:hover": {
                       background: "transparent",
                       opacity: 0.8,
@@ -284,11 +209,10 @@ export default function HomePage() {
                   sx={{
                     color: "text.primary",
                     fontWeight: 600,
-                    fontSize: "1.1rem", // Increased font size
                     textTransform: "none",
                     background: "transparent",
-                    py: 1.5, // Increased vertical padding
-                    px: 3, // Increased horizontal padding
+                    py: 1,
+                    px: 2,
                     "&:hover": {
                       background: "transparent",
                       opacity: 0.8,
@@ -310,11 +234,10 @@ export default function HomePage() {
                   sx={{
                     color: "text.primary",
                     fontWeight: 600,
-                    fontSize: "1.1rem", // Increased font size
                     textTransform: "none",
                     background: "transparent",
-                    py: 1.5, // Increased vertical padding
-                    px: 3, // Increased horizontal padding
+                    py: 1,
+                    px: 2,
                     "&:hover": {
                       background: "transparent",
                       opacity: 0.8,
@@ -333,8 +256,8 @@ export default function HomePage() {
       <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
         <Box
           sx={{
-            py: 8,
-            pt: 16, // Add extra padding top to account for fixed header
+            py: 4,
+            pt: 8,
             minHeight: "100vh",
             display: "flex",
             alignItems: "center",
@@ -366,7 +289,11 @@ export default function HomePage() {
                     }}
                   >
                     <School
-                      sx={{ fontSize: 120, color: "primary.main", mb: 3 }}
+                      sx={{
+                        fontSize: iconSizes.xlarge,
+                        color: "primary.main",
+                        mb: 2,
+                      }}
                     />
                   </motion.div>
                   <Typography
@@ -380,9 +307,8 @@ export default function HomePage() {
                       backgroundClip: "text",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
-                      fontSize: { xs: "3.5rem", md: "5rem", lg: "6rem" },
                       letterSpacing: "-0.02em",
-                      textShadow: "0 0 40px rgba(230, 128, 87, 0.3)",
+                      textShadow: "0 0 20px rgba(230, 128, 87, 0.3)",
                     }}
                   >
                     PlanIt
@@ -397,13 +323,12 @@ export default function HomePage() {
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
                 <Typography
-                  variant="h3"
+                  variant="h2"
                   component="h2"
                   sx={{
                     fontWeight: 600,
-                    mb: 4,
+                    mb: 3,
                     color: "primary.main",
-                    fontSize: { xs: "2rem", md: "2.5rem", lg: "3rem" },
                   }}
                 >
                   Your Academic Journey, Simplified
@@ -413,10 +338,9 @@ export default function HomePage() {
                   variant="h5"
                   color="text.secondary"
                   sx={{
-                    mb: 8,
-                    maxWidth: 900,
+                    mb: 6,
+                    maxWidth: 700,
                     mx: "auto",
-                    fontSize: { xs: "1.2rem", md: "1.5rem" },
                     lineHeight: 1.6,
                     fontWeight: 400,
                   }}
@@ -440,17 +364,16 @@ export default function HomePage() {
                 >
                   <Button
                     variant="contained"
-                    size="large"
                     onClick={handleGetStarted}
                     endIcon={<ArrowForward />}
                     sx={{
-                      py: 3,
-                      px: 8,
-                      borderRadius: 6,
-                      fontSize: "1.5rem",
+                      py: 1.5,
+                      px: 4,
+                      borderRadius: 3,
+                      fontSize: "1.1rem",
                       fontWeight: 600,
                       textTransform: "none",
-                      boxShadow: "0 8px 32px rgba(230, 128, 87, 0.3)",
+                      boxShadow: "0 4px 16px rgba(230, 128, 87, 0.3)",
                       position: "relative",
                       overflow: "hidden",
                       "&::before": {
@@ -483,7 +406,7 @@ export default function HomePage() {
 
       {/* What is PlanIt Section */}
       <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
-        <Box sx={{ py: 12 }}>
+        <Box sx={{ py: 6 }}>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -533,7 +456,7 @@ export default function HomePage() {
 
       {/* Features Section */}
       <Container maxWidth="xl" sx={{ position: "relative", zIndex: 1 }}>
-        <Box sx={{ py: 12 }}>
+        <Box sx={{ py: 6 }}>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -572,44 +495,62 @@ export default function HomePage() {
           >
             {[
               {
-                // Light color for visibility
-                icon: <AutoAwesome sx={{ fontSize: 64, color: "#FFF5F0" }} />,
+                icon: (
+                  <AutoAwesome
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "AI-Powered Course Planning",
                 description:
                   "Generate personalized academic plans using advanced AI that understands course prerequisites, requirements, and your unique preferences to create the optimal path to graduation.",
               },
               {
-                // Light color for visibility
-                icon: <Refresh sx={{ fontSize: 64, color: "#FFF5F0" }} />,
+                icon: (
+                  <Refresh
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Dynamic Plan Updates",
                 description:
                   "Instantly modify and regenerate your academic plan when your goals or circumstances change. Our system adapts to schedule conflicts, preference updates, and requirement changes.",
               },
               {
-                icon: <School sx={{ fontSize: 64, color: "#FFF5F0" }} />, // Light color for visibility
+                icon: (
+                  <School
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Graduation Requirements Tracking",
                 description:
                   "Automatically track graduation requirements, major courses, minor requirements, and general education credits with precision. Never miss a requirement again.",
               },
               {
-                // Light color for visibility
                 icon: (
-                  <BookmarkBorder sx={{ fontSize: 64, color: "#FFF5F0" }} />
+                  <BookmarkBorder
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
                 ),
                 title: "Multiple Plan Management",
                 description:
                   "Save and compare multiple academic plans. Explore different majors, minors, or graduation timelines side-by-side to make informed decisions about your future.",
               },
               {
-                // Light color for visibility
-                icon: <ArrowForward sx={{ fontSize: 64, color: "#FFF5F0" }} />,
+                icon: (
+                  <ArrowForward
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Semester-by-Semester Planning",
                 description:
                   "Get detailed semester breakdowns with course loads, credit hours, and timeline visualization. Plan years ahead with confidence and clarity.",
               },
               {
                 // Light color for visibility
-                icon: <AutoAwesome sx={{ fontSize: 64, color: "#FFF5F0" }} />,
+                icon: (
+                  <AutoAwesome
+                    sx={{ fontSize: iconSizes.large, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Smart Recommendations",
                 description:
                   "Receive intelligent suggestions for course selections, scheduling optimizations, and alternative pathways based on your academic performance and preferences.",
@@ -745,7 +686,11 @@ export default function HomePage() {
             {[
               {
                 // Warm orange for primary card
-                icon: <AutoAwesome sx={{ fontSize: 48, color: "#E68057" }} />,
+                icon: (
+                  <AutoAwesome
+                    sx={{ fontSize: iconSizes.xlarge, color: "#E68057" }}
+                  />
+                ),
                 title: "Generate Your First Plan",
                 description:
                   "Start your academic planning journey by creating a personalized plan based on your major, preferences, and timeline.",
@@ -756,7 +701,7 @@ export default function HomePage() {
               {
                 icon: (
                   <BookmarkBorder
-                    sx={{ fontSize: 48, color: "#FFF5F0" }} // Light color for contrast on dark background
+                    sx={{ fontSize: iconSizes.xlarge, color: "#FFF5F0" }}
                   />
                 ),
                 title: "View Saved Plans",
@@ -767,7 +712,11 @@ export default function HomePage() {
                 primary: false,
               },
               {
-                icon: <School sx={{ fontSize: 48, color: "#FFF5F0" }} />, // Light color for contrast
+                icon: (
+                  <School
+                    sx={{ fontSize: iconSizes.xlarge, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Browse Majors & Minors",
                 description:
                   "Explore available majors and minors to help you make informed decisions about your academic path.",
@@ -776,7 +725,11 @@ export default function HomePage() {
                 primary: false,
               },
               {
-                icon: <Refresh sx={{ fontSize: 48, color: "#FFF5F0" }} />, // Light color for contrast
+                icon: (
+                  <Refresh
+                    sx={{ fontSize: iconSizes.xlarge, color: "#FFF5F0" }}
+                  />
+                ),
                 title: "Planner Interface",
                 description:
                   "Use our interactive planner to visualize your academic timeline and make adjustments to your course schedule.",

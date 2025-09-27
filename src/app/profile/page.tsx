@@ -11,7 +11,6 @@ export default function ProfilePage() {
       <Box
         sx={{
           minHeight: "100vh",
-          bgcolor: "background.default",
           py: 4,
         }}
       >

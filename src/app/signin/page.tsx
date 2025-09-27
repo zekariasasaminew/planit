@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Box, Container, Typography, CircularProgress } from "@mui/material";
 import { useAuth } from "@/app/context/authContext";
 import { SignInCard } from "@/components/SignInCard";
+import { AnimatedBackground } from "@/components";
 
 function SignInContent() {
   const { user, loading } = useAuth();
@@ -30,10 +31,11 @@ function SignInContent() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          bgcolor: "background.default",
+          position: "relative",
         }}
       >
-        <CircularProgress />
+        <AnimatedBackground />
+        <CircularProgress sx={{ zIndex: 1 }} />
       </Box>
     );
   }
@@ -50,11 +52,12 @@ function SignInContent() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        bgcolor: "background.default",
+        position: "relative",
         py: 4,
       }}
     >
-      <Container maxWidth="sm">
+      <AnimatedBackground />
+      <Container maxWidth="sm" sx={{ zIndex: 1 }}>
         <Box sx={{ textAlign: "center", mb: 4 }}>
           <Typography
             variant="h3"
@@ -87,9 +90,11 @@ export default function SignInPage() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            position: "relative",
           }}
         >
-          <CircularProgress />
+          <AnimatedBackground />
+          <CircularProgress sx={{ zIndex: 1 }} />
         </Box>
       }
     >

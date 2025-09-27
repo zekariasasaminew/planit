@@ -80,7 +80,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
 
   const drawerContent = (
     <Box
-      sx={{ width, height: "100%", display: "flex", flexDirection: "column" }}
+      sx={{
+        width,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
+        backdropFilter: "blur(10px)",
+      }}
     >
       {/* Navigation Menu - No logo section */}
       <Box sx={{ flexGrow: 1, overflow: "auto", pt: 3 }}>
@@ -98,23 +105,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
                   selected={isActive}
                   sx={{
                     borderRadius: 3,
-                    py: 1.5,
+                    py: 1,
                     px: 2,
                     transition: "all 0.2s ease-in-out",
                     "&.Mui-selected": {
-                      backgroundColor: "primary.main",
-                      color: "primary.contrastText",
+                      backgroundColor: "rgba(230, 128, 87, 0.9)", // Semi-transparent accent color
+                      color: "white",
                       boxShadow: theme.shadows[2],
                       "&:hover": {
-                        backgroundColor: "primary.dark",
+                        backgroundColor: "rgba(230, 128, 87, 1)",
                         transform: "translateX(4px)",
                       },
                       "& .MuiListItemIcon-root": {
-                        color: "primary.contrastText",
+                        color: "white",
                       },
                     },
                     "&:hover:not(.Mui-selected)": {
-                      backgroundColor: "action.hover",
+                      backgroundColor: "rgba(230, 128, 87, 0.1)",
                       transform: "translateX(2px)",
                     },
                   }}
@@ -147,8 +154,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
       <Box
         sx={{
           p: 3,
-          borderTop: `1px solid ${theme.palette.divider}`,
-          bgcolor: "background.paper",
+          borderTop: `1px solid rgba(0, 0, 0, 0.1)`,
+          backgroundColor: "rgba(255, 255, 255, 0.8)",
         }}
       >
         <Typography
@@ -180,6 +187,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
           display: { xs: "block", md: "none" },
           "& .MuiDrawer-paper": {
             width,
+            backgroundColor: "transparent",
+            border: "none",
             transition: theme.transitions.create("transform", {
               easing: theme.transitions.easing.sharp,
               duration: theme.transitions.duration.enteringScreen,
@@ -199,6 +208,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width }) => {
           display: { xs: "none", md: "block" },
           "& .MuiDrawer-paper": {
             width,
+            backgroundColor: "transparent",
             border: "none",
             transition: theme.transitions.create("transform", {
               easing: theme.transitions.easing.sharp,

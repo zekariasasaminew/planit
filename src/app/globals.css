@@ -1,12 +1,12 @@
 :root {
-  --background: #FDF8F6; /* Very light warm beige background */
-  --foreground: #4A2B2A; /* Very dark warm brown for text */
+  --background: #FDF8F6;
+  --foreground: #4A2B2A;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #FDF8F6; /* Keep light warm background even in dark mode preference */
-    --foreground: #4A2B2A; /* Very dark warm brown for text */
+    --background: #FDF8F6;
+    --foreground: #4A2B2A;
   }
 }
 
@@ -14,6 +14,8 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 body {
@@ -22,6 +24,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  zoom: 1;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 * {
@@ -35,8 +41,16 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+button, input, select, textarea {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #E68057;
+  outline-offset: 2px;
 }
