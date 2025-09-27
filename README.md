@@ -1,8 +1,8 @@
 # PlanIt - Academic Planning Assistant
 
-This repository now includes a backend scaffold with Next.js App Router APIs, Supabase Auth, Postgres (SQL migrations), Drizzle types, Zod validation, Pino logging, OpenAPI generation, Vitest unit tests, and Playwright API smoke tests.
+A modern academic planning application built with Next.js, featuring course catalog integration, automated plan generation, and Learning Perspectives tracking for Augustana University.
 
-## 🚀 Features
+## 🚀 Production Features
 
 ### ✨ Modern UI/UX
 
@@ -11,23 +11,22 @@ This repository now includes a backend scaffold with Next.js App Router APIs, Su
 - **Responsive design** that works on all devices
 - **Google-style** clean and intuitive interface
 
-### 📚 Core Functionality
+### 📚 Academic Planning
 
 - **Interactive Dashboard** with welcome screen and quick actions
-- **Plan Generation Wizard** with multi-step form
+- **AI-Powered Plan Generation** with semester optimization
 - **Semester-by-Semester Planner** with visual course cards
-- **Saved Plans Management** with full CRUD operations
-- **Majors & Requirements Browser** with search functionality
-- **Settings Panel** with theme customization
+- **Prerequisites Tracking** with automatic dependency resolution
+- **Learning Perspectives Integration** (PA, PH, PS, PP, PL, PN)
+- **Major/Minor Support** with comprehensive course requirements
 
 ### 🎯 Key Components
 
-- **Collapsible Sidebar** with navigation menu
-- **Top App Bar** with hamburger menu and profile section
-- **Semester Cards** displaying courses with type indicators
-- **Major/Minor Selectors** with autocomplete and filtering
-- **Preference Forms** with sliders, toggles, and radio buttons
-- **Plan Generation Flow** with validation and stepper
+- **Course Catalog Integration** with web scraping capabilities
+- **Plan Generation Engine** with constraint satisfaction
+- **Database Migration System** for course data management
+- **User Authentication** with Google OAuth integration
+- **Real-time Plan Validation** with prerequisite checking
 
 ## 🛠 Tech Stack
 

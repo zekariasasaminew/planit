@@ -1,0 +1,24 @@
+{
+  "program_title": "Entrepreneurial Studies course catalog",
+  "catalog_year": "2025-26",
+  "page_url": "https://augustana.edu/academics/areas-of-study/entrepreneurial-studies/courses",
+  "faculty": [],
+  "requirements": {
+    "major_in": null,
+    "acs_major": null,
+    "major_for_ed": null,
+    "minor_in": null,
+    "gpa_note": "All courses listed in the catalog as required courses for any major and/or minor, including those courses outside of the department or with a different subject coding, are considered part of the minor and will count in the grade point average. Recommended supporting courses that are optional and not required may also count in the minor depending on the program. For more information see your department chair or the degree requirements for Bachelor of Arts and information on Majors/Minors .",
+    "other_sections": {}
+  },
+  "courses_endpoint": null,
+  "courses_html": null,
+  "scrape_metadata": {
+    "original_title": "Entrepreneurial Studies",
+    "dept_slug": "entrepreneurial-studies",
+    "original_url": "https://augustana.edu/academics/areas-of-study/entrepreneurial-studies",
+    "courses_url": "https://augustana.edu/academics/areas-of-study/entrepreneurial-studies/courses",
+    "scrape_timestamp": "2025-09-26 19:57:48",
+    "status": "success"
+  }
+}

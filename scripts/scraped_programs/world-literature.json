@@ -1,0 +1,11 @@
+{
+  "scrape_metadata": {
+    "original_title": "World Literature",
+    "dept_slug": "world-literature",
+    "original_url": "https://augustana.edu/academics/areas-of-study/world-literature",
+    "courses_url": "https://augustana.edu/academics/areas-of-study/world-literature/courses",
+    "scrape_timestamp": "2025-09-26 20:00:09",
+    "status": "not_found",
+    "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/world-literature/courses"
+  }
+}
