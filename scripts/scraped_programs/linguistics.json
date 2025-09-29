@@ -1,0 +1,24 @@
+{
+  "program_title": "Linguistics course catalog",
+  "catalog_year": "2025-26",
+  "page_url": "https://augustana.edu/academics/areas-of-study/linguistics/courses",
+  "faculty": [],
+  "requirements": {
+    "major_in": null,
+    "acs_major": null,
+    "major_for_ed": null,
+    "minor_in": null,
+    "gpa_note": "All courses listed in the catalog as required courses for any major and/or minor, including those courses outside of the department or with a different subject coding, are considered part of the major and will count in the grade point average. Some departments may have additional grade requirements for the courses offered within their department. Recommended supporting courses that are optional and not required may also count in the major depending on the program. For more information see your department chair or the degree requirements for Bachelor of Arts and information on Majors/Minors .",
+    "other_sections": {}
+  },
+  "courses_endpoint": "https://www.augustana.net/prebuilt/catalog/courselist.php?area=ling",
+  "courses_html": "document.write('<p><strong>LING-100 Linguistics (4 Credits)</strong><br/>Descriptive and historical study of language: linguistic analysis, language universals, language in its social and cultural setting, language change, language contact, social and regional variation, and first and second language acquisition. Includes examples and data from languages other than English. Prerequisite: one year of college-level foreign language or equivalent.</p><p><strong>LING-200TR Linguistics Elective (3-4 Credits)</strong><br/></p><p><strong>LING-201 Language Myths (4 Credits)</strong><br/>(PS, D) Everybody has acquired  at least one language and, consequently, has ideas about the nature of language, yet many popular notions about language are not shared by linguists who study it objectively. In this course, we explore common misconceptions about language and analyze how these myths shape the social, cultural, and political landscapes in two contexts: the world in general and the United States in particular. Specific issues in the U.S. context include Spanglish and Black English.</p><p><strong>LING-261 Intercultural Pragmatics (4 Credits)</strong><br/>(PS, D) This course is meant to introduce and apply the most relevant pragmatic theories and topics to the study of communication between people of different cultures, and thus explore the source of some common problems in intercultural communication.  Recommended to have completed one year of college-level foreign language or equivalent.</p><p><strong>LING-399 Directed Study (1-2 Credits)</strong><br/>Opportunity for students to study a particular subject under a faculty member\\'s direction. Prerequisite: consent of department chair and instructor.  </p><p><strong>LING-400 Independent Study (1-2 Credits)</strong><br/>Opportunity for students to study a particular subject under a faculty member\\'s direction. Prerequisite: consent of department chair and instructor.  </p><p><strong>LING-INTR Linguistics Internship (0-12 Credits)</strong><br/>LING-INTR Academic Internship (0-12)   Prerequisite: a declared minor in LING. Departmental internships must be approved by the department. DEPT-INTR are letter-graded unless noted otherwise. See the Internships page for detailed information.</p>');",
+  "scrape_metadata": {
+    "original_title": "Linguistics",
+    "dept_slug": "linguistics",
+    "original_url": "https://augustana.edu/academics/areas-of-study/linguistics",
+    "courses_url": "https://augustana.edu/academics/areas-of-study/linguistics/courses",
+    "scrape_timestamp": "2025-09-26 19:58:45",
+    "status": "success"
+  }
+}

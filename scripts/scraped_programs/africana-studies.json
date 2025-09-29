@@ -1,0 +1,24 @@
+{
+  "program_title": "Africana Studies course catalog",
+  "catalog_year": "2025-26",
+  "page_url": "https://augustana.edu/academics/areas-of-study/africana-studies/courses",
+  "faculty": [],
+  "requirements": {
+    "major_in": "32 credits, including AFSP-201 and AFSP-441/442. No more than 12 credits taken within the same departmental course code other than AFSP. Two tracks: students will choose an emphasis • Africa • African Diaspora At least 4 courses in track of emphasis is required, and at least 1 course in other track. One additional requirement is one course taken that provides some methodology on how to study these communities. The selection of this course should be made in consultation with the faculty advisor.",
+    "acs_major": null,
+    "major_for_ed": null,
+    "minor_in": "20 credits, including 4 credits at the 200-level or higher. No more than 8 credits taken within the same departmental course code other than AFSP.",
+    "gpa_note": "All courses listed in the catalog as required courses for any major and/or minor, including those courses outside of the department or with a different subject coding, are considered part of the major and will count in the grade point average. Recommended supporting courses that are optional and not required may also count in the major depending on the program. For more information see your department chair or the degree requirements for Bachelor of Arts and information on Majors/Minors .",
+    "other_sections": {}
+  },
+  "courses_endpoint": "https://www.augustana.net/prebuilt/catalog/courselist.php?area=afsp",
+  "courses_html": "document.write('<p><strong>AFSP-199 Directed Study (1-2 Credits)</strong><br/></p><p><strong>AFSP-201 Introduction to Africana Studies (4 Credits)</strong><br/>(PH,G) Examination of histories and experiences of African peoples and their descendants throughout the globe. Exploration of the commonality of experience across the African Diaspora, examining global slavery, emancipation and the different ways Africans and their descendants continue to creatively survive and thrive in, and shape their new environments. Discussion of the various methodologies used to study these communities.  PH became active as of 04-08-2020</p><p><strong>AFSP-299 Directed Study (1-2 Credits)</strong><br/></p><p><strong>AFSP-380 Special Topics (4 Credits)</strong><br/></p><p><strong>AFSP-393 International Study Colloquium (3-4 Credits)</strong><br/></p><p><strong>AFSP-399 Directed Study (1-2 Credits)</strong><br/></p><p><strong>AFSP-400 Independent Study (1-2 Credits)</strong><br/></p><p><strong>AFSP-441 Senior Inquiry (2 Credits)</strong><br/>Original research utilizing the methodologies appropriate to the department, area or concentration of the project. During the first semester, students will examine relevant scholarship, reach critical conclusions and report these to the class. In the second semester, students, in consultation with their faculty supervisor(s), will redact their findings into an acceptable format, defend their overall analysis and reflect upon the process and the conclusions reached. Prerequisites: senior standing and declared major in Africana studies.</p><p><strong>AFSP-442 Senior Inquiry (2 Credits)</strong><br/>Original research utilizing the methodologies appropriate to the department, area or concentration of the project. During the first semester, students will examine relevant scholarship, reach critical conclusions and report these to the class. In the second semester, students, in consultation with their faculty supervisor(s), will redact their findings into an acceptable format, defend their overall analysis and reflect upon the process and the conclusions reached. Prerequisites: senior standing and declared major in Africana studies.</p><p><strong>AFSP-499 Directed Study (1-2 Credits)</strong><br/></p>');",
+  "scrape_metadata": {
+    "original_title": "Africana Studies",
+    "dept_slug": "africana-studies",
+    "original_url": "https://augustana.edu/academics/areas-of-study/africana-studies",
+    "courses_url": "https://augustana.edu/academics/areas-of-study/africana-studies/courses",
+    "scrape_timestamp": "2025-09-26 19:56:42",
+    "status": "success"
+  }
+}

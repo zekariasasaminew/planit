@@ -1,0 +1,740 @@
+{
+  "scrape_summary": {
+    "timestamp": "2025-09-26 20:00:09",
+    "total_programs": 87,
+    "successful": 57,
+    "not_found": 30,
+    "failed": 0
+  },
+  "successful_programs": [
+    {
+      "original_title": "Accounting",
+      "dept_slug": "accounting",
+      "original_url": "https://augustana.edu/academics/areas-of-study/accounting",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/accounting/courses",
+      "scrape_timestamp": "2025-09-26 19:56:39",
+      "status": "success"
+    },
+    {
+      "original_title": "Africana Studies",
+      "dept_slug": "africana-studies",
+      "original_url": "https://augustana.edu/academics/areas-of-study/africana-studies",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/africana-studies/courses",
+      "scrape_timestamp": "2025-09-26 19:56:42",
+      "status": "success"
+    },
+    {
+      "original_title": "American Studies",
+      "dept_slug": "american-studies",
+      "original_url": "https://augustana.edu/academics/areas-of-study/american-studies",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/american-studies/courses",
+      "scrape_timestamp": "2025-09-26 19:56:46",
+      "status": "success"
+    },
+    {
+      "original_title": "Art",
+      "dept_slug": "art",
+      "original_url": "https://augustana.edu/academics/areas-of-study/art",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/art/courses",
+      "scrape_timestamp": "2025-09-26 19:56:49",
+      "status": "success"
+    },
+    {
+      "original_title": "Art History",
+      "dept_slug": "art-history",
+      "original_url": "https://augustana.edu/academics/areas-of-study/art-history",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/art-history/courses",
+      "scrape_timestamp": "2025-09-26 19:56:52",
+      "status": "success"
+    },
+    {
+      "original_title": "Asian Studies",
+      "dept_slug": "asian-studies",
+      "original_url": "https://augustana.edu/academics/areas-of-study/asian-studies",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/asian-studies/courses",
+      "scrape_timestamp": "2025-09-26 19:56:54",
+      "status": "success"
+    },
+    {
+      "original_title": "Astronomy",
+      "dept_slug": "astronomy",
+      "original_url": "https://augustana.edu/academics/areas-of-study/astronomy",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/astronomy/courses",
+      "scrape_timestamp": "2025-09-26 19:56:57",
+      "status": "success"
+    },
+    {
+      "original_title": "Biology",
+      "dept_slug": "biology",
+      "original_url": "https://augustana.edu/academics/areas-of-study/biology",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/biology/courses",
+      "scrape_timestamp": "2025-09-26 19:57:01",
+      "status": "success"
+    },
+    {
+      "original_title": "Business Administration",
+      "dept_slug": "business-administration",
+      "original_url": "https://augustana.edu/academics/areas-of-study/business-administration",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/business-administration/courses",
+      "scrape_timestamp": "2025-09-26 19:57:04",
+      "status": "success"
+    },
+    {
+      "original_title": "Chemistry",
+      "dept_slug": "chemistry",
+      "original_url": "https://augustana.edu/academics/areas-of-study/chemistry",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/chemistry/courses",
+      "scrape_timestamp": "2025-09-26 19:57:08",
+      "status": "success"
+    },
+    {
+      "original_title": "Chinese",
+      "dept_slug": "chinese",
+      "original_url": "https://augustana.edu/academics/areas-of-study/chinese",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/chinese/courses",
+      "scrape_timestamp": "2025-09-26 19:57:11",
+      "status": "success"
+    },
+    {
+      "original_title": "Classics",
+      "dept_slug": "classics",
+      "original_url": "https://augustana.edu/academics/areas-of-study/classics",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/classics/courses",
+      "scrape_timestamp": "2025-09-26 19:57:14",
+      "status": "success"
+    },
+    {
+      "original_title": "Communication Sciences and Disorders",
+      "dept_slug": "communication-sciences-and-disorders",
+      "original_url": "https://augustana.edu/academics/areas-of-study/communication-sciences-and-disorders",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/communication-sciences-and-disorders/courses",
+      "scrape_timestamp": "2025-09-26 19:57:17",
+      "status": "success"
+    },
+    {
+      "original_title": "Communication Studies",
+      "dept_slug": "communication-studies",
+      "original_url": "https://augustana.edu/academics/areas-of-study/communication-studies",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/communication-studies/courses",
+      "scrape_timestamp": "2025-09-26 19:57:20",
+      "status": "success"
+    },
+    {
+      "original_title": "Computer Science",
+      "dept_slug": "computer-science",
+      "original_url": "https://augustana.edu/academics/areas-of-study/computer-science",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/computer-science/courses",
+      "scrape_timestamp": "2025-09-26 19:57:26",
+      "status": "success"
+    },
+    {
+      "original_title": "Data Analytics",
+      "dept_slug": "data-analytics",
+      "original_url": "https://augustana.edu/academics/areas-of-study/data-analytics",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/data-analytics/courses",
+      "scrape_timestamp": "2025-09-26 19:57:34",
+      "status": "success"
+    },
+    {
+      "original_title": "Economics",
+      "dept_slug": "economics",
+      "original_url": "https://augustana.edu/academics/areas-of-study/economics",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/economics/courses",
+      "scrape_timestamp": "2025-09-26 19:57:39",
+      "status": "success"
+    },
+    {
+      "original_title": "Education",
+      "dept_slug": "education",
+      "original_url": "https://augustana.edu/academics/areas-of-study/education",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/education/courses",
+      "scrape_timestamp": "2025-09-26 19:57:41",
+      "status": "success"
+    },
+    {
+      "original_title": "English and Creative Writing",
+      "dept_slug": "english-and-creative-writing",
+      "original_url": "https://augustana.edu/academics/areas-of-study/english-and-creative-writing",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/english-and-creative-writing/courses",
+      "scrape_timestamp": "2025-09-26 19:57:46",
+      "status": "success"
+    },
+    {
+      "original_title": "Entrepreneurial Studies",
+      "dept_slug": "entrepreneurial-studies",
+      "original_url": "https://augustana.edu/academics/areas-of-study/entrepreneurial-studies",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/entrepreneurial-studies/courses",
+      "scrape_timestamp": "2025-09-26 19:57:48",
+      "status": "success"
+    },
+    {
+      "original_title": "Environmental Studies",
+      "dept_slug": "environmental-studies",
+      "original_url": "https://augustana.edu/academics/areas-of-study/environmental-studies",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/environmental-studies/courses",
+      "scrape_timestamp": "2025-09-26 19:57:51",
+      "status": "success"
+    },
+    {
+      "original_title": "Ethics",
+      "dept_slug": "ethics",
+      "original_url": "https://augustana.edu/academics/areas-of-study/ethics",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/ethics/courses",
+      "scrape_timestamp": "2025-09-26 19:57:53",
+      "status": "success"
+    },
+    {
+      "original_title": "Film",
+      "dept_slug": "film",
+      "original_url": "https://augustana.edu/academics/areas-of-study/film",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/film/courses",
+      "scrape_timestamp": "2025-09-26 19:57:56",
+      "status": "success"
+    },
+    {
+      "original_title": "French",
+      "dept_slug": "french",
+      "original_url": "https://augustana.edu/academics/areas-of-study/french",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/french/courses",
+      "scrape_timestamp": "2025-09-26 19:58:05",
+      "status": "success"
+    },
+    {
+      "original_title": "Geography",
+      "dept_slug": "geography",
+      "original_url": "https://augustana.edu/academics/areas-of-study/geography",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/geography/courses",
+      "scrape_timestamp": "2025-09-26 19:58:10",
+      "status": "success"
+    },
+    {
+      "original_title": "Geology",
+      "dept_slug": "geology",
+      "original_url": "https://augustana.edu/academics/areas-of-study/geology",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/geology/courses",
+      "scrape_timestamp": "2025-09-26 19:58:12",
+      "status": "success"
+    },
+    {
+      "original_title": "Graphic Design",
+      "dept_slug": "graphic-design",
+      "original_url": "https://augustana.edu/academics/areas-of-study/graphic-design",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/graphic-design/courses",
+      "scrape_timestamp": "2025-09-26 19:58:17",
+      "status": "success"
+    },
+    {
+      "original_title": "History",
+      "dept_slug": "history",
+      "original_url": "https://augustana.edu/academics/areas-of-study/history",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/history/courses",
+      "scrape_timestamp": "2025-09-26 19:58:21",
+      "status": "success"
+    },
+    {
+      "original_title": "Japanese",
+      "dept_slug": "japanese",
+      "original_url": "https://augustana.edu/academics/areas-of-study/japanese",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/japanese/courses",
+      "scrape_timestamp": "2025-09-26 19:58:32",
+      "status": "success"
+    },
+    {
+      "original_title": "Kinesiology",
+      "dept_slug": "kinesiology",
+      "original_url": "https://augustana.edu/academics/areas-of-study/kinesiology",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/kinesiology/courses",
+      "scrape_timestamp": "2025-09-26 19:58:35",
+      "status": "success"
+    },
+    {
+      "original_title": "Linguistics",
+      "dept_slug": "linguistics",
+      "original_url": "https://augustana.edu/academics/areas-of-study/linguistics",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/linguistics/courses",
+      "scrape_timestamp": "2025-09-26 19:58:45",
+      "status": "success"
+    },
+    {
+      "original_title": "Mathematics",
+      "dept_slug": "mathematics",
+      "original_url": "https://augustana.edu/academics/areas-of-study/mathematics",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/mathematics/courses",
+      "scrape_timestamp": "2025-09-26 19:58:51",
+      "status": "success"
+    },
+    {
+      "original_title": "Multimedia Journalism and Mass Communication",
+      "dept_slug": "multimedia-journalism-and-mass-communication",
+      "original_url": "https://augustana.edu/academics/areas-of-study/multimedia-journalism-and-mass-communication",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/multimedia-journalism-and-mass-communication/courses",
+      "scrape_timestamp": "2025-09-26 19:58:55",
+      "status": "success"
+    },
+    {
+      "original_title": "Music",
+      "dept_slug": "music",
+      "original_url": "https://augustana.edu/academics/areas-of-study/music",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/music/courses",
+      "scrape_timestamp": "2025-09-26 19:58:57",
+      "status": "success"
+    },
+    {
+      "original_title": "Neuroscience",
+      "dept_slug": "neuroscience",
+      "original_url": "https://augustana.edu/academics/areas-of-study/neuroscience",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/neuroscience/courses",
+      "scrape_timestamp": "2025-09-26 19:59:03",
+      "status": "success"
+    },
+    {
+      "original_title": "Nonprofit Leadership Development Experiential Minor",
+      "dept_slug": "nonprofit-leadership-development-experiential-minor",
+      "original_url": "https://augustana.edu/academics/areas-of-study/nonprofit-leadership-development-experiential-minor",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/nonprofit-leadership-development-experiential-minor/courses",
+      "scrape_timestamp": "2025-09-26 19:59:08",
+      "status": "success"
+    },
+    {
+      "original_title": "Philosophy",
+      "dept_slug": "philosophy",
+      "original_url": "https://augustana.edu/academics/areas-of-study/philosophy",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/philosophy/courses",
+      "scrape_timestamp": "2025-09-26 19:59:12",
+      "status": "success"
+    },
+    {
+      "original_title": "Physics, Engineering, and Astronomy",
+      "dept_slug": "engineering",
+      "original_url": "https://augustana.edu/academics/areas-of-study/engineering",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/engineering/courses",
+      "scrape_timestamp": "2025-09-26 19:59:14",
+      "status": "success"
+    },
+    {
+      "original_title": "Political Science",
+      "dept_slug": "political-science",
+      "original_url": "https://augustana.edu/academics/areas-of-study/political-science",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/political-science/courses",
+      "scrape_timestamp": "2025-09-26 19:59:17",
+      "status": "success"
+    },
+    {
+      "original_title": "Pre-Dentistry",
+      "dept_slug": "pre-dentistry",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-dentistry",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-dentistry/courses",
+      "scrape_timestamp": "2025-09-26 19:59:19",
+      "status": "success"
+    },
+    {
+      "original_title": "Pre-Law",
+      "dept_slug": "pre-law",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-law",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-law/courses",
+      "scrape_timestamp": "2025-09-26 19:59:21",
+      "status": "success"
+    },
+    {
+      "original_title": "Pre-Nursing",
+      "dept_slug": "pre-nursing",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-nursing",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-nursing/courses",
+      "scrape_timestamp": "2025-09-26 19:59:27",
+      "status": "success"
+    },
+    {
+      "original_title": "Pre-Occupational Therapy",
+      "dept_slug": "pre-occupational-therapy",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-occupational-therapy",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-occupational-therapy/courses",
+      "scrape_timestamp": "2025-09-26 19:59:29",
+      "status": "success"
+    },
+    {
+      "original_title": "Pre-Optometry",
+      "dept_slug": "pre-optometry",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-optometry",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-optometry/courses",
+      "scrape_timestamp": "2025-09-26 19:59:31",
+      "status": "success"
+    },
+    {
+      "original_title": "Pre-Pharmacy",
+      "dept_slug": "pre-pharmacy",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-pharmacy",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-pharmacy/courses",
+      "scrape_timestamp": "2025-09-26 19:59:33",
+      "status": "success"
+    },
+    {
+      "original_title": "Pre-Physical Therapy",
+      "dept_slug": "pre-physical-therapy",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-physical-therapy",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-physical-therapy/courses",
+      "scrape_timestamp": "2025-09-26 19:59:35",
+      "status": "success"
+    },
+    {
+      "original_title": "Pre-Physician Assistant",
+      "dept_slug": "pre-physician-assistant",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-physician-assistant",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-physician-assistant/courses",
+      "scrape_timestamp": "2025-09-26 19:59:37",
+      "status": "success"
+    },
+    {
+      "original_title": "Pre-Seminary",
+      "dept_slug": "pre-seminary",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-seminary",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-seminary/courses",
+      "scrape_timestamp": "2025-09-26 19:59:38",
+      "status": "success"
+    },
+    {
+      "original_title": "Psychology",
+      "dept_slug": "psychology",
+      "original_url": "https://augustana.edu/academics/areas-of-study/psychology",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/psychology/courses",
+      "scrape_timestamp": "2025-09-26 19:59:43",
+      "status": "success"
+    },
+    {
+      "original_title": "Public Health",
+      "dept_slug": "public-health",
+      "original_url": "https://augustana.edu/academics/areas-of-study/public-health",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/public-health/courses",
+      "scrape_timestamp": "2025-09-26 19:59:45",
+      "status": "success"
+    },
+    {
+      "original_title": "Religion",
+      "dept_slug": "religion",
+      "original_url": "https://augustana.edu/academics/areas-of-study/religion",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/religion/courses",
+      "scrape_timestamp": "2025-09-26 19:59:48",
+      "status": "success"
+    },
+    {
+      "original_title": "Scandinavian Studies",
+      "dept_slug": "scandinavian-studies",
+      "original_url": "https://augustana.edu/academics/areas-of-study/scandinavian-studies",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/scandinavian-studies/courses",
+      "scrape_timestamp": "2025-09-26 19:59:51",
+      "status": "success"
+    },
+    {
+      "original_title": "Sociology and Anthropology",
+      "dept_slug": "sociology-and-anthropology",
+      "original_url": "https://augustana.edu/academics/areas-of-study/sociology-and-anthropology",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/sociology-and-anthropology/courses",
+      "scrape_timestamp": "2025-09-26 19:59:53",
+      "status": "success"
+    },
+    {
+      "original_title": "Spanish",
+      "dept_slug": "spanish",
+      "original_url": "https://augustana.edu/academics/areas-of-study/spanish",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/spanish/courses",
+      "scrape_timestamp": "2025-09-26 19:59:56",
+      "status": "success"
+    },
+    {
+      "original_title": "Speech-Language Pathology (Master of Science)",
+      "dept_slug": "speech-language-pathology-master-science",
+      "original_url": "https://augustana.edu/academics/areas-of-study/speech-language-pathology-master-science",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/speech-language-pathology-master-science/courses",
+      "scrape_timestamp": "2025-09-26 19:59:58",
+      "status": "success"
+    },
+    {
+      "original_title": "Theatre",
+      "dept_slug": "theatre-arts",
+      "original_url": "https://augustana.edu/academics/areas-of-study/theatre-arts",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/theatre-arts/courses",
+      "scrape_timestamp": "2025-09-26 20:00:01",
+      "status": "success"
+    },
+    {
+      "original_title": "Women, Gender, and Sexuality Studies",
+      "dept_slug": "women-gender-and-sexuality-studies",
+      "original_url": "https://augustana.edu/academics/areas-of-study/women-gender-and-sexuality-studies",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/women-gender-and-sexuality-studies/courses",
+      "scrape_timestamp": "2025-09-26 20:00:06",
+      "status": "success"
+    }
+  ],
+  "not_found_programs": [
+    {
+      "original_title": "American Culture Exploration",
+      "dept_slug": "american-culture-exploration",
+      "original_url": "https://augustana.edu/academics/areas-of-study/american-culture-exploration",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/american-culture-exploration/courses",
+      "scrape_timestamp": "2025-09-26 19:56:44",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/american-culture-exploration/courses"
+    },
+    {
+      "original_title": "Biochemistry",
+      "dept_slug": "biochemistry",
+      "original_url": "https://augustana.edu/academics/areas-of-study/biochemistry",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/biochemistry/courses",
+      "scrape_timestamp": "2025-09-26 19:56:59",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/biochemistry/courses"
+    },
+    {
+      "original_title": "Business Intelligence",
+      "dept_slug": "business-administration",
+      "original_url": "https://augustana.edu/academics/areas-of-study/business-administration/business-intelligence",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/business-administration/business-intelligence/courses",
+      "scrape_timestamp": "2025-09-26 19:57:06",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/business-administration/business-intelligence/courses"
+    },
+    {
+      "original_title": "Contract Majors",
+      "dept_slug": "contract-majors",
+      "original_url": "https://augustana.edu/academics/areas-of-study/contract-majors",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/contract-majors/courses",
+      "scrape_timestamp": "2025-09-26 19:57:29",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/contract-majors/courses"
+    },
+    {
+      "original_title": "Disability Studies",
+      "dept_slug": "disability-studies",
+      "original_url": "https://augustana.edu/academics/areas-of-study/disability-studies",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/disability-studies/courses",
+      "scrape_timestamp": "2025-09-26 19:57:36",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/disability-studies/courses"
+    },
+    {
+      "original_title": "Engineering (Bachelor of Science)",
+      "dept_slug": "engineering-bachelor-science",
+      "original_url": "https://augustana.edu/academics/areas-of-study/engineering-bachelor-science",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/engineering-bachelor-science/courses",
+      "scrape_timestamp": "2025-09-26 19:57:43",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/engineering-bachelor-science/courses"
+    },
+    {
+      "original_title": "Finance",
+      "dept_slug": "business-administration",
+      "original_url": "https://augustana.edu/academics/areas-of-study/business-administration/finance",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/business-administration/finance/courses",
+      "scrape_timestamp": "2025-09-26 19:57:58",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/business-administration/finance/courses"
+    },
+    {
+      "original_title": "First Year Inquiry (FYI)",
+      "dept_slug": "first-year-inquiry-fyi",
+      "original_url": "https://augustana.edu/academics/areas-of-study/first-year-inquiry-fyi",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/first-year-inquiry-fyi/courses",
+      "scrape_timestamp": "2025-09-26 19:58:00",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/first-year-inquiry-fyi/courses"
+    },
+    {
+      "original_title": "Food Studies Experiential Minor",
+      "dept_slug": "food-studies-experiential-minor",
+      "original_url": "https://augustana.edu/academics/areas-of-study/food-studies-experiential-minor",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/food-studies-experiential-minor/courses",
+      "scrape_timestamp": "2025-09-26 19:58:02",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/food-studies-experiential-minor/courses"
+    },
+    {
+      "original_title": "Geographic Information Science and Technology Minor",
+      "dept_slug": "geographic-information-science-and-technology-minor",
+      "original_url": "https://augustana.edu/academics/areas-of-study/geographic-information-science-and-technology-minor",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/geographic-information-science-and-technology-minor/courses",
+      "scrape_timestamp": "2025-09-26 19:58:07",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/geographic-information-science-and-technology-minor/courses"
+    },
+    {
+      "original_title": "German Studies",
+      "dept_slug": "german-studies",
+      "original_url": "https://augustana.edu/academics/areas-of-study/german-studies",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/german-studies/courses",
+      "scrape_timestamp": "2025-09-26 19:58:14",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/german-studies/courses"
+    },
+    {
+      "original_title": "Health and Physical Education",
+      "dept_slug": "health-and-physical-education",
+      "original_url": "https://augustana.edu/academics/areas-of-study/health-and-physical-education",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/health-and-physical-education/courses",
+      "scrape_timestamp": "2025-09-26 19:58:19",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/health-and-physical-education/courses"
+    },
+    {
+      "original_title": "Integrative Medicine and the Humanities Experiential Minor",
+      "dept_slug": "integrative-medicine-and-humanities-experiential-minor",
+      "original_url": "https://augustana.edu/academics/areas-of-study/integrative-medicine-and-humanities-experiential-minor",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/integrative-medicine-and-humanities-experiential-minor/courses",
+      "scrape_timestamp": "2025-09-26 19:58:23",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/integrative-medicine-and-humanities-experiential-minor/courses"
+    },
+    {
+      "original_title": "International Business",
+      "dept_slug": "international-business",
+      "original_url": "https://augustana.edu/academics/areas-of-study/international-business",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/international-business/courses",
+      "scrape_timestamp": "2025-09-26 19:58:25",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/international-business/courses"
+    },
+    {
+      "original_title": "International Business (concentration)",
+      "dept_slug": "business-administration",
+      "original_url": "https://augustana.edu/academics/areas-of-study/business-administration/international-business",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/business-administration/international-business/courses",
+      "scrape_timestamp": "2025-09-26 19:58:27",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/business-administration/international-business/courses"
+    },
+    {
+      "original_title": "Interreligious Leadership",
+      "dept_slug": "interreligious-leadership",
+      "original_url": "https://augustana.edu/academics/areas-of-study/interreligious-leadership",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/interreligious-leadership/courses",
+      "scrape_timestamp": "2025-09-26 19:58:29",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/interreligious-leadership/courses"
+    },
+    {
+      "original_title": "Landscape Architecture",
+      "dept_slug": "landscape-architecture",
+      "original_url": "https://augustana.edu/academics/areas-of-study/landscape-architecture",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/landscape-architecture/courses",
+      "scrape_timestamp": "2025-09-26 19:58:37",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/landscape-architecture/courses"
+    },
+    {
+      "original_title": "Latin American and Latinx Studies",
+      "dept_slug": "latin-american-and-latinx-studies",
+      "original_url": "https://augustana.edu/academics/areas-of-study/latin-american-and-latinx-studies",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/latin-american-and-latinx-studies/courses",
+      "scrape_timestamp": "2025-09-26 19:58:39",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/latin-american-and-latinx-studies/courses"
+    },
+    {
+      "original_title": "Liberal Studies Courses (LSC)",
+      "dept_slug": "liberal-studies-courses-lsc",
+      "original_url": "https://augustana.edu/academics/areas-of-study/liberal-studies-courses-lsc",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/liberal-studies-courses-lsc/courses",
+      "scrape_timestamp": "2025-09-26 19:58:41",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/liberal-studies-courses-lsc/courses"
+    },
+    {
+      "original_title": "Library and Information Science Advising",
+      "dept_slug": "library-and-information-science-advising",
+      "original_url": "https://augustana.edu/academics/areas-of-study/library-and-information-science-advising",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/library-and-information-science-advising/courses",
+      "scrape_timestamp": "2025-09-26 19:58:42",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/library-and-information-science-advising/courses"
+    },
+    {
+      "original_title": "Management",
+      "dept_slug": "business-administration",
+      "original_url": "https://augustana.edu/academics/areas-of-study/business-administration/management",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/business-administration/management/courses",
+      "scrape_timestamp": "2025-09-26 19:58:47",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/business-administration/management/courses"
+    },
+    {
+      "original_title": "Marketing",
+      "dept_slug": "business-administration",
+      "original_url": "https://augustana.edu/academics/areas-of-study/business-administration/marketing",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/business-administration/marketing/courses",
+      "scrape_timestamp": "2025-09-26 19:58:49",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/business-administration/marketing/courses"
+    },
+    {
+      "original_title": "Music Education",
+      "dept_slug": "music-education",
+      "original_url": "https://augustana.edu/academics/areas-of-study/music-education",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/music-education/courses",
+      "scrape_timestamp": "2025-09-26 19:58:59",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/music-education/courses"
+    },
+    {
+      "original_title": "Nursing (Bachelor of Science)",
+      "dept_slug": "nursing-bachelor-science",
+      "original_url": "https://augustana.edu/academics/areas-of-study/nursing-bachelor-science",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/nursing-bachelor-science/courses",
+      "scrape_timestamp": "2025-09-26 19:59:10",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/nursing-bachelor-science/courses"
+    },
+    {
+      "original_title": "Pre-Medicine",
+      "dept_slug": "pre-medicine",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-medicine",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-medicine/courses",
+      "scrape_timestamp": "2025-09-26 19:59:23",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/pre-medicine/courses"
+    },
+    {
+      "original_title": "Pre-Music Therapy",
+      "dept_slug": "pre-music-therapy",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-music-therapy",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-music-therapy/courses",
+      "scrape_timestamp": "2025-09-26 19:59:25",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/pre-music-therapy/courses"
+    },
+    {
+      "original_title": "Pre-Veterinary",
+      "dept_slug": "pre-veterinary",
+      "original_url": "https://augustana.edu/academics/areas-of-study/pre-veterinary",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/pre-veterinary/courses",
+      "scrape_timestamp": "2025-09-26 19:59:40",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/pre-veterinary/courses"
+    },
+    {
+      "original_title": "Undecided",
+      "dept_slug": "exploring-majors",
+      "original_url": "https://augustana.edu/academics/areas-of-study/exploring-majors",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/exploring-majors/courses",
+      "scrape_timestamp": "2025-09-26 20:00:03",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/exploring-majors/courses"
+    },
+    {
+      "original_title": "World Languages, Literatures, and Cultures",
+      "dept_slug": "world-languages-literatures-and-cultures",
+      "original_url": "https://augustana.edu/academics/areas-of-study/world-languages-literatures-and-cultures",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/world-languages-literatures-and-cultures/courses",
+      "scrape_timestamp": "2025-09-26 20:00:07",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/world-languages-literatures-and-cultures/courses"
+    },
+    {
+      "original_title": "World Literature",
+      "dept_slug": "world-literature",
+      "original_url": "https://augustana.edu/academics/areas-of-study/world-literature",
+      "courses_url": "https://augustana.edu/academics/areas-of-study/world-literature/courses",
+      "scrape_timestamp": "2025-09-26 20:00:09",
+      "status": "not_found",
+      "error": "404 Client Error: Not Found for url: https://augustana.edu/academics/areas-of-study/world-literature/courses"
+    }
+  ],
+  "failed_programs": []
+}
