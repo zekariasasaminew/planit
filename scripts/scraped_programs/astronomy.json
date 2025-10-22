@@ -1,0 +1,24 @@
+{
+  "program_title": "Astronomy course catalog",
+  "catalog_year": "2025-26",
+  "page_url": "https://augustana.edu/academics/areas-of-study/astronomy/courses",
+  "faculty": [],
+  "requirements": {
+    "major_in": null,
+    "acs_major": null,
+    "major_for_ed": null,
+    "minor_in": null,
+    "gpa_note": null,
+    "other_sections": {}
+  },
+  "courses_endpoint": "https://www.augustana.net/prebuilt/catalog/courselist.php?area=astr",
+  "courses_html": "document.write('<p><strong>ASTR-135 Planets (4 Credits)</strong><br/>(PN) A non-calculus course intended for all majors on planets and planetary systems.  Topics include the history of planetary astronomy, formation and evolution of the solar system, solar system physics, properties of solar system objects and the discovery of extrasolar planets. Results of recent space discoveries and the methods and tools used by astronomers will be emphasized. Evening observing sessions in the Carl Gamble observatory will be required. Suggested prerequisite: A math-index score of 840 or higher is recommended (pre-calc ready).</p><p><strong>ASTR-145 Stars and Galaxies (4 Credits)</strong><br/>(PN) A non-calculus course intended for all majors on stars, galaxies and the universe.   Topics include the formation and evolution of stars, basic stellar astrophysics, the interstellar medium, galaxy evolution and cosmology.  Observational techniques and scientific methodology will be discussed.  Evening observing sessions in the Carl Gamble observatory will be required. Suggested prerequisite: A math-index score of 840 or higher is recommended (pre-calc ready). </p><p><strong>ASTR-305 Advanced Astronomy (4 Credits)</strong><br/>The class covers key topics in physical astronomy including electromagnetic radiation, stellar astrophysics, galactic structure and cosmology. The course will emphasize the physics behind the methods astronomers use to understand the universe. Course work will consist of daily homework, in-class exercises, laboratory activities using remote telescope observations, three exams and a final. Prerequisites are ASTR-145 and either PHYS-151 or PHYS-211. The class is offered every other Fall term.</p><p><strong>ASTR-367 Advanced Astronomical Instrumentation (2 Credits)</strong><br/>The aim of this course is to introduce students to advanced experimental techniques and instrumentation used by professional astronomers. Students work in groups on a series of independent projects that cover a range of instruments/observational techniques such as spectroscopy, optical astronomy, radio astronomy, and exoplanet observations. Students will study engineering and design aspects of the instruments used, methods of calibration and data analysis, the theoretical basis for and conclusions from observations, as well as computer software used in each stage of experimental design. Students also learn skills for working in research teams, presenting findings, and supporting conclusions with verifiable data. This course thus provides students with the foundation for holistic advanced experimental scientific work in a range of fields, including but not limited to professional astronomy. Depending on student interest and availability, project work may consist of portions of Augustana faculty research.  Prerequisite: PHYS-151 or PHYS-211</p><p><strong>ASTR-393 International Study Colloquium (3-4 Credits)</strong><br/></p>');",
+  "scrape_metadata": {
+    "original_title": "Astronomy",
+    "dept_slug": "astronomy",
+    "original_url": "https://augustana.edu/academics/areas-of-study/astronomy",
+    "courses_url": "https://augustana.edu/academics/areas-of-study/astronomy/courses",
+    "scrape_timestamp": "2025-09-26 19:56:57",
+    "status": "success"
+  }
+}

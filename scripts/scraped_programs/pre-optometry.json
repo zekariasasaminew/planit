@@ -1,0 +1,24 @@
+{
+  "program_title": "Pre-Optometry courses",
+  "catalog_year": "2025-26",
+  "page_url": "https://augustana.edu/academics/areas-of-study/pre-optometry/courses",
+  "faculty": [],
+  "requirements": {
+    "major_in": null,
+    "acs_major": null,
+    "major_for_ed": null,
+    "minor_in": null,
+    "gpa_note": null,
+    "other_sections": {}
+  },
+  "courses_endpoint": null,
+  "courses_html": null,
+  "scrape_metadata": {
+    "original_title": "Pre-Optometry",
+    "dept_slug": "pre-optometry",
+    "original_url": "https://augustana.edu/academics/areas-of-study/pre-optometry",
+    "courses_url": "https://augustana.edu/academics/areas-of-study/pre-optometry/courses",
+    "scrape_timestamp": "2025-09-26 19:59:31",
+    "status": "success"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "program_title": "American Studies courses",
+  "catalog_year": "2025-26",
+  "page_url": "https://augustana.edu/academics/areas-of-study/american-studies/courses",
+  "faculty": [],
+  "requirements": {
+    "major_in": null,
+    "acs_major": null,
+    "major_for_ed": null,
+    "minor_in": null,
+    "gpa_note": "All courses listed in the catalog as required courses for any major and/or minor, including those courses outside of the department or with a different subject coding, are considered part of the major and will count in the grade point average. Recommended supporting courses that are optional and not required may also count in the major depending on the program. For more information see your department chair or the degree requirements for Bachelor of Arts and information on Majors/Minors . Take one class from each area. Take additional credits above the American Foundations classes to meet a minimum of 28 credits. Elective courses include all of those listed for American Foundations and the additional courses listed below. The same course cannot count as both a Foundations course and an Elective course.",
+    "other_sections": {}
+  },
+  "courses_endpoint": "https://www.augustana.net/prebuilt/catalog/courselist.php?area=amst",
+  "courses_html": "document.write('<p><strong>AMST-101 Intro American Studies (4 Credits)</strong><br/>(PH,D) This course is designed to introduce you to the interdisciplinary field of American Studies, for which the object of study is the complex and changing concept of &quot;American culture.&quot; The idea of America - as a place, identity, set of values, and as a political ideal - both unifies and divides, and has meaning at local and global scales. Its meaning is also expressed in an almost infinite variety of forms and locations, from the Senate floor to the sports field, from the Constitution to comic books. Thus, rather than focusing on a single method of investigating the past or present--by conducting experiments, collecting quantitative data, or closely reading a novel-American Studies instead looks for points of intersection between seemingly vastly different kinds of information. It seeks connections and disconnections between individual experiences and shared ways of thinking, between what we know and what we make, between the worlds we live in and those we imagine.</p><p><strong>AMST-360 Big American Novel (2 Credits)</strong><br/></p><p><strong>AMST-380A Special Topics (2 Credits)</strong><br/>An upper-level seminar on special topics within American Studies. Sections may focus on themes as diverse as urban planning, film, popular culture, and athletics.</p><p><strong>AMST-401 Senior Inquiry (2 Credits)</strong><br/>Self-chosen focused study utilizing methods of inquiry central to American Studies. Individual or small group directed research paper option that is designed and facilitated by a single instructor. This course could enable most students to delve deeper into one of the themes the student learned about in their previous coursework. SI might require students to articulate methods and theories unique to American Studies that they learned in their Intro to American Studies class.</p>');",
+  "scrape_metadata": {
+    "original_title": "American Studies",
+    "dept_slug": "american-studies",
+    "original_url": "https://augustana.edu/academics/areas-of-study/american-studies",
+    "courses_url": "https://augustana.edu/academics/areas-of-study/american-studies/courses",
+    "scrape_timestamp": "2025-09-26 19:56:46",
+    "status": "success"
+  }
+}
