@@ -1,6 +1,6 @@
 # PlanIt - Academic Planning Assistant
 
-A modern academic planning application built with Next.js, featuring course catalog integration, automated plan generation, and Learning Perspectives tracking for Augustana University.
+A modern academic planning application built with Next.js, featuring course catalog integration, automated plan generation, and Learning Perspectives tracking for Augustana College.
 
 ## 🚀 Production Features
 
